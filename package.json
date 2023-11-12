@@ -1,0 +1,19 @@
+{
+  "name": "no-food-waste",
+  "version": "1.0.0",
+  "description": "546-WN1 Project to Save on Food Waste.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "mongodb": "^6.2.0",
+    "mongoose": "^8.0.0"
+  }
+}
