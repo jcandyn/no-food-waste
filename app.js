@@ -1,62 +1,45 @@
 import express from "express";
-import mongoose from "mongoose";
-import bodyParser from "body-parser";
-
-// import routes
-// import authRoutes from "./routes/auth";
-import foodRoutes from "./routes/foodRoutes.js";
-import recipeRoutes from "./routes/recipeRoutes.js";
-
 const app = express();
-
-// Connect to MongoDB
-mongoose.connect("mongodb://localhost/zeroFoodWaste", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
 import configRoutes from "./routes/index.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import exphbs from "express-handlebars";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import path from "path";
 
 const staticDir = express.static(__dirname + "/public");
 
-const rewriteUnsupportedBrowserMethods = (req, res, next) => {
-  // If the user posts to the server with a property called _method, rewrite the request's method
-  // To be that method; so if they post _method=PUT you can now allow browsers to POST to a route that gets
-  // rewritten in this middleware to a PUT route
-  if (req.body && req.body._method) {
-    req.method = req.body._method;
-    delete req.body._method;
-  }
+// const rewriteUnsupportedBrowserMethods = (req, res, next) => {
+//   // If the user posts to the server with a property called _method, rewrite the request's method
+//   // To be that method; so if they post _method=PUT you can now allow browsers to POST to a route that gets
+//   // rewritten in this middleware to a PUT route
+//   if (req.body && req.body._method) {
+//     req.method = req.body._method;
+//     delete req.body._method;
+//   }
 
-  // let the next middleware run:
-  next();
-};
-
-// Configure express
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Define User model
-// const Users = require("./models/user"); // You need to create this model
-
-// app.use(authRoutes);
-app.use(foodRoutes);
-app.use(recipeRoutes);
+//   // let the next middleware run:
+//   next();
+// };
 
 app.use("/public", staticDir);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(rewriteUnsupportedBrowserMethods);
+// app.use(rewriteUnsupportedBrowserMethods);
 
-app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+app.engine(
+  "handlebars",
+  exphbs.engine({
+    defaultLayout: "main",
+    partialsDir: path.join(__dirname, "views"),
+  })
+);
 app.set("view engine", "handlebars");
 
-// Start the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+configRoutes(app);
+
+app.listen(3000, () => {
+  console.log("We've now got a server!");
+  console.log("Your routes will be running on http://localhost:3000");
 });

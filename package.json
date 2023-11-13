@@ -2,7 +2,7 @@
   "name": "no-food-waste",
   "version": "1.0.0",
   "description": "546-WN1 Project to Save on Food Waste.",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "start": "node app.js",
