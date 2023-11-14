@@ -1,24 +1,34 @@
 import express from "express";
 const router = express.Router();
-// import FoodItem = from "../models/foodItem"; // You need to create this model
+import foodData from "../data/foods.js";
 
 // Create a new food item
-router.post("/food/add", (req, res) => {
-  const { name, expirationDate } = req.body;
-  const newFoodItem = new FoodItem({
-    name,
-    expirationDate,
-    user: req.user._id, // Associate with the currently logged in user
-  });
+router.route("/").post(async (req, res) => {
+  const {
+    itemName,
+    quantity,
+    unit,
+    expiryDate,
+    costPerItem,
+    totalCost,
+    brand,
+  } = req.body;
 
-  newFoodItem.save((err) => {
-    if (err) {
-      console.error(err);
-      res.redirect("/");
-    } else {
-      res.redirect("/");
-    }
-  });
+  try {
+    await foodData.addFood(
+      itemName,
+      quantity,
+      unit,
+      expiryDate,
+      costPerItem,
+      totalCost,
+      brand
+    );
+    res.status(200).send("Food item added successfully");
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ error: e });
+  }
 });
 
 // Add code for updating and deleting food items
