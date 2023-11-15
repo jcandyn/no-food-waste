@@ -6,7 +6,7 @@ import foodData from "../data/foods.js";
 router
   .route("/")
   .get(async (req, res) => {
-      //code here for GET
+      
       try {
         let foodList = await foodData.getAllFood();
         return res.json(foodList);
@@ -32,23 +32,7 @@ router
     }catch(e){
       return res.status(500).json({ error: e });
     }
-    // try {
-    //   await foodData.addFood(
-    //     itemName,
-    //     quantity,
-    //     unit,
-    //     expiryDate,
-    //     costPerItem,
-    //     totalCost,
-    //     brand,
-    //     category,
-    //     status
-    //   );
-    //   res.status(200).send("Food item added successfully");
-    // } catch (e) {
-    //   console.log(e);
-    //   res.status(500).json({ error: e });
-    // }
+
   });
 
 
@@ -96,7 +80,7 @@ router
       .json({error: 'There are no fields in the request body'});
   }
   // try {
-  //   //food Id checkup
+  //   //food Id check
   // } catch (e) {
   //   return res.status(400).json({error: e});
   // }
@@ -120,7 +104,6 @@ router
   }    
 
 });
-// Add code for updating and deleting food items
-// Set up expiration alert logic
+
 
 export default router;

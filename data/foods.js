@@ -9,39 +9,6 @@ const client = new MongoClient(url);
 const dbName = "zeroFoodWaste";
 
 const exportedMethods = {
-  // async addFood(name, quantity, unit, date, cost, totalCost, brand) {
-  //   async function run() {
-  //     try {
-  //       // Connect to the Atlas cluster
-  //       await client.connect();
-  //       const db = client.db(dbName);
-  //       // Reference the "people" collection in the specified database
-  //       const col = db.collection("Inventory");
-  //       // Create a new document
-  //       let newFoodItem = {
-  //         userId: new ObjectId(), // this should come from somewhere else
-  //         itemName: name,
-  //         quantity: quantity,
-  //         unit: unit,
-  //         expiryDate: date,
-  //         constPerItem: cost,
-  //         totalCost: totalCost,
-  //         brand: brand,
-  //       };
-  //       // Insert the document into the specified collection
-  //       const p = await col.insertOne(newFoodItem);
-  //       // Find and return the document
-  //       const filter = { itemName: "Milk" };
-  //       const document = await col.findOne(filter);
-  //       console.log("Document found:\n" + JSON.stringify(document));
-  //     } catch (err) {
-  //       console.log(err.stack);
-  //     } finally {
-  //       await client.close();
-  //     }
-  //   }
-  //   run().catch(console.dir);
-  // },
   async addFood(itemName,quantity,unit,expiryDate,costPerItem,totalCost,brand,category,status){
     async function run() {
       // Connect to the Atlas cluster
@@ -165,7 +132,7 @@ const exportedMethods = {
       const db = client.db(dbName);
       // Reference the "people" collection in the specified database
       const foodCollection = db.collection("Inventory");
-      //Input ID checking will do later
+      //Input  checking will do later
 
       let FoodItem = {
         _id:new ObjectId(foodId),
@@ -198,10 +165,6 @@ const exportedMethods = {
     }
 
   }
-    
 
-  // add data function to update
-
-  // add data function to delete by id
 };
 export default exportedMethods;
