@@ -1,0 +1,52 @@
+/* .typing-container {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+} */
+
+#welcome {
+    letter-spacing: 0.2rem;
+}
+
+/* #welcome h1 {
+  color: green;
+} */
+
+.typing-container {
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.typing-container {
+    display: inline-block;
+}
+
+#typing-indicator {
+    display: inline-block;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: black;
+    }
+}
+
+#welcome-message {
+    font-family: 'Courier New', Courier, monospace; /* Use a monospaced font */
+    font-size: 2rem; /* Adjust the font size as needed */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+#typing-indicator {
+    font-family: 'Courier New', Courier, monospace; /* Use the same monospaced font */
+    font-size: 2rem; /* Adjust the font size to match the text */
+    margin-left: 5px; /* Add some spacing between text and indicator */
+}
