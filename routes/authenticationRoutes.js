@@ -58,6 +58,11 @@ router
       });
     }
     if (response) {
+      req.session.user = {
+        email: user.email,
+        password: user.password,
+        name: user.firstName,
+      };
       res.render("inventory", { name: user.firstName });
     }
     return;
@@ -90,7 +95,7 @@ router
         password: user.password,
         name: user.name,
       };
-      res.redirect("/inventory");
+      res.redirect("../");
     } else {
       res.status(401);
       res.render("error", {
