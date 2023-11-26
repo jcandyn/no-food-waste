@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "the world is your oyster!",
     "take it one expiration at a time.",
     "the possibilities are endless.",
-    "welcome to efficiency made easy.",
+    "this is efficiency made easy.",
   ];
 
   let currentMessageIndex = 0;
