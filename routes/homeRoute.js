@@ -5,7 +5,7 @@ router.route("/").get(async (req, res) => {
   //code here for GET will render the home handlebars file
 
   if (req.session.user) {
-    res.render("home", { name: req.session.user.name });
+    res.render("inventory", { name: req.session.user.name });
   } else {
     res.render("home", {});
   }
