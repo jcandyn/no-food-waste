@@ -8,7 +8,6 @@ import {
   printMiddleware,
   loginMiddleware,
   registrationMiddleware,
-  adminMiddleware,
   logoutMiddleware,
 } from "../middleware.js";
 
@@ -98,33 +97,6 @@ router
         error: "Invalid Username and/or Password",
       });
     }
-  });
-
-router.route("/protected").get(printMiddleware, async (req, res) => {
-  //code here for GET
-  if (!req.session.user) {
-    return res.redirect("/authenticate/login");
-  }
-
-  res.render("protected", {
-    user: req.session.user,
-  });
-});
-
-router
-  .route("/admin")
-  .get(adminMiddleware, printMiddleware, async (req, res) => {
-    //code here for GET
-    if (!req.session.user) {
-      return res.redirect("/authenticate/login");
-    } else if (req.session.user.role != "admin") {
-      return res.redirect("/error");
-    }
-
-    res.render("admin", {
-      user: req.session.user,
-      secret: req.session.user.secret,
-    });
   });
 
 router.route("/error").get(printMiddleware, async (req, res) => {
