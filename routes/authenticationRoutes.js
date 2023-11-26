@@ -20,12 +20,10 @@ router.route("/").get(printMiddleware, async (req, res) => {
 router
   .route("/signup")
   .get(registrationMiddleware, printMiddleware, async (req, res) => {
-    console.log("hits this");
     //code here for GET
     res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
-    console.log("hits this other one");
     //code here for POST
     // try {
     //   req.body.password = passwordValidation(req.body.password);
@@ -56,7 +54,6 @@ router
         user.location
       );
     } catch (error) {
-      console.log("error: ", error);
       res.status(401).render("error", {
         error: "User could not be added",
       });
@@ -70,13 +67,11 @@ router
 router
   .route("/login")
   .get(printMiddleware, loginMiddleware, async (req, res) => {
-    console.log("login gets hit");
     //code here for GET
     res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
     //code here for POST
-    console.log("login hits the other one");
     const email = req.body["email"];
     const password = req.body["password"];
 
@@ -85,7 +80,6 @@ router
     try {
       user = await loginUser(email.toLowerCase(), password);
     } catch (error) {
-      console.log(error);
       res.status(401).render("error", {
         error: "Invalid Username and/or Password",
       });
@@ -96,8 +90,6 @@ router
         email: user.email,
         password: user.password,
         name: user.name,
-        // role: user.role,
-        // secret: user.role === "admin" ? "Cats are the best!" : null,
       };
       res.redirect("/inventory");
     } else {

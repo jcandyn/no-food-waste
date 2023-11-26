@@ -18,7 +18,6 @@ const printMiddleware = (req, res, next) => {
     return next();
   }
 
-  console.log("CHECK");
   return res.redirect("/");
 };
 

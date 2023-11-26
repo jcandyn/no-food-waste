@@ -56,7 +56,6 @@ export const loginUser = async (email, password) => {
   } catch (error) {
     throw error;
   }
-  //   console.log(user);
   if (!user) throw "Error: User not found";
 
   if (!bcrypt.compareSync(password, user.password)) {

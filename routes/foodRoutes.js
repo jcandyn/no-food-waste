@@ -26,7 +26,6 @@ router.route("/").post(async (req, res) => {
     );
     res.status(200).send("Food item added successfully");
   } catch (e) {
-    console.log(e);
     res.status(500).json({ error: e });
   }
 });
