@@ -1,23 +1,6 @@
 //import mongo collections, bcrypt and implement the following data functions
 import bcrypt from "bcrypt";
-// import { users } from "../config/mongoCollections.js";
-import { MongoClient } from "mongodb";
-const url =
-  "mongodb+srv://group_2_546:pass01a@cluster0.dohb3e9.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(url);
-
-const dbName = "zeroFoodWaste";
-let usersCollection;
-let db;
-
-try {
-  await client.connect();
-  db = client.db(dbName);
-  // Reference the "people" collection in the specified database
-} catch (error) {
-  console.log("Error connecting to db: ", error);
-}
-usersCollection = db.collection("Users");
+import { usersCollection } from "./index.js";
 
 export const registerUser = async (
   username,
@@ -30,7 +13,6 @@ export const registerUser = async (
   location
 ) => {
   let hash = bcrypt.hashSync(password, 10);
-
   let newUser = {
     username: username,
     dateJoined: dateJoined,
