@@ -8,32 +8,24 @@ const printMiddleware = (req, res, next) => {
   );
 
   if (
-    req.originalUrl === "/login" ||
+    req.originalUrl === "/authenticate/signup" ||
     req.originalUrl === "/protected" ||
-    req.originalUrl === "/register" ||
+    req.originalUrl === "/authenticate/login" ||
+    req.originalUrl === "/authenticate" ||
     req.originalUrl === "/admin" ||
-    req.originalUrl === "/logout"
+    req.originalUrl === "/authenticate/logout"
   ) {
     return next();
   }
 
-  if (req.session.user) {
-    if (req.session.user.role === "admin") {
-      return res.redirect("/protected");
-    } else if (req.session.user.role === "user") {
-      return res.redirect("/protected");
-    }
-  }
-
-  return res.redirect("/login");
+  console.log("CHECK");
+  return res.redirect("/");
 };
 
 const loginMiddleware = (req, res, next) => {
   if (req.session.user) {
-    if (req.session.user.role === "admin") {
-      return res.redirect("/admin");
-    } else if (req.session.user.role === "user") {
-      return res.redirect("/protected");
+    if (req.session.user) {
+      return res.redirect("/inventory");
     }
   } else {
     return next();
@@ -41,13 +33,9 @@ const loginMiddleware = (req, res, next) => {
 };
 
 const registrationMiddleware = (req, res, next) => {
-  if (req.path === "/register" && req.method === "GET") {
+  if (req.path === "/singup" && req.method === "GET") {
     if (req.session.user) {
-      if (req.user.role === "admin") {
-        return res.redirect("/admin");
-      } else if (req.user.role === "user") {
-        return res.redirect("/protected");
-      }
+      return res.redirect("/inventory");
     }
     return next();
   }
@@ -55,17 +43,17 @@ const registrationMiddleware = (req, res, next) => {
   next();
 };
 
-const protectedMiddleware = (req, res, next) => {
-  if (req.path === "/protected" && req.method === "GET") {
-    if (req.session.user) {
-      return next();
-    } else {
-      return res.redirect("/login");
-    }
-  }
+// const protectedMiddleware = (req, res, next) => {
+//   if (req.path === "/protected" && req.method === "GET") {
+//     if (req.session.user) {
+//       return next();
+//     } else {
+//       return res.redirect("/login");
+//     }
+//   }
 
-  next();
-};
+//   next();
+// };
 
 const adminMiddleware = (req, res, next) => {
   if (req.path === "/admin" && req.method === "GET") {
@@ -97,7 +85,6 @@ export {
   printMiddleware,
   loginMiddleware,
   registrationMiddleware,
-  protectedMiddleware,
   adminMiddleware,
   logoutMiddleware,
 };

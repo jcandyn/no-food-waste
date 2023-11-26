@@ -8,15 +8,16 @@ const client = new MongoClient(url);
 
 const dbName = "zeroFoodWaste";
 let usersCollection;
+let db;
 
 try {
   await client.connect();
-  const db = client.db(dbName);
+  db = client.db(dbName);
   // Reference the "people" collection in the specified database
-  usersCollection = db.collection("Users");
 } catch (error) {
   console.log("Error connecting to db: ", error);
 }
+usersCollection = db.collection("Users");
 
 export const registerUser = async (
   username,
@@ -40,28 +41,28 @@ export const registerUser = async (
     dateOfBirth: dateOfBirth,
     location: location,
   };
-  const usersCollection = await users();
+
   const newInsertInformation = await usersCollection.insertOne(newUser);
   if (!newInsertInformation.insertedId) throw "Error: Insert failed!";
 
   return { insertedUser: true };
 };
 
-export const loginUser = async (emailAddress, password) => {
+export const loginUser = async (email, password) => {
   let user;
 
-  const userCollection = await users();
-
   try {
-    user = await userCollection.findOne({ email: emailAddress });
+    user = await usersCollection.findOne({ email: email });
   } catch (error) {
     throw error;
   }
+  //   console.log(user);
   if (!user) throw "Error: User not found";
 
   if (!bcrypt.compareSync(password, user.password)) {
     // Passwords do not match
     user = null;
+    throw "Error: Incorrect password";
   }
   return user;
 };

@@ -5,12 +5,10 @@ import homeRoute from "./homeRoute.js";
 import authenticationRoutes from "./authenticationRoutes.js";
 
 const constructorMethod = (app) => {
+  app.use("/authenticate", authenticationRoutes);
   app.use("/food", foodRoutes);
   app.use("/analyticsRoutes", analyticsRoutes);
   app.use("/recipeRoutes", recipeRoutes);
-  app.use("/signup", authenticationRoutes);
-  app.use("/login", authenticationRoutes);
-  app.use("/logout", authenticationRoutes);
   app.use("/", homeRoute);
 
   app.use("*", (req, res) => {

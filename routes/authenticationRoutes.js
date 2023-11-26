@@ -8,7 +8,6 @@ import {
   printMiddleware,
   loginMiddleware,
   registrationMiddleware,
-  protectedMiddleware,
   adminMiddleware,
   logoutMiddleware,
 } from "../middleware.js";
@@ -19,12 +18,14 @@ router.route("/").get(printMiddleware, async (req, res) => {
 });
 
 router
-  .route("/register")
+  .route("/signup")
   .get(registrationMiddleware, printMiddleware, async (req, res) => {
+    console.log("hits this");
     //code here for GET
-    res.render("register");
+    res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
+    console.log("hits this other one");
     //code here for POST
     // try {
     //   req.body.password = passwordValidation(req.body.password);
@@ -33,17 +34,35 @@ router
     //     error: error,
     //   });
     // }
+    let response;
 
+    req.body.location = {
+      streetAddress: req.body.streetAddress,
+      city: req.body.city,
+      state: req.body.state,
+      zip: req.body.zip,
+    };
     const user = req.body;
-    let response = await registerUser(
-      user.firstName,
-      user.lastName,
-      user.email,
-      user.password,
-      user.role
-    );
+
+    try {
+      response = await registerUser(
+        user.username,
+        new Date(),
+        user.email,
+        user.password,
+        user.firstName,
+        user.lastName,
+        user.dateOfBirth,
+        user.location
+      );
+    } catch (error) {
+      console.log("error: ", error);
+      res.status(401).render("error", {
+        error: "User could not be added",
+      });
+    }
     if (response) {
-      res.render("login");
+      res.render("inventory", { name: user.firstName });
     }
     return;
   });
@@ -51,19 +70,22 @@ router
 router
   .route("/login")
   .get(printMiddleware, loginMiddleware, async (req, res) => {
+    console.log("login gets hit");
     //code here for GET
-    res.render("login");
+    res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
     //code here for POST
-    const emailAddress = req.body["email"];
+    console.log("login hits the other one");
+    const email = req.body["email"];
     const password = req.body["password"];
 
     let user;
 
     try {
-      user = await loginUser(emailAddress.toLowerCase(), password);
+      user = await loginUser(email.toLowerCase(), password);
     } catch (error) {
+      console.log(error);
       res.status(401).render("error", {
         error: "Invalid Username and/or Password",
       });
@@ -71,14 +93,13 @@ router
     }
     if (user) {
       req.session.user = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        emailAddress: user.emailAddress,
+        email: user.email,
         password: user.password,
-        role: user.role,
-        secret: user.role === "admin" ? "Cats are the best!" : null,
+        name: user.name,
+        // role: user.role,
+        // secret: user.role === "admin" ? "Cats are the best!" : null,
       };
-      res.redirect("/protected");
+      res.redirect("/inventory");
     } else {
       res.status(401);
       res.render("error", {
@@ -87,25 +108,23 @@ router
     }
   });
 
-router
-  .route("/protected")
-  .get(protectedMiddleware, printMiddleware, async (req, res) => {
-    //code here for GET
-    if (!req.session.user) {
-      return res.redirect("/login");
-    }
+router.route("/protected").get(printMiddleware, async (req, res) => {
+  //code here for GET
+  if (!req.session.user) {
+    return res.redirect("/authenticate/login");
+  }
 
-    res.render("protected", {
-      user: req.session.user,
-    });
+  res.render("protected", {
+    user: req.session.user,
   });
+});
 
 router
   .route("/admin")
   .get(adminMiddleware, printMiddleware, async (req, res) => {
     //code here for GET
     if (!req.session.user) {
-      return res.redirect("/login");
+      return res.redirect("/authenticate/login");
     } else if (req.session.user.role != "admin") {
       return res.redirect("/error");
     }
@@ -130,7 +149,7 @@ router
   .get(logoutMiddleware, printMiddleware, async (req, res) => {
     //code here for GET
     req.session.destroy();
-    res.render("logout");
+    res.redirect("../");
   });
 
 export default router;
