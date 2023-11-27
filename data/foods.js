@@ -1,7 +1,7 @@
 // import userData from "./users.js";
 import { ObjectId } from "mongodb";
 import { foodCollection } from "./index.js";
-// import validation from "./validation.js";
+import help from "../validation.js";
 
 const exportedMethods = {
   async addFood(
@@ -19,6 +19,15 @@ const exportedMethods = {
       // Connect to the Atlas cluster
       try {
         //Input check will do it later
+        itemName = help.checkString(itemName,'Item Name');
+        quantity = help.checkNum(quantity,'Quantity');
+        unit=help.checkUnit(unit,'unit');
+        expiryDate=help.checkDate(expiryDate,'Expiry Date');
+        costPerItem=help.checkNum(costPerItem,'Cost per Item');
+        totalCost=help.checkNum(totalCost,'Total Cost');
+        brand=help.checkString(brand,'Brand');
+        category=help.checkString(category,'Category');
+        status=help.checkString(status,'Status');
 
         //  Create a new document
         let newFoodItem = {
@@ -47,8 +56,6 @@ const exportedMethods = {
         return food;
       } catch (err) {
         console.log(err.stack);
-      } finally {
-        await client.close();
       }
     }
     run().catch(console.dir);
@@ -70,28 +77,24 @@ const exportedMethods = {
       return foodList;
     } catch (err) {
       console.log(err.stack);
-    } finally {
-      await client.close();
     }
   },
   async getFoodById(foodId) {
     try {
       if (!ObjectId.isValid(foodId)) throw "invalid object ID";
-
+      foodId=help.checkId(foodId,'Food Id');
       const food = await foodCollection.findOne({ _id: new ObjectId(foodId) });
       if (food === null) throw `No food with that id: ${foodId}`;
       food._id = food._id.toString();
       return food;
     } catch (err) {
       console.log(err.stack);
-    } finally {
-      await client.close();
-    }
+    } 
   },
   async removeFood(foodId) {
     try {
       if (!ObjectId.isValid(foodId)) throw "invalid object ID";
-
+      foodId=help.checkId(foodId,'Food Id');
       const DeleteInfo = await foodCollection.findOneAndDelete({
         _id: new ObjectId(foodId),
       });
@@ -102,9 +105,7 @@ const exportedMethods = {
       return deletedObj;
     } catch (err) {
       console.log(err.stack);
-    } finally {
-      await client.close();
-    }
+    } 
   },
   async updateFood(
     foodId,
@@ -120,6 +121,17 @@ const exportedMethods = {
     status
   ) {
     try {
+      foodId=help.checkId(foodId,'Food Id');
+      userId=help.checkId(userId,'User Id');
+      itemName = help.checkString(itemName,'Item Name');
+      quantity = help.checkNum(quantity,'Quantity');
+      unit=help.checkUnit(unit);
+      expiryDate=help.checkDate(expiryDate,'Expiry Date');
+      costPerItem=help.checkNum(costPerItem,'Cost per Item');
+      totalCost=help.checkNum(totalCost,'Total Cost');
+      brand=help.checkString(brand,'Brand');
+      category=help.checkString(category,'Category');
+      status=help.checkString(status,'Status');
       let FoodItem = {
         _id: new ObjectId(foodId),
         userId: new ObjectId(userId), // this should come from somewhere else
@@ -145,9 +157,7 @@ const exportedMethods = {
       return updateInfo;
     } catch (err) {
       console.log(err.stack);
-    } finally {
-      await client.close();
-    }
+    } 
   },
 };
 export default exportedMethods;
