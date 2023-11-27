@@ -2,7 +2,8 @@ import isLeapYear from 'leap-year';
 import {ObjectId} from 'mongodb';
 const exportedMethods = {
     checkId(id, varName='id') {
-      if (!id) throw `Error: You must provide an ${varName}`;
+      if (!id) 
+        throw `Error: You must provide an ${varName}`;
       if (typeof id !== 'string') throw `Error: ${varName} must be a string`;
       id = id.trim();
       if (id.length === 0)
@@ -12,7 +13,8 @@ const exportedMethods = {
     },
   
     checkString(strVal, varName='string') {
-      if (!strVal) throw `Error: You must supply a ${varName}!`;
+      if (!strVal) 
+        throw `Error: You must supply a ${varName}!`;
       if (typeof strVal !== 'string') throw `Error: ${varName} must be a string!`;
       strVal = strVal.trim();
       if (strVal.length === 0)
@@ -57,7 +59,7 @@ const exportedMethods = {
       const year = dateStr[2]
       
       if(mon.length != 2 || date.length != 2 || year.length != 4){
-        throw `Enter date: ${dateVal} in "MM/DD/YYYY" format.`
+        throw `Enter date: ${dateVal} in MM/DD/YYYY format.`
       }
     
       if(!(mon>= 1 && mon<=12))

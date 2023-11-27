@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import foodData from "../data/foods.js";
+import help from '../validation.js'
 
 // Create a new food item
 router
@@ -49,12 +50,7 @@ router
 router
 .route('/:Id')
 .get(async (req, res) => {
-  //Input check wil do later
-  // try {
-  //   
-  // } catch (e) {
-  //   return res.status(400).json({error: e});
-  // }
+  
   try {
     req.params.Id=help.checkId(req.params.Id,'Food Id');
   } catch (e) {
@@ -103,7 +99,7 @@ router
   }catch(e){
     return res.status(404).json({error: e});
   }
- 
+  
   let {userId,itemName,quantity,unit,expiryDate,costPerItem,totalCost,brand,category,status} = updateData;
   try{
     userId=help.checkId(userId,'User Id');
