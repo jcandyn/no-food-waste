@@ -27,7 +27,7 @@ export const registerUser = async (
   const newInsertInformation = await usersCollection.insertOne(newUser);
   if (!newInsertInformation.insertedId) throw "Error: Insert failed!";
 
-  return { insertedUser: true };
+  return { insertedUser: true, id: newInsertInformation.insertedId };
 };
 
 export const loginUser = async (email, password) => {

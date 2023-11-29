@@ -59,6 +59,7 @@ router
     }
     if (response) {
       req.session.user = {
+        id: response.id,
         email: user.email,
         password: user.password,
         name: user.firstName,
@@ -91,6 +92,7 @@ router
     }
     if (user) {
       req.session.user = {
+        id: user._id,
         email: user.email,
         password: user.password,
         name: user.name,

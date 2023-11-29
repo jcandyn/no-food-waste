@@ -11,6 +11,7 @@ const printMiddleware = (req, res, next) => {
     req.originalUrl === "/authenticate/signup" ||
     req.originalUrl === "/authenticate/login" ||
     req.originalUrl === "/authenticate" ||
+    req.originalUrl === "/food" ||
     req.originalUrl === "/authenticate/logout"
   ) {
     return next();
@@ -21,18 +22,16 @@ const printMiddleware = (req, res, next) => {
 
 const loginMiddleware = (req, res, next) => {
   if (req.session.user) {
-    if (req.session.user) {
-      return res.redirect("/inventory");
-    }
+    return res.redirect("/food");
   } else {
     return next();
   }
 };
 
 const registrationMiddleware = (req, res, next) => {
-  if (req.path === "/singup" && req.method === "GET") {
+  if (req.path === "/signup" && req.method === "GET") {
     if (req.session.user) {
-      return res.redirect("/inventory");
+      return res.redirect("/food");
     }
     return next();
   }

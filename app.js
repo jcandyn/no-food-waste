@@ -8,6 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import session from "express-session";
 import path from "path";
+import cors from "cors";
+
+// Use the 'cors' middleware before routes
+app.use(cors());
 
 const staticDir = express.static(__dirname + "/public");
 const handlebarsInstance = exphbs.create({
