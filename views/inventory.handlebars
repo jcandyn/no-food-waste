@@ -9,11 +9,35 @@
 </head>
 
 <body>
-    <h1>Inventory</h1>
-    <main>
-        <p>Inventory tracking goes here.</p>
-    </main>
+    <div class="container">
+        <h1 class="px-4 mb-3">Inventory</h1>
+        <main>
+            <div id="inventoryList" class="container">
 
+                {{#if foodList.length}}
+                    {{#each foodList}}
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{itemName}}</h5>
+                                <p class="card-text">Expiration date: {{expiryDate}}</p>
+                                <img src="{{imageUrl}}" alt="Food Image" class="food-image w-25">
+                            </div>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <!-- Message card when foodList is empty -->
+                    <div class="card text-center bg-light">
+                        <div class="card-body">
+                            <p class="card-text">No food items, yet. Add some to get started!</p>
+                        </div>
+                    </div>
+                {{/if}}
+
+            </div>
+        </main>
+    </div>
+
+    <script src="/public/js/inventory.js"></script>
 </body>
 
 </html>

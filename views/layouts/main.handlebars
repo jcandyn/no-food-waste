@@ -33,7 +33,7 @@
                     </li>
                     {{#if name}}
                     <li class="nav-item">
-                        <a class="nav-link" href="/inventory">Inventory</a>
+                        <a class="nav-link" href="/food">Inventory</a>
                     </li>
                     {{/if}}
                     {{#if name}}
@@ -68,10 +68,6 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <!-- Display the name of the logged-in user -->
                             <li><span class="dropdown-item">Welcome, {{name}}!</span></li>
-                            {{!-- <li><hr class="dropdown-divider"></li>
-                            <!-- Add a link to the user's profile or other options -->
-                            <li><a class="dropdown-item" href="#">Your Profile</a></li>
-                            <li><hr class="dropdown-divider"></li> --}}
                             <!-- Add a logout option -->
                             <li><a class="dropdown-item" href="/authenticate/logout">Logout</a></li>
                         </ul>

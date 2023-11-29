@@ -23,14 +23,6 @@ router
     res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
-    //code here for POST
-    // try {
-    //   req.body.password = passwordValidation(req.body.password);
-    // } catch (error) {
-    //   res.status(400).render("register", {
-    //     error: error,
-    //   });
-    // }
     let response;
 
     req.body.location = {
@@ -50,7 +42,8 @@ router
         user.firstName,
         user.lastName,
         user.dateOfBirth,
-        user.location
+        user.location,
+        user.phoneNumber
       );
     } catch (error) {
       res.status(401).render("error", {
@@ -59,6 +52,7 @@ router
     }
     if (response) {
       req.session.user = {
+        id: response.id,
         email: user.email,
         password: user.password,
         name: user.firstName,
@@ -91,6 +85,7 @@ router
     }
     if (user) {
       req.session.user = {
+        id: user._id,
         email: user.email,
         password: user.password,
         name: user.name,
