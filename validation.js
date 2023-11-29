@@ -26,6 +26,8 @@ const exportedMethods = {
 
     checkNum(numVal, varName='Number'){
       if(!numVal) throw `Error: You must provide an ${varName} `;
+      
+      numVal=Number(numVal)
       if (typeof numVal !== 'number') throw `Error: ${varName} must be a number`;
       
       if (isNaN(numVal)) {
@@ -53,10 +55,13 @@ const exportedMethods = {
         throw "Invalid  Date "
         
       }
-      const dateStr = dateVal.split('/')
-      const mon = dateStr[0]
-      const date = dateStr[1]
-      const year = dateStr[2]
+      const dateStr = dateVal.split('-')
+      // const mon = dateStr[0]
+      // const date = dateStr[1]
+      // const year = dateStr[2]
+      const year=dateStr[0]
+      const date=dateStr[2]
+      const mon=dateStr[1]
       
       if(mon.length != 2 || date.length != 2 || year.length != 4){
         throw `Enter date: ${dateVal} in MM/DD/YYYY format.`
