@@ -12,6 +12,115 @@
     <div class="container">
         <h1 class="px-4 mb-3">Inventory</h1>
         <main>
+            {{!-- <button id="addButton" type="submit" >Add food items</button> --}}
+            <button class="btn btn-primary addButton active" data-form="addButton">Add Food</button>
+            <button class="btn btn-secondary closeButton" data-form="closeButton">Close </button>
+            <div id="addFood" class="container" >
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Enter the details </h5>
+                <form id="addFood-form" method="post" action="/food">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="itemName">Item Name:
+                                <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk" value={{body.itemName}} >
+                            </label><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="quantity">Quantity:
+                                <input type="number" step="0.01" name="quantity" id="quantity" placeholder="Eg:2" >
+                            </label><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="unit"> Unit:
+                                <select name="unit" id="unit">
+                                    <option value="">Select...</option>
+                                    <option value="tsp">Teaspoon</option>
+                                    <option value="tbsp">Tablespoon</option>
+                                    <option value="c">Cup</option>
+                                    <option value="pt">Pint</option>
+                                    <option value="qt">Quart</option>
+                                    <option value="gal">Gallon</option>
+                                    <option value="oz">Ounce</option>
+                                    <option value="floz">Fluid ounce</option>
+                                    <option value="lb">Pound</option>
+                                </select><br>
+                            </label><br>
+                        </div>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="expiryDate">Expiry Date:
+                                <input type="date" name="expiryDate" id="expiryDate"  placeholder="MM/DD/YYYY">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="costPerItem">CostPerItem:
+                                <input type="number" step="0.01" name="costPerItem" id="costPerItem" placeholder="Eg:20" >
+                            </label><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="totalCost">Total Cost:
+                                <input type="number" step="0.01" name="totalCost" id="totalCost" placeholder="Eg:200" >
+                            </label><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="brand">Brand:
+                                <input type="text" name="brand" id="brand" placeholder="Eg:Costco" >
+                            </label><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="category">Category:
+                                <input type="text" name="category" id="category" placeholder="Eg:Dairy" >
+                            </label><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="status">status:
+                                <select name="status" id="status">
+                                    <option value="">Select...</option>
+                                    <option value="fresh">Fresh</option>
+                                    <option value="decline">Early Decline</option>
+                                </select>
+                            </label><br>
+                        </div>
+                    </div>
+                </div>
+                <button id="formAddButton" type="submit">Add</button>
+                <button type="reset">Clear</button>
+
+                </form>
+                {{#if hasErrors}}
+                    <ul class="error-list">
+                        {{#each error}}
+                        <li>
+                        {{this}}
+                        </li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
+                </div>
+                </div>
+
+            </div>
             <div id="inventoryList" class="container">
 
                 {{#if foodList.length}}
@@ -33,7 +142,7 @@
                     </div>
                 {{/if}}
 
-            </div>
+            </div><br>
         </main>
     </div>
 
