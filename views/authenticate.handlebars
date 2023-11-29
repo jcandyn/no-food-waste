@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Sign Up / Login</title>
@@ -9,17 +10,18 @@
     <script src="../public/js/authenticate.js"></script>
     <script src="../public/js/welcomeAnimation.js"></script>
 </head>
+
 <body>
     <div class="container w-75 mt-4">
         <header>
             <div class="container mb-4">
                 <h1 id="welcome" class="d-inline  mb-4">Welcome,
-                <span class="typing-container">
-                <h1 class="d-inline" id="welcome-message"></h1>
-                <p class="d-inline" id="typing-indicator"></p>
+                    <span class="typing-container">
+                        <h1 class="d-inline" id="welcome-message"></h1>
+                        <p class="d-inline" id="typing-indicator"></p>
+                    </span>
+                </h1>
             </div>
-        </span>
-        </span></h1>
         </header>
         <main>
             <div class="toggle-form mb-4">
@@ -28,72 +30,79 @@
             </div>
             <div class="container">
                 <form id="signup-form" method="POST" action="/authenticate/signup">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">First Name:</label>
-                            <input type="text" id="firstName" name="firstName" class="form-control" required>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label">First Name:</label>
+                                <input type="text" id="firstName" name="firstName" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Last Name:</label>
-                            <input type="text" id="lastName" name="lastName" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Last Name:</label>
+                                <input type="text" id="lastName" name="lastName" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="dateOfBirth" class="form-label">Date of Birth:</label>
-                            <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="dateOfBirth" class="form-label">Date of Birth:</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" required>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username:</label>
-                            <input type="text" id="username" name="username" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username:</label>
+                                <input type="text" id="username" name="username" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email:</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password:</label>
-                            <input type="password" id="password" name="password" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Phone Number:</label>
+                                <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="streetAddress" class="form-label">Street Address:</label>
-                            <input type="text" id="streetAddress" name="streetAddress" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="city" class="form-label">City:</label>
-                            <input type="text" id="city" name="city" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="streetAddress" class="form-label">Street Address:</label>
+                                <input type="text" id="streetAddress" name="streetAddress" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="city" class="form-label">City:</label>
+                                <input type="text" id="city" name="city" class="form-control" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="state" class="form-label">State:</label>
-                            <input type="text" id="state" name="state" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="state" class="form-label">State:</label>
+                                <input type="text" id="state" name="state" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="zip" class="form-label">Zip Code:</label>
-                            <input type="text" id="zip" name="zip" class="form-control" required>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="zip" class="form-label">Zip Code:</label>
+                                <input type="text" id="zip" name="zip" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
@@ -114,4 +123,5 @@
         </main>
     </div>
 </body>
+
 </html>

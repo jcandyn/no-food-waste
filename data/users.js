@@ -10,7 +10,8 @@ export const registerUser = async (
   firstName,
   lastName,
   dateOfBirth,
-  location
+  location,
+  phoneNumber
 ) => {
   let hash = bcrypt.hashSync(password, 10);
   let newUser = {
@@ -22,6 +23,7 @@ export const registerUser = async (
     lastName: lastName,
     dateOfBirth: dateOfBirth,
     location: location,
+    phoneNumber: phoneNumber,
   };
 
   const newInsertInformation = await usersCollection.insertOne(newUser);
