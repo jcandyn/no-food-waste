@@ -90,7 +90,7 @@ router
       error.push(e);
     }
     if(error.length>0){
-      return res.status(400).render('inventory',{foodList: foodList,name: req.session.user.name,hasErrors:true,error:error,body:foodInfo})
+      return res.status(400).render('inventory',{foodList: foodList,name: req.session.user.name,hasErrors:true,error:error})
     }
 
 
@@ -106,7 +106,7 @@ router
       .then((data) => {
         imageUrl = data.urls.regular;
       })
-      .catch((error) => console.error("Error fetching image:", error));
+      .catch((error) => console.error("Error fetching image:", error));   
 
     try {
       const foodItem = await foodData.addFood(
@@ -122,7 +122,7 @@ router
         status,
         imageUrl
       );
-
+     
       return res.status(200).redirect('/');
     } catch (e) {
       return res.status(500).render('error',{ error: e });
