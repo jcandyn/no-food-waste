@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 import session from "express-session";
 import path from "path";
 import cors from "cors";
+import { findExpirations } from "./public/js/expiration.js";
 
 // Use the 'cors' middleware before routes
 app.use(cors());
@@ -54,7 +55,6 @@ app.use(
     secret: "This is a secret.. shhh don't tell anyone",
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 900000 },
   })
 );
 
@@ -70,6 +70,14 @@ app.engine("handlebars", handlebarsInstance.engine);
 app.set("view engine", "handlebars");
 
 configRoutes(app);
+
+setInterval(() => {
+  findExpirations();
+}, 24 * 60 * 60 * 1000); // Run every 24 hours
+
+// setInterval(() => {
+//   findExpirations();
+// }, 30 * 1000); // Run every 30 mins
 
 app.listen(3000, () => {
   console.log("We've now got a server!");
