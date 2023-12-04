@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUserInventory } from '../data/inventory.js'; // Adjust import based on your project structure
+import foodsData from '../data/foods.js'; // Import the exported methods from foods.js
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.get('/recipes', async (req, res) => {
     }
 
     try {
-        const inventoryItems = await getUserInventory(req.user.id);
+        const inventoryItems = await foodsData.getFoodByUserId(req.user.id);
         let hasIngredients = inventoryItems && inventoryItems.length > 0;
 
         res.render('recipes', {
