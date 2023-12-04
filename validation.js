@@ -37,7 +37,7 @@ const exportedMethods = {
     },
 
     checkUnit(unitVal, varName='Unit'){
-      unitVal = this.checkString(unitVal);
+      unitVal = this.checkString(unitVal,"Unit");
       unitVal=unitVal.toLowerCase();
       const unitStd=['tsp','tbsp','c','pt','qt','gal','oz','floz','lb']
       if(!(unitStd.includes(unitVal))){
