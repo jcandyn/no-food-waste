@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Zero Food Waste</title>
-    <link rel="stylesheet" href="/public/main.css">
+    <link rel="stylesheet" href="../public/css/inventory.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
@@ -18,13 +18,13 @@
             <div id="addFood" class="container" >
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Enter the details </h5>
+                        <h5 class="card-title">Enter the food details </h5>
                 <form id="addFood-form" method="post" action="/food">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="itemName">Item Name:
-                                <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk" value={{body.itemName}} >
+                                <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk"  >
                             </label><br>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <button id="formAddButton" type="submit">Add</button>
-                <button type="reset">Clear</button>
+                <button type="reset" id="clearBtn">Clear</button>
 
                 </form>
                 {{#if hasErrors}}
@@ -145,7 +145,7 @@
             </div><br>
         </main>
     </div>
-
+    
     <script src="/public/js/inventory.js"></script>
 </body>
 
