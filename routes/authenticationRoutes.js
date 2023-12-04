@@ -1,7 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { registerUser } from "../data/users.js";
-import { loginUser } from "../data/users.js";
+import { registerUser, loginUser, valid } from "../data/users.js";
 // import { passwordValidation } from "../helpers.js";
 
 import {
@@ -34,22 +33,29 @@ router
     const user = req.body;
 
     try {
-      response = await registerUser(
-        user.username,
-        new Date(),
-        user.email,
-        user.password,
-        user.firstName,
-        user.lastName,
-        user.dateOfBirth,
-        user.location,
-        user.phoneNumber
-      );
-    } catch (error) {
+      // Check if the confirm password and password are equal to each other
+      if (req.body.password !== req.body.confirmPassword) {
+        throw "Passwords do not match";
+      }
+    } catch (e) {
+      return res.status(401).render("error", {error: e,});
+    }
+    try {
+      // Check if the inputs are valid
+      valid( req.body.email, req.body.password, req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.location, req.body.phoneNumber );
+    } catch (e) {
+      return res.status(401).render("error", {error: e,});
+    }
+
+    // Try to input the user
+    try {
+      response = await registerUser( req.body.email, req.body.password, req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.location, req.body.phoneNumber );
+    } catch (e) {
       res.status(401).render("error", {
-        error: "User could not be added",
+        error: e,
       });
     }
+
     if (response) {
       req.session.user = {
         id: response.id,
