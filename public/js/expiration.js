@@ -1,4 +1,15 @@
 import { foodCollection } from "../../data/index.js";
+import { getUserInfo } from "../../data/users.js";
+
+import { config } from "dotenv";
+config();
+
+import twilio from "twilio";
+
+// twilio credentials
+const accountSid = process.env.TWILIO_ACCOUNT_Sid;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilioPhoneNumber = "+18886918536";
 
 async function findExpirations() {
   // expiration threshold of 7 days
@@ -65,6 +76,26 @@ async function sendAlert(document, formattedThreshold) {
     `Alert: Expiration approaching for document with _id ${document._id}. Expiration date: ${formattedThreshold}`
   );
   // twilio alert logic goes here
+  sendAlertViaTwilio(document);
+}
+
+async function sendAlertViaTwilio(document) {
+  const client = twilio(accountSid, authToken);
+
+  let userInfo = await getUserInfo(document.userId);
+  let userPhone = userInfo.phoneNumber;
+  console.log("userPhone: ", userPhone);
+
+  client.messages
+    .create({
+      body: `ALERT: Hi ${userInfo.name}. Expiration approaching for your ${document.itemName}`,
+      from: twilioPhoneNumber,
+      to: userPhone,
+    })
+    .then((message) => console.log(`SMS alert sent: ${message.sid}`))
+    .catch((error) =>
+      console.error(`Error sending SMS alert: ${error.message}`)
+    );
 }
 
 export { findExpirations };

@@ -71,13 +71,13 @@ app.set("view engine", "handlebars");
 
 configRoutes(app);
 
-setInterval(() => {
-  findExpirations();
-}, 24 * 60 * 60 * 1000); // Run every 24 hours
-
 // setInterval(() => {
 //   findExpirations();
-// }, 30 * 1000); // Run every 30 mins
+// }, 24 * 60 * 60 * 1000); // Run every 24 hours
+
+setInterval(() => {
+  findExpirations();
+}, 30 * 1000); // Run every 30 mins
 
 app.listen(3000, () => {
   console.log("We've now got a server!");

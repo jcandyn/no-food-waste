@@ -19,6 +19,7 @@
     "express-session": "^1.17.3",
     "leap-year": "^4.0.0",
     "mongodb": "^6.2.0",
-    "mongoose": "^8.0.0"
+    "mongoose": "^8.0.0",
+    "twilio": "^4.19.3"
   }
 }
