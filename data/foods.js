@@ -117,7 +117,7 @@ const exportedMethods = {
 
     let FoodItem = {
       _id: new ObjectId(foodId),
-      userId: new ObjectId(userId), // this should come from somewhere else
+      userId: userId, // this should come from somewhere else
       itemName: itemName,
       quantity: quantity,
       unit: unit,
