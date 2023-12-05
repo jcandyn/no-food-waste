@@ -1,3 +1,170 @@
 #logo-link {
     margin-left: 15px;
 }
+
+.ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    /* Additional styling */
+}
+.ingredient {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    /* Additional styling */
+}
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Font and Color Theme */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+
+/* Color Scheme */
+:root {
+    --primary-color: #4CAF50; /* Modern light green */
+    --secondary-color: #388E3C; /* Darker green */
+    --accent-color: #FFC107; /* Accent color - golden/yellow for contrast */
+    --text-color: #333;
+    --background-color: #f4f4f4;
+}
+
+.container {
+    padding: 20px;
+}
+
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Button Styles */
+.addButton, .closeButton {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.addButton:hover, .closeButton:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Card Styles */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    color: var(--secondary-color);
+}
+
+/* Form Styles */
+input[type="text"], 
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus {
+    background-color: #eee;
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Error Styles */
+.error-list {
+    color: red;
+    margin-top: 20px;
+}
+
+/* Inventory List Styles */
+#inventoryList .card {
+    margin-bottom: 20px;
+}
+
+.food-image {
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+    .row .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+/* Custom Color Scheme */
+:root {
+    --primary-color: #4CAF50; /* Modern light green */
+    --secondary-color: #388E3C; /* Darker green */
+    --accent-color: #FFC107; /* Accent color - golden/yellow */
+    --text-color: #333;
+    --background-color: #f4f4f4;
+}
+
+/* Container */
+.container {
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Button Styles */
+.addButton, .closeButton {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.addButton:hover, .closeButton:hover {
+    background-color: var(--secondary-color);
+}
+
+/* More styles... */
