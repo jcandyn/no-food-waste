@@ -6,7 +6,8 @@ import authenticationRoutes from "./authenticationRoutes.js";
 
 const constructorMethod = (app) => {
   app.use("/authenticate", authenticationRoutes);
-  app.use("/food", foodRoutes);
+  app.use("/food/", foodRoutes);
+  //app.use("/food/view", foodRoutes);
   app.use("/analyticsRoutes", analyticsRoutes);
   app.use("/recipeRoutes", recipeRoutes);
   app.use("/", homeRoute);
