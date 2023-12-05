@@ -17,13 +17,13 @@
             <div id="addFood" class="container" >
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Enter the details </h5>
+                        <h5 class="card-title">Enter the food details </h5>
                 <form id="addFood-form" method="post" action="/food">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="itemName">Item Name:
-                                <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk" value={{body.itemName}} >
+                                <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk"  >
                             </label><br>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <button id="formAddButton" type="submit">Add</button>
-                <button type="reset">Clear</button>
+                <button type="reset" id="clearBtn">Clear</button>
 
                 </form>
                 {{#if hasErrors}}
