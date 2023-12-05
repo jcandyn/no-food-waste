@@ -1,39 +1,39 @@
-$(document).ready(function () {
+$(document).ready(function(){
 
-    const foodDiv = $('#addFood')
-    const addButton = $('.addButton')
-    const closeButton=$('.closeButton')
-    const form=$('#addFood-form')
-    const errorList=$('.error-list')
-    const clear=$('#clearBtn')
-    // const formAddButton=$('#formAddButton')
+    const editBtn =$('#editBtn');
+    const editForm=$('#editFood-form');
+    //const editDiv=$('#editDiv');
+    //const errorDisplay=$('#errorDisplay');
+    const errorClass=$('.error-list')
+    const deleteBtn=$('#deleteBtn')
+    editForm.hide();
     
-    //form.hide();
-    //foodDiv.hide();
-    //closeButton.hide();
-    addButton.hide();
 
-   addButton.click(function () {
-        foodDiv.addClass("active");
-        addButton.hide();
-        foodDiv.show();
-        form.show();
-        //errorList.remove();
-        closeButton.show()
+    editBtn.click(function () {
         
+        errorClass.empty();
+        editForm.show();
+        editBtn.hide();
         
-    });
-    closeButton.click(function () {
-        foodDiv.removeClass("active");
-        addButton.show();
-        foodDiv.hide();
-        form.hide();
-        errorList.remove();
-        $('.error').remove();
-        clear.click()
-        closeButton.hide();
-        
-    });
+    })
+    deleteBtn.click(function(){
+        // will be doing this next
+    })
+
+    const foodDetail= $('#foodDetail').text().trim()
+    let obj={};
+    let array = foodDetail.split('\n')
+    array.forEach((val)=>{
+        let eachVal = val.trim()
+        let eachArr= eachVal.split(':')
+       
+        obj[eachArr[0]]=eachArr[1].trim()
+    })
+    const unitVal = obj['Unit']
+    const statusVal = obj['Status']
+    
+    $('#status').val(statusVal)
+    $('#unit').val(unitVal)
 
     const checkString = (strVal, varName='input') =>{
         if (!strVal) throw `Error: You must supply a ${varName}!`;
@@ -119,7 +119,7 @@ $(document).ready(function () {
         return dateVal;
     }
 
-    form.submit((event)=>{
+    editForm.submit((event)=>{
         event.preventDefault();
         let itemName =$('#itemName').val()
         let quantity =$('#quantity').val()
@@ -185,14 +185,16 @@ $(document).ready(function () {
                 errorDisplay += `<li>${error}</li>`;
             }
             errorDisplay += `</ul>`;
-            form.append(errorDisplay)
+            editForm.append(errorDisplay)
         }
         
         
         if(errorList.length ===0){
-            form[0].submit();
+            editForm[0].submit();
         }
         
     })
 
-})
+
+    
+});

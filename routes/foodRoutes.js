@@ -146,16 +146,18 @@ router.get("/:Id", async (req, res) => {
 });
 
 router
-  .route("/:Id")
+  .route("/view/:Id")
   .get(async (req, res) => {
     try {
       req.params.Id = help.checkId(req.params.Id, "Food Id");
+      
     } catch (e) {
       return res.status(400).render('error',{ error: e });
     }
     try {
       let food = await foodData.getFoodById(req.params.Id);
-      return res.json(food);
+      return res.render('singleview',{food:food,foodId:req.params.Id,hasErrors:false})
+      //return res.json(food);
     } catch (e) {
       return res.status(404).render('error',{ error: e });
     }
@@ -181,6 +183,7 @@ router
   .put(async (req, res) => {
     //code here for PUT
     let updateData = req.body;
+    let food;
     if (!updateData || Object.keys(updateData).length === 0) {
       return res
         .status(400)
@@ -192,7 +195,7 @@ router
       return res.status(400).render('error',{ error: e });
     }
     try {
-      await foodData.getFoodById(req.params.Id);
+      food= await foodData.getFoodById(req.params.Id);
     } catch (e) {
       return res.status(404).render('error',{ error: e });
     }
@@ -211,17 +214,59 @@ router
     } = updateData;
     try {
       userId = help.checkId(req.session.user.id, "User Id");
-      itemName = help.checkString(itemName, "Item Name");
-      quantity = help.checkNum(quantity, "Quantity");
-      unit = help.checkUnit(unit);
-      expiryDate = help.checkDate(expiryDate, "Expiry Date");
-      costPerItem = help.checkNum(costPerItem, "Cost per Item");
-      totalCost = help.checkNum(totalCost, "Total Cost");
-      brand = help.checkString(brand, "Brand");
-      category = help.checkString(category, "Category");
-      status = help.checkString(status, "Status");
+      
     } catch (e) {
       return res.status(400).render('error',{ error: e });
+    }
+    let error=[]
+    try {
+      itemName = help.checkString(itemName, "Item Name");
+    } catch (e) {
+      error.push(e);
+    }
+    try{
+      quantity = help.checkNum(quantity, "Quantity");
+    }catch (e) {
+        error.push(e);
+    }
+    try{
+      unit = help.checkUnit(unit);
+    }catch (e) {
+        error.push(e);
+    }
+    try{
+      expiryDate = help.checkDate(expiryDate, "Expiry Date");
+    }catch (e) {
+      error.push(e);
+    }
+    try{
+      costPerItem = help.checkNum(costPerItem, "Cost per Item");
+    }catch (e) {
+      error.push(e);
+    }
+    try{
+      totalCost = help.checkNum(totalCost, "Total Cost");
+    }catch (e) {
+      error.push(e);
+    }
+
+    try{
+      brand = help.checkString(brand, "Brand");
+    }catch (e) {
+      error.push(e);
+    }
+    try{
+      category = help.checkString(category, "Category");
+    }catch (e) {
+      error.push(e);
+    }
+    try{
+      status = help.checkString(status, "Status");
+    }catch (e) {
+      error.push(e);
+    }
+    if(error.length>0){
+      return res.status(400).render('singleview',{food:food,foodId:req.params.Id,hasErrors:true,error:error})
     }
     try {
       const updateFood = await foodData.updateFood(
@@ -237,7 +282,7 @@ router
         category,
         status
       );
-      return res.json(updateFood);
+      return res.render('singleview',{food:updateFood,foodId:req.params.Id});
     } catch (e) {
       return res.status(500).render('error',{ error: e });
     }
