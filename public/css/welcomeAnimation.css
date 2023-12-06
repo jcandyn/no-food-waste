@@ -50,3 +50,11 @@
     font-size: 2rem; /* Adjust the font size to match the text */
     margin-left: 5px; /* Add some spacing between text and indicator */
 }
+
+#error {
+    border: 1px solid red; 
+    border-radius: 5px; 
+    padding: 10px; 
+    color: red;
+    background-color: #FFDDDD;
+}
