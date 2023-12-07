@@ -8,7 +8,7 @@ const constructorMethod = (app) => {
   app.use("/authenticate", authenticationRoutes);
   app.use("/recipes", recipeRoutes);
   app.use("/food", foodRoutes);
-  //app.use("/food/view", foodRoutes);
+  app.use("/food/view", foodRoutes);
   app.use("/analyticsRoutes", analyticsRoutes);
   app.use("/", homeRoute);
 

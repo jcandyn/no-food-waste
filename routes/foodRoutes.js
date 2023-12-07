@@ -183,7 +183,8 @@ router
     }
     try {
       const deleteFood = await foodData.removeFood(req.params.Id);
-      return res.json(deleteFood);
+      return res.status(200).redirect('/')
+      //return res.json(deleteFood);
     } catch (e) {
       return res.status(500).render("error", { error: e });
     }
