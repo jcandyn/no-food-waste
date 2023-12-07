@@ -8,10 +8,10 @@ $(document).ready(function () {
     const clear=$('#clearBtn')
     // const formAddButton=$('#formAddButton')
     
-    //form.hide();
-    //foodDiv.hide();
-    //closeButton.hide();
-    addButton.hide();
+    form.hide();
+    foodDiv.hide();
+    closeButton.hide();
+    //addButton.hide();
 
    addButton.click(function () {
         foodDiv.addClass("active");

@@ -5,7 +5,8 @@ $(document).ready(function(){
     //const editDiv=$('#editDiv');
     //const errorDisplay=$('#errorDisplay');
     const errorClass=$('.error-list')
-    const deleteBtn=$('#deleteBtn')
+    //const deleteBtn=$('#deleteBtn')
+    const closeButton=$('#closeBtn')
     editForm.hide();
     
 
@@ -15,9 +16,11 @@ $(document).ready(function(){
         editForm.show();
         editBtn.hide();
         
-    })
-    deleteBtn.click(function(){
-        // will be doing this next
+    });
+
+    closeButton.click(function(){
+      editForm.hide();
+      editBtn.show();
     })
 
     const foodDetail= $('#foodDetail').text().trim()
