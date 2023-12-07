@@ -1,49 +1,53 @@
 import { foodCollection } from "../../data/index.js";
 import { getUserInfo } from "../../data/users.js";
+import wss from "../../websocket.js";
+import WebSocket from "ws";
 
 import { config } from "dotenv";
 config();
 
-async function findExpirations() {
-  // expiration threshold of 7 days
-  const expirationThreshold = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+async function findExpirations(user) {
+  try {
+    console.log("expirations");
+    // Calculate the date 7 days from today
+    const sevenDaysFromNow = new Date();
+    sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
 
-  const formattedThreshold = expirationThreshold.toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  });
+    // Format the date as "YYYY-MM-DD"
+    const formattedThreshold = `${sevenDaysFromNow.getFullYear()}-${(
+      sevenDaysFromNow.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}-${sevenDaysFromNow
+      .getDate()
+      .toString()
+      .padStart(2, "0")}`;
 
-  const date = new Date().toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  });
+    // Find documents with expiryDate within the next 7 days
+    const query = {
+      expiryDate: {
+        $lte: formattedThreshold,
+      },
+      userId: user.id,
+    };
 
-  // Find documents with approaching expiration
-  const query = {
-    expiryDate: {
-      $gte: date,
-      $lte: formattedThreshold,
-    },
-  };
+    const cursor = foodCollection.find(query);
 
-  const cursor = foodCollection.find(query);
+    // Retrieve user info once outside the forEach loop
+    const userInfo = await getUserInfo(user.id);
 
-  // Iterate over the cursor and send alerts
-  cursor.forEach(
-    (doc) => {
-      console.log(doc);
-      const formattedThreshold = formatDateString(doc.expiryDate);
-      if (formattedThreshold) {
-        sendAlert(doc, formattedThreshold);
-      }
-    },
-    (err) => {
-      console.log("Error: ", err);
-      client.close();
+    for await (const doc of cursor) {
+      const formattedExpiryDate = formatDateString(doc.expiryDate);
+      console.log(
+        `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
+      );
+      await sendAlert(doc, userInfo);
+      // Introduce a delay
+      await delay(8000); // Delay for 8 seconds
     }
-  );
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 async function formatDateString(dateString) {
@@ -53,10 +57,10 @@ async function formatDateString(dateString) {
       throw new Error("Invalid date string");
     }
 
-    // Format the date as "mm/dd/yyyy"
-    const formattedDate = `${
-      date.getMonth() + 1
-    }/${date.getDate()}/${date.getFullYear()}`;
+    // Format the date as "YYYY-MM-DD"
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
     return formattedDate;
   } catch (error) {
     console.error(`Error parsing date string: ${dateString}. ${error.message}`);
@@ -64,29 +68,29 @@ async function formatDateString(dateString) {
   }
 }
 
-async function sendAlert(document, formattedThreshold) {
+async function sendAlert(document, userInfo) {
   console.log(
-    `Alert: Expiration approaching for document with _id ${document._id}. Expiration date: ${formattedThreshold}`
+    `Alert: Expiration approaching for document with _id ${document._id}. Expiration date: ${document.expiryDate}`
   );
-  // twilio alert logic goes here
-  sendAlertViaTwilio(document);
+
+  await sendAlertViaSocket(document, userInfo);
 }
 
-async function sendAlertViaTwilio(document) {
-  //   const client = twilio(accountSid, authToken);
-  //   let userInfo = await getUserInfo(document.userId);
-  //   let userPhone = userInfo.phoneNumber;
-  //   console.log("userPhone: ", userPhone);
-  //   client.messages
-  //     .create({
-  //       body: `ALERT: Hi ${userInfo.name}. Expiration approaching for your ${document.itemName}`,
-  //       from: twilioPhoneNumber,
-  //       to: userPhone,
-  //     })
-  //     .then((message) => console.log(`SMS alert sent: ${message.sid}`))
-  //     .catch((error) =>
-  //       console.error(`Error sending SMS alert: ${error.message}`)
-  //     );
+async function sendAlertViaSocket(document, userInfo) {
+  wss.clients.forEach((ws) => {
+    if (ws.readyState === WebSocket.OPEN) {
+      const notification = JSON.stringify({
+        type: "notification",
+        message: `ALERT: Expiration approaching for your ${document.itemName}`,
+      });
+      ws.send(notification);
+    }
+  });
+}
+
+// Function to introduce a delay
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export { findExpirations };
