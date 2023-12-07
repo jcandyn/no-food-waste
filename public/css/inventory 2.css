@@ -1,9 +1,0 @@
-body {
-    background-color: #ffcf93 ;
-}
-
-.card {
-    background-color: #b3f9db ;
-    flex: 0 0 calc(25% - 20px); /* Adjust the width as needed, and consider margins */
-    margin: 10px; /* Add some margin for spacing */
-}
