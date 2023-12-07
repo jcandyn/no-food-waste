@@ -1,80 +1,83 @@
-/* Recipe Page Specific Styles */
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f4f4f4;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    max-width: 800px;
-    margin: auto;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
 }
 
 h1 {
-    color: #4CAF50; /* Light green color for headers */
+    color: #2a9d8f; 
     text-align: center;
-    margin-bottom: 30px;
+    grid-column: 1 / -1; 
+    margin-bottom: 20px;
 }
 
+/* Ingredients List */
 .ingredient-list {
     list-style-type: none;
     padding: 0;
 }
 
 .ingredient-item {
-    background-color: #fff;
+    background-color: #e9f5f2; 
+    border: 1px solid #2a9d8f; 
+    padding: 10px;
     margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.ingredient-link {
-    color: #007bff; /* Bootstrap primary color */
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.ingredient-link:hover {
-    color: #0056b3; /* Darker shade for hover state */
-    text-decoration: underline;
-}
-
-.no-ingredients {
-    background-color: #fff3cd;
     border-radius: 5px;
-    padding: 15px;
-    margin-top: 20px;
-    color: #856404; /* Text color for contrast */
+    cursor: pointer; 
 }
 
-.add-item-link {
-    color: #28a745; /* Green color for action items */
-    font-weight: bold;
+/* Recipe Container */
+#recipes-container {
+    padding-left: 20px;
 }
 
-.add-item-link:hover {
-    text-decoration: underline;
+.recipe {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+    max-width: 450px;
 }
 
-.add-item-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Light green color */
-    color: white;
+.recipe img {
+    width: 100%; 
+    height: auto;
+    border-radius: 5px;
+}
+
+.recipe h3 {
+    margin: 0;
+    font-size: 1em;
     text-align: center;
-    border-radius: 25px; /* Rounded corners */
+}
+
+.recipe a {
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    color: #2a9d8f;
+    font-weight: bold;
+    align-self: center; 
+    margin-top: auto; 
 }
 
-.add-item-button:hover {
-    background-color: #388E3C; /* Darker shade for hover state */
-}
 
-.add-item-container {
-    margin-top: 15px; /* Adds space above the button */
-    text-align: center; /* Center align the button if desired */
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
 }

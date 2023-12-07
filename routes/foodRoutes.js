@@ -2,6 +2,8 @@ import express from "express";
 const router = express.Router();
 import foodData from "../data/foods.js";
 import help from "../validation.js";
+import fetch from 'node-fetch';
+
 
 let userId;
 let foodList;
