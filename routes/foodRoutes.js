@@ -2,15 +2,14 @@ import express from "express";
 const router = express.Router();
 import foodData from "../data/foods.js";
 import help from "../validation.js";
-
-import { foodExpirationsMiddleware } from "../middleware.js";
+import { findExpirations } from "../public/js/expiration.js";
 
 let userId;
 let foodList;
 // Create a new food item
 router
   .route("/")
-  .get(foodExpirationsMiddleware, async (req, res) => {
+  .get(async (req, res) => {
     try {
       const date = new Date();
       userId = help.checkId(req.session.user.id, "User Id");
@@ -19,6 +18,8 @@ router
         foodList: foodList,
         name: req.session.user.name,
       });
+
+      findExpirations(req.session.user);
     } catch (e) {
       return res.status(500).render("error", { error: e });
     }

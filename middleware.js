@@ -1,5 +1,3 @@
-import { findExpirations } from "./public/js/expiration.js";
-
 const printMiddleware = (req, res, next) => {
   let timestamp = new Date();
   let authentication = req.session.user
@@ -20,13 +18,6 @@ const printMiddleware = (req, res, next) => {
   }
 
   return res.redirect("/");
-};
-
-const foodExpirationsMiddleware = (req, res, next) => {
-  if (req.session.user) {
-    findExpirations(req.session.user);
-  }
-  next();
 };
 
 const loginMiddleware = (req, res, next) => {
@@ -65,5 +56,4 @@ export {
   loginMiddleware,
   registrationMiddleware,
   logoutMiddleware,
-  foodExpirationsMiddleware,
 };
