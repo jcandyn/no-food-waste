@@ -4,46 +4,51 @@ import { getUserInfo } from "../../data/users.js";
 import { config } from "dotenv";
 config();
 
-async function findExpirations() {
-  // expiration threshold of 7 days
-  const expirationThreshold = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+async function findExpirations(user) {
+  try {
+    console.log("expirations");
+    // Calculate the date 7 days from today
+    const sevenDaysFromNow = new Date();
+    sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
 
-  const formattedThreshold = expirationThreshold.toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  });
+    // Format the date as "YYYY-MM-DD"
+    const formattedThreshold = `${sevenDaysFromNow.getFullYear()}-${(
+      sevenDaysFromNow.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}-${sevenDaysFromNow
+      .getDate()
+      .toString()
+      .padStart(2, "0")}`;
 
-  const date = new Date().toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  });
+    // Find documents with expiryDate within the next 7 days
+    const query = {
+      expiryDate: {
+        $lte: formattedThreshold,
+      },
+      userId: user.id,
+    };
 
-  // Find documents with approaching expiration
-  const query = {
-    expiryDate: {
-      $gte: date,
-      $lte: formattedThreshold,
-    },
-  };
+    const cursor = foodCollection.find(query);
 
-  const cursor = foodCollection.find(query);
-
-  // Iterate over the cursor and send alerts
-  cursor.forEach(
-    (doc) => {
-      console.log(doc);
-      const formattedThreshold = formatDateString(doc.expiryDate);
-      if (formattedThreshold) {
-        sendAlert(doc, formattedThreshold);
+    // Iterate over the cursor and log or process the matching documents
+    cursor.forEach(
+      (doc) => {
+        const formattedExpiryDate = formatDateString(doc.expiryDate);
+        console.log(
+          `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
+        );
+        // You can perform additional processing or log the documents here
+      },
+      (err) => {
+        if (err) {
+          console.error("Error:", err);
+        }
       }
-    },
-    (err) => {
-      console.log("Error: ", err);
-      client.close();
-    }
-  );
+    );
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 async function formatDateString(dateString) {
@@ -53,10 +58,10 @@ async function formatDateString(dateString) {
       throw new Error("Invalid date string");
     }
 
-    // Format the date as "mm/dd/yyyy"
-    const formattedDate = `${
-      date.getMonth() + 1
-    }/${date.getDate()}/${date.getFullYear()}`;
+    // Format the date as "YYYY-MM-DD"
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
     return formattedDate;
   } catch (error) {
     console.error(`Error parsing date string: ${dateString}. ${error.message}`);
