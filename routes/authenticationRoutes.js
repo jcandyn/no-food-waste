@@ -82,10 +82,7 @@ router
     try {
       user = await loginUser(email.toLowerCase(), password);
     } catch (error) {
-      res.status(401).render("error", {
-        error: "Invalid Username and/or Password",
-      });
-      return;
+      res.status(401).render("authenticate", {error: "Invalid Username and/or Password",});
     }
     if (user) {
       req.session.user = {
@@ -96,16 +93,13 @@ router
       };
       res.redirect("../");
     } else {
-      res.status(401);
-      res.render("error", {
-        error: "Invalid Username and/or Password",
-      });
+      res.status(401).render("authenticate", {error: "Invalid Username and/or Password",});
     }
   });
 
 router.route("/error").get(printMiddleware, async (req, res) => {
   //code here for GET
-  const errorMessage = "An error occurred. Please try again."; // Customize the error message as needed
+  const errorMessage = "An error occurred. Please try again.";
 
   res.status(500).render("error", {
     error: errorMessage,
