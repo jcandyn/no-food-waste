@@ -1,26 +1,70 @@
 import express from 'express';
-import foodsData from '../data/foods.js'; // Import the exported methods from foods.js
+import foodsData from '../data/foods.js';
+import { findRecipesByIngredients } from '../data/recipes.js'; 
+import axios from 'axios';
 
 const router = express.Router();
+const SPOONACULAR_API_KEY = 'd4ba958eb33242358a0aa3588e425c68';
 
-router.get('/recipes', async (req, res) => {
-    if (!req.user) {
+router.get('/', async (req, res) => { 
+    console.log('Accessing /recipes route');
+    
+    if (!req.session || !req.session.user) {
+        // If not authenticated, redirect to login
         return res.redirect('/login');
     }
-
+    console.log(req.session.user.id);
     try {
-        const inventoryItems = await foodsData.getFoodByUserId(req.user.id);
+        const userId = req.session.user.id; 
+        const inventoryItems = await foodsData.getFoodByUserId(userId);
         let hasIngredients = inventoryItems && inventoryItems.length > 0;
+
+        console.log('Inventory Items:', inventoryItems);
+        console.log('Has Ingredients:', hasIngredients);
+        
 
         res.render('recipes', {
             layout: 'main',
-            name: req.user.name,
+            name: req.session.user.name, 
             hasIngredients,
-            inventoryItems  // Pass inventory items to the template
+            inventoryItems
+    
         });
     } catch (error) {
         console.error('Error in /recipes route:', error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+router.get('/fetch-recipes', async (req, res) => {
+    try {
+        const ingredient = req.query.ingredient;
+        const recipes = await findRecipesByIngredients([ingredient]);
+        res.json(recipes);
+    } catch (error) {
+        console.error('Error fetching recipes:', error);
+        res.status(500).json({ message: 'Error fetching recipes' });
+    }
+});
+
+
+router.get('/recipe-info/:id', async (req, res) => {
+    const recipeId = req.params.id;
+    console.log(`Backend: Received request for recipe ID: ${recipeId}`);
+
+    if (!recipeId) {
+        return res.status(400).json({ error: 'No recipe ID provided' });
+    }
+
+    const url = `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=false&apiKey=${SPOONACULAR_API_KEY}`;
+
+    try {
+        const response = await axios.get(url);
+        console.log('Backend: Sending recipe details:', response.data);
+        res.json(response.data);
+    } catch (error) {
+        console.error('Backend: Error fetching recipe details:', error);
+        res.status(500).json({ error: 'Error fetching recipe details' });
     }
 });
 
@@ -29,17 +73,3 @@ router.get('/recipes', async (req, res) => {
 export default router;
 
 
-/*
-// Additional route to handle fetching recipes by ingredient
-router.get('/fetch-recipes', logoutMiddleware, async (req, res) => {
-    try {
-        const ingredient = req.query.ingredient;
-        console.log('Fetching recipes for ingredient:', ingredient);
-        const recipes = await findRecipesByIngredients([ingredient]);
-        res.json(recipes);
-    } catch (error) {
-        console.error('Error fetching recipes:', error);
-        res.status(500).json({ message: 'Error fetching recipes' });
-    }
-});
-*/
