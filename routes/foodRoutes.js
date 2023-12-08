@@ -22,13 +22,15 @@ router
         name: req.session.user.name,
       });
 
-      socketIO.on("connection", (socket) => {
+      socketIO.on("connection", async (socket) => {
         console.log(`⚡: ${socket.id} user just connected`);
         socket.on("disconnect", () => {
           console.log("A user disconnected");
         });
 
-        socket.emit("response", findExpirations(req.session.user));
+        req.session.user.socketId = socket.id;
+
+        socket.emit("response", await findExpirations(req.session.user));
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });

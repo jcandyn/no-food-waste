@@ -37,13 +37,13 @@ async function findExpirations(user) {
     // Iterate over the documents and log or process the matching items
     for (const doc of documents) {
       const formattedExpiryDate = await formatDateString(doc.expiryDate);
-      console.log(
-        `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
-      );
+      // console.log(
+      //   `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
+      // );
 
-      console.log(
-        `Alert: Expiration approaching for document with _id ${doc._id}. Expiration date: ${formattedExpiryDate}`
-      );
+      // console.log(
+      //   `Alert: Expiration approaching for document with _id ${doc._id}. Expiration date: ${formattedExpiryDate}`
+      // );
 
       let userInfo = await getUserInfo(doc.userId);
       result.push(

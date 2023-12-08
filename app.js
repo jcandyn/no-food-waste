@@ -46,18 +46,6 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   next();
 };
 
-socketIO.on("connection", (socket) => {
-  console.log(`⚡: ${socket.id} user just connected`);
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
-
-  // socket.on("message", (data) => {
-  //   //sends the data to everyone except you.
-  //   socket.broadcast.emit("response", data);
-  // });
-});
-
 app.use("/public", staticDir);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -3,6 +3,10 @@ const router = Router();
 import { registerUser } from "../data/users.js";
 import { loginUser } from "../data/users.js";
 // import { passwordValidation } from "../helpers.js";
+import { findExpirations } from "../public/js/expiration.js";
+import { app } from "../app.js";
+import http from "http";
+import { Server } from "socket.io";
 
 import {
   printMiddleware,
@@ -112,6 +116,20 @@ router
   .route("/logout")
   .get(logoutMiddleware, printMiddleware, async (req, res) => {
     //code here for GET
+    const userSocketId = req.session.user.socketId;
+
+    // If the user has a socketId stored in the session
+    if (userSocketId) {
+      // Get the user's socket using the stored socketId
+      const userSocket = socketIO.sockets.sockets.get(userSocketId);
+
+      // Emit a "disconnect" event to close the connection
+      if (userSocket) {
+        userSocket.emit("disconnect");
+      }
+    }
+
+    // Destroy the session
     req.session.destroy();
     res.redirect("../");
   });
