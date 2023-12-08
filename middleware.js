@@ -24,7 +24,7 @@ const printMiddleware = (req, res, next) => {
 
 const foodExpirationsMiddleware = (req, res, next) => {
   if (req.session.user) {
-    findExpirations(req.session.user);
+    // findExpirations(req.session.user);
   }
   next();
 };
