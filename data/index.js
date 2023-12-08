@@ -25,3 +25,4 @@ const getCollection = async (collectionName) => {
 
 export const usersCollection = await getCollection("Users");
 export const foodCollection = await getCollection("Inventory");
+export const shareCollection = await getCollection("Giveaway");

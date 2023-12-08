@@ -6,6 +6,7 @@ $(document).ready(function () {
     const form=$('#addFood-form')
     const errorList=$('.error-list')
     const clear=$('#clearBtn')
+    const shareBtn = $('#shareBtn')
     // const formAddButton=$('#formAddButton')
     
     form.hide();
@@ -193,6 +194,14 @@ $(document).ready(function () {
             form[0].submit();
         }
         
+    })
+    //const userId =$('#userId')
+    
+    shareBtn.click(function(){
+     // window.open(`http://localhost:3000/sharing`)
+      let newWindow = window.open('http://localhost:3000/sharing', '_blank');
+      //console.log(userId.text())
+
     })
 
 })
