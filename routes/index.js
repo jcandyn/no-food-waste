@@ -1,4 +1,4 @@
-import recipeRoutes from './recipeRoutes.js';
+import recipeRoutes from "./recipeRoutes.js";
 import foodRoutes from "./foodRoutes.js";
 import analyticsRoutes from "./analyticsRoutes.js";
 import homeRoute from "./homeRoute.js";

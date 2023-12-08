@@ -1,12 +1,14 @@
 import { foodCollection } from "../../data/index.js";
 import { getUserInfo } from "../../data/users.js";
-
 import { config } from "dotenv";
+
 config();
 
 async function findExpirations(user) {
+  let result = [];
   try {
     console.log("expirations");
+
     // Calculate the date 7 days from today
     const sevenDaysFromNow = new Date();
     sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
@@ -29,25 +31,30 @@ async function findExpirations(user) {
       userId: user.id,
     };
 
-    const cursor = foodCollection.find(query);
+    const cursor = await foodCollection.find(query);
+    const documents = await cursor.toArray();
 
-    // Iterate over the cursor and log or process the matching documents
-    cursor.forEach(
-      (doc) => {
-        const formattedExpiryDate = formatDateString(doc.expiryDate);
-        console.log(
-          `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
-        );
-        // You can perform additional processing or log the documents here
-      },
-      (err) => {
-        if (err) {
-          console.error("Error:", err);
-        }
-      }
-    );
+    // Iterate over the documents and log or process the matching items
+    for (const doc of documents) {
+      const formattedExpiryDate = await formatDateString(doc.expiryDate);
+      console.log(
+        `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
+      );
+
+      console.log(
+        `Alert: Expiration approaching for document with _id ${doc._id}. Expiration date: ${formattedExpiryDate}`
+      );
+
+      let userInfo = await getUserInfo(doc.userId);
+      result.push(
+        `ALERT: Hi ${userInfo.name}. Expiration approaching for your ${doc.itemName}`
+      );
+    }
   } catch (error) {
     console.error("Error:", error);
+  } finally {
+    console.log("result: ", result);
+    return result;
   }
 }
 
@@ -67,31 +74,6 @@ async function formatDateString(dateString) {
     console.error(`Error parsing date string: ${dateString}. ${error.message}`);
     return null;
   }
-}
-
-async function sendAlert(document, formattedThreshold) {
-  console.log(
-    `Alert: Expiration approaching for document with _id ${document._id}. Expiration date: ${formattedThreshold}`
-  );
-  // twilio alert logic goes here
-  sendAlertViaTwilio(document);
-}
-
-async function sendAlertViaTwilio(document) {
-  //   const client = twilio(accountSid, authToken);
-  //   let userInfo = await getUserInfo(document.userId);
-  //   let userPhone = userInfo.phoneNumber;
-  //   console.log("userPhone: ", userPhone);
-  //   client.messages
-  //     .create({
-  //       body: `ALERT: Hi ${userInfo.name}. Expiration approaching for your ${document.itemName}`,
-  //       from: twilioPhoneNumber,
-  //       to: userPhone,
-  //     })
-  //     .then((message) => console.log(`SMS alert sent: ${message.sid}`))
-  //     .catch((error) =>
-  //       console.error(`Error sending SMS alert: ${error.message}`)
-  //     );
 }
 
 export { findExpirations };

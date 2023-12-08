@@ -3,10 +3,13 @@ const router = express.Router();
 import foodData from "../data/foods.js";
 import help from "../validation.js";
 import { findExpirations } from "../public/js/expiration.js";
+import { app } from "../app.js";
+import { socketIO } from "../app.js"; // Import the 'io' instance
 
 let userId;
 let foodList;
 // Create a new food item
+
 router
   .route("/")
   .get(async (req, res) => {
@@ -19,7 +22,14 @@ router
         name: req.session.user.name,
       });
 
-      findExpirations(req.session.user);
+      socketIO.on("connection", (socket) => {
+        console.log(`⚡: ${socket.id} user just connected`);
+        socket.on("disconnect", () => {
+          console.log("A user disconnected");
+        });
+
+        socket.emit("response", findExpirations(req.session.user));
+      });
     } catch (e) {
       return res.status(500).render("error", { error: e });
     }
@@ -28,9 +38,9 @@ router
   .post(async (req, res) => {
     let foodInfo = req.body;
     if (!foodInfo || Object.keys(foodInfo).length === 0) {
-      return res
-        .status(400)
-        .render("error", { error: "There are no fields in the request body" });
+      return res.status(400).render("error", {
+        error: "There are no fields in the request body",
+      });
     }
 
     let {
@@ -194,9 +204,9 @@ router
     let updateData = req.body;
     let food;
     if (!updateData || Object.keys(updateData).length === 0) {
-      return res
-        .status(400)
-        .render("error", { error: "There are no fields in the request body" });
+      return res.status(400).render("error", {
+        error: "There are no fields in the request body",
+      });
     }
     try {
       req.params.Id = help.checkId(req.params.Id, "Food Id");
