@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <title>Zero Food Waste</title>
     <link rel="stylesheet" href="../public/css/inventory.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    {{!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> --}}
 </head>
 
 <body>
     <div class="container">
         <h1 class="px-4 mb-3">{{food.itemName}}</h1>
         <main>
-            <div class="card">
+            <div class="card" id="mainDiv">
                 <div class="card-body">
                     <p class="card-text" id="foodDetail">
                         Quantity: {{food.quantity}}<br>
@@ -26,103 +26,110 @@
                         <img src="{{food.imageUrl}}" alt="Food Image" class="food-image w-25">
                         
                     </p>
-                    <button type="button" id="editBtn">Edit</button>
-                    <button type="button" id="deleteBtn">Delete</button>
+                    <p id="forFoodId" hidden>{{foodId}}</p>
+                    <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
+                    <div>
+                    <form id="delete-form" method="post" action="/food/view/{{food._id}}" >
+                        <input type="hidden" name='_method' value="DELETE" /><br>
+                        <button type="submit" class="btn btn-danger"  id="deleteBtn">Delete</button>
+                    </form>
+                    </div>
                 </div>
             </div><br>
             <div class="card" id="editDiv">
                 <div class="card-body"></div>
-            <form id="editFood-form" method="post" action="/food/view/{{food._id}}" >
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <input type="hidden" name='_method' value="PUT" />
-                            <label for="itemName">Item Name:
-                                <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk" value="{{food.itemName}}" >
-                            </label><br>
+                    <form id="editFood-form" method="post" action="/food/view/{{food._id}}" >
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <input type="hidden" name='_method' value="PUT" />
+                                    <label for="itemName">Item Name:
+                                        <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk" value="{{food.itemName}}" >
+                                    </label><br>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="quantity">Quantity:
+                                        <input type="number" step="0.01" name="quantity" id="quantity" placeholder="Eg:2" value="{{food.quantity}}">
+                                    </label><br>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="unit"> Unit:
+                                        <select name="unit" id="unit" value="{{food.unit}}">
+                                            <option value="">Select...</option>
+                                            <option value="tsp">Teaspoon</option>
+                                            <option value="tbsp">Tablespoon</option>
+                                            <option value="c">Cup</option>
+                                            <option value="pt">Pint</option>
+                                            <option value="qt">Quart</option>
+                                            <option value="gal">Gallon</option>
+                                            <option value="oz">Ounce</option>
+                                            <option value="floz">Fluid ounce</option>
+                                            <option value="lb">Pound</option>
+                                        </select><br>
+                                    </label><br>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="expiryDate">Expiry Date:
+                                        <input type="date" name="expiryDate" id="expiryDate"  placeholder="MM/DD/YYYY" value="{{food.expiryDate}}">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="costPerItem">CostPerItem:
+                                        <input type="number" step="0.01" name="costPerItem" id="costPerItem" placeholder="Eg:20" value="{{food.costPerItem}}" >
+                                    </label><br>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="totalCost">Total Cost:
+                                        <input type="number" step="0.01" name="totalCost" id="totalCost" placeholder="Eg:200" value="{{food.totalCost}}" >
+                                    </label><br>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="quantity">Quantity:
-                                <input type="number" step="0.01" name="quantity" id="quantity" placeholder="Eg:2" value="{{food.quantity}}">
-                            </label><br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="brand">Brand:
+                                        <input type="text" name="brand" id="brand" placeholder="Eg:Costco" value="{{food.brand}}" >
+                                    </label><br>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="category">Category:
+                                        <input type="text" name="category" id="category" placeholder="Eg:Dairy" value="{{food.category}}" >
+                                    </label><br>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="status">status:
+                                        <select name="status" id="status">
+                                            <option value="">Select...</option>
+                                            <option value="Fresh">Fresh</option>
+                                            <option value="Early Decline">Early Decline</option>
+                                        </select>
+                                    </label><br>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="unit"> Unit:
-                                <select name="unit" id="unit" value="{{food.unit}}">
-                                    <option value="">Select...</option>
-                                    <option value="tsp">Teaspoon</option>
-                                    <option value="tbsp">Tablespoon</option>
-                                    <option value="c">Cup</option>
-                                    <option value="pt">Pint</option>
-                                    <option value="qt">Quart</option>
-                                    <option value="gal">Gallon</option>
-                                    <option value="oz">Ounce</option>
-                                    <option value="floz">Fluid ounce</option>
-                                    <option value="lb">Pound</option>
-                                </select><br>
-                            </label><br>
-                        </div>
-                    </div>
-                </div> 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="expiryDate">Expiry Date:
-                                <input type="date" name="expiryDate" id="expiryDate"  placeholder="MM/DD/YYYY" value="{{food.expiryDate}}">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="costPerItem">CostPerItem:
-                                <input type="number" step="0.01" name="costPerItem" id="costPerItem" placeholder="Eg:20" value="{{food.costPerItem}}" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="totalCost">Total Cost:
-                                <input type="number" step="0.01" name="totalCost" id="totalCost" placeholder="Eg:200" value="{{food.totalCost}}" >
-                            </label><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="brand">Brand:
-                                <input type="text" name="brand" id="brand" placeholder="Eg:Costco" value="{{food.brand}}" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="category">Category:
-                                <input type="text" name="category" id="category" placeholder="Eg:Dairy" value="{{food.category}}" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="status">status:
-                                <select name="status" id="status">
-                                    <option value="">Select...</option>
-                                    <option value="Fresh">Fresh</option>
-                                    <option value="Early Decline">Early Decline</option>
-                                </select>
-                            </label><br>
-                        </div>
-                    </div>
-                </div>
-                <button id="changeBtn" type="submit">Change</button>
-                
-                
+                        <button id="changeBtn" class="btn btn-primary" type="submit">Change</button>
+                        <button id="closeBtn" class="btn btn-secondary" type="button">Close</button>
+                        
+                        
 
-                </form>
+                    </form>
                 {{#if hasErrors}}
                     <ul class="error-list">
                         {{#each error}}
@@ -140,7 +147,9 @@
             </div> --}}
         </main>
     </div>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="/public/js/singleview.js"></script>
 </body>
 

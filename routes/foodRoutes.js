@@ -5,23 +5,24 @@ import help from "../validation.js";
 import fetch from 'node-fetch';
 
 
+import { foodExpirationsMiddleware } from "../middleware.js";
+
 let userId;
 let foodList;
 // Create a new food item
 router
   .route("/")
-  .get(async (req, res) => {
+  .get(foodExpirationsMiddleware, async (req, res) => {
     try {
-      const date= new Date()
+      const date = new Date();
       userId = help.checkId(req.session.user.id, "User Id");
       foodList = await foodData.getFoodByUserId(userId);
       res.render("inventory", {
         foodList: foodList,
         name: req.session.user.name,
-        
       });
     } catch (e) {
-      return res.status(500).render('error',{ error: e });
+      return res.status(500).render("error", { error: e });
     }
     return;
   })
@@ -30,7 +31,7 @@ router
     if (!foodInfo || Object.keys(foodInfo).length === 0) {
       return res
         .status(400)
-        .render('error',{ error: "There are no fields in the request body" });
+        .render("error", { error: "There are no fields in the request body" });
     }
 
     let {
@@ -44,57 +45,61 @@ router
       category,
       status,
     } = foodInfo;
-    let error=[]
+    let error = [];
     try {
       itemName = help.checkString(itemName, "Item Name");
     } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       quantity = help.checkNum(quantity, "Quantity");
-    }catch (e) {
-        error.push(e);
+    } catch (e) {
+      error.push(e);
     }
-    try{
+    try {
       unit = help.checkUnit(unit);
-    }catch (e) {
-        error.push(e);
+    } catch (e) {
+      error.push(e);
     }
-    try{
+    try {
       expiryDate = help.checkDate(expiryDate, "Expiry Date");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       costPerItem = help.checkNum(costPerItem, "Cost per Item");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       totalCost = help.checkNum(totalCost, "Total Cost");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
 
-    try{
+    try {
       brand = help.checkString(brand, "Brand");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       category = help.checkString(category, "Category");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       status = help.checkString(status, "Status");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    if(error.length>0){
-      return res.status(400).render('inventory',{foodList: foodList,name: req.session.user.name,hasErrors:true,error:error})
+    if (error.length > 0) {
+      return res.status(400).render("inventory", {
+        foodList: foodList,
+        name: req.session.user.name,
+        hasErrors: true,
+        error: error,
+      });
     }
-
 
     const apiKey = "0A0cwRBFJMQvKubVKnQJO2wYQTVnxTNY35cFJxXAnyg";
     const searchWord = itemName; // Replace with the word you want to search for
@@ -108,7 +113,7 @@ router
       .then((data) => {
         imageUrl = data.urls.regular;
       })
-      .catch((error) => console.error("Error fetching image:", error));   
+      .catch((error) => console.error("Error fetching image:", error));
 
     try {
       const foodItem = await foodData.addFood(
@@ -124,10 +129,10 @@ router
         status,
         imageUrl
       );
-     
-      return res.status(200).redirect('/');
+
+      return res.status(200).redirect("/");
     } catch (e) {
-      return res.status(500).render('error',{ error: e });
+      return res.status(500).render("error", { error: e });
     }
   });
 
@@ -137,13 +142,13 @@ router.get("/:Id", async (req, res) => {
     const food = await foodData.getFoodByUserId(userId);
 
     if (!food) {
-      return res.status(404).render('error',{ error: "Food not found" });
+      return res.status(404).render("error", { error: "Food not found" });
     }
 
     return res.json(food);
   } catch (e) {
     console.error("Error getting food by user id:", e);
-    return res.status(500).render('error',{ error: "Internal server error" });
+    return res.status(500).render("error", { error: "Internal server error" });
   }
 });
 
@@ -152,34 +157,38 @@ router
   .get(async (req, res) => {
     try {
       req.params.Id = help.checkId(req.params.Id, "Food Id");
-      
     } catch (e) {
-      return res.status(400).render('error',{ error: e });
+      return res.status(400).render("error", { error: e });
     }
     try {
       let food = await foodData.getFoodById(req.params.Id);
-      return res.render('singleview',{food:food,foodId:req.params.Id,hasErrors:false})
+      return res.render("singleview", {
+        food: food,
+        foodId: req.params.Id,
+        hasErrors: false,
+      });
       //return res.json(food);
     } catch (e) {
-      return res.status(404).render('error',{ error: e });
+      return res.status(404).render("error", { error: e });
     }
   })
   .delete(async (req, res) => {
     try {
       req.params.Id = help.checkId(req.params.Id, "Food Id");
     } catch (e) {
-      return res.status(400).render('error',{ error: e });
+      return res.status(400).render("error", { error: e });
     }
     try {
       await foodData.getFoodById(req.params.Id);
     } catch (e) {
-      return res.status(404).render('error',{ error: e });
+      return res.status(404).render("error", { error: e });
     }
     try {
       const deleteFood = await foodData.removeFood(req.params.Id);
-      return res.json(deleteFood);
+      return res.status(200).redirect('/')
+      //return res.json(deleteFood);
     } catch (e) {
-      return res.status(500).render('error',{ error: e });
+      return res.status(500).render("error", { error: e });
     }
   })
   .put(async (req, res) => {
@@ -189,17 +198,17 @@ router
     if (!updateData || Object.keys(updateData).length === 0) {
       return res
         .status(400)
-        .render('error',{ error: "There are no fields in the request body" });
+        .render("error", { error: "There are no fields in the request body" });
     }
     try {
       req.params.Id = help.checkId(req.params.Id, "Food Id");
     } catch (e) {
-      return res.status(400).render('error',{ error: e });
+      return res.status(400).render("error", { error: e });
     }
     try {
-      food= await foodData.getFoodById(req.params.Id);
+      food = await foodData.getFoodById(req.params.Id);
     } catch (e) {
-      return res.status(404).render('error',{ error: e });
+      return res.status(404).render("error", { error: e });
     }
 
     let {
@@ -216,59 +225,63 @@ router
     } = updateData;
     try {
       userId = help.checkId(req.session.user.id, "User Id");
-      
     } catch (e) {
-      return res.status(400).render('error',{ error: e });
+      return res.status(400).render("error", { error: e });
     }
-    let error=[]
+    let error = [];
     try {
       itemName = help.checkString(itemName, "Item Name");
     } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       quantity = help.checkNum(quantity, "Quantity");
-    }catch (e) {
-        error.push(e);
+    } catch (e) {
+      error.push(e);
     }
-    try{
+    try {
       unit = help.checkUnit(unit);
-    }catch (e) {
-        error.push(e);
+    } catch (e) {
+      error.push(e);
     }
-    try{
+    try {
       expiryDate = help.checkDate(expiryDate, "Expiry Date");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       costPerItem = help.checkNum(costPerItem, "Cost per Item");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       totalCost = help.checkNum(totalCost, "Total Cost");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
 
-    try{
+    try {
       brand = help.checkString(brand, "Brand");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       category = help.checkString(category, "Category");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    try{
+    try {
       status = help.checkString(status, "Status");
-    }catch (e) {
+    } catch (e) {
       error.push(e);
     }
-    if(error.length>0){
-      return res.status(400).render('singleview',{food:food,foodId:req.params.Id,hasErrors:true,error:error})
+    if (error.length > 0) {
+      return res.status(400).render("singleview", {
+        food: food,
+        foodId: req.params.Id,
+        hasErrors: true,
+        error: error,
+      });
     }
     try {
       const updateFood = await foodData.updateFood(
@@ -284,9 +297,12 @@ router
         category,
         status
       );
-      return res.render('singleview',{food:updateFood,foodId:req.params.Id});
+      return res.render("singleview", {
+        food: updateFood,
+        foodId: req.params.Id,
+      });
     } catch (e) {
-      return res.status(500).render('error',{ error: e });
+      return res.status(500).render("error", { error: e });
     }
   });
 
@@ -298,13 +314,13 @@ router.get("/:userId", async (req, res) => {
     const food = await foodData.getFoodByUserId(userId);
 
     if (!food) {
-      return res.status(404).render('error',{ error: "Food not found" });
+      return res.status(404).render("error", { error: "Food not found" });
     }
 
     return res.json(food);
   } catch (e) {
     console.error("Error getting food by user id:", e);
-    return res.status(500).render('error',{ error: "Internal server error" });
+    return res.status(500).render("error", { error: "Internal server error" });
   }
 });
 

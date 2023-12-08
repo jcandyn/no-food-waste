@@ -9,8 +9,6 @@ const __dirname = dirname(__filename);
 import session from "express-session";
 import path from "path";
 import cors from "cors";
-import { findExpirations } from "./public/js/expiration.js";
-import WebSocket, { WebSocketServer } from "ws";
 
 // Use the 'cors' middleware before routes
 app.use(cors());
@@ -72,54 +70,7 @@ app.set("view engine", "handlebars");
 
 configRoutes(app);
 
-// setInterval(() => {
-//   findExpirations();
-// }, 24 * 60 * 60 * 1000); // Run every 24 hours
-
-setInterval(() => {
-  findExpirations();
-}, 30 * 1000); // Run every 30 seconds
-
 app.listen(3000, () => {
   console.log("We've now got a server!");
   console.log("Your routes will be running on http://localhost:3000");
-});
-const wss = new WebSocketServer({
-  port: 8080,
-  perMessageDeflate: {
-    zlibDeflateOptions: {
-      // See zlib defaults.
-      chunkSize: 1024,
-      memLevel: 7,
-      level: 3,
-    },
-    zlibInflateOptions: {
-      chunkSize: 10 * 1024,
-    },
-    // Other options settable:
-    clientNoContextTakeover: true, // Defaults to negotiated value.
-    serverNoContextTakeover: true, // Defaults to negotiated value.
-    serverMaxWindowBits: 10, // Defaults to negotiated value.
-    // Below options specified as default values.
-    concurrencyLimit: 10, // Limits zlib concurrency for perf.
-    threshold: 1024, // Size (in bytes) below which messages
-    // should not be compressed if context takeover is disabled.
-  },
-});
-
-wss.on("connection", (ws) => {
-  console.log("Client connected");
-
-  ws.on("message", (message) => {
-    console.log(`Received: ${message}`);
-  });
-
-  // Simulate sending a notification after 5 seconds
-  setTimeout(() => {
-    const notification = JSON.stringify({
-      type: "notification",
-      message: "New notification: Your food is about to expire!",
-    });
-    ws.send(notification);
-  }, 5000);
 });
