@@ -26,19 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     });
-
-    
-    async function fetchRecipeDetails(recipeId) {
-        console.log(`Fetching details for recipe ID: ${recipeId}`);
-        try {
-            const response = await fetch(`/recipes/recipe-info/${recipeId}`);
-            const recipeDetails = await response.json();
-            console.log('Received recipe details:', recipeDetails);
-            displayRecipe(recipeDetails);
-        } catch (error) {
-            console.error('Error fetching recipe details:', error);
-        }
-    }
     
     function displayRecipes(recipes) {
         recipesContainer.innerHTML = ''; // Clear previous results
