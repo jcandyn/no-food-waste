@@ -4,6 +4,11 @@ $(document).ready(function () {
   const signupForm = $("#signup-form");
   const loginForm = $("#login-form");
 
+  if ($("#error:contains('Invalid Username and/or Password')").length > 0) {
+    loginForm.show();
+    signupForm.hide();
+  }
+
   signupButton.click(function () {
     signupButton.addClass("active");
     loginButton.removeClass("active");
