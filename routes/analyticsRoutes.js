@@ -33,6 +33,7 @@ router.get("/", async (req, res) => {
       foodItems: JSON.stringify(foodItems),
       units: JSON.stringify(units),
       status: JSON.stringify(category),
+      data: JSON.stringify(itemNameStatistics),
       name: req.session.user.name,
     });
 

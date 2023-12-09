@@ -24,6 +24,19 @@
               const foodItems = JSON.parse('{{{foodItems}}}');
             const units = JSON.parse('{{{units}}}');
             const status = JSON.parse('{{{status}}}');
+            const data = JSON.parse('{{{data}}}');
+
+
+            const allFruits = Array.from(new Set(data.flatMap(obj => Object.keys(obj).filter(key => key !== 'month'))));
+
+// Update each row to include all fruits with 0 value if missing
+data.forEach(row => {
+  allFruits.forEach(fruit => {
+    if (!row.hasOwnProperty(fruit)) {
+      row[fruit] = 0;
+    }
+  });
+});
 
             console.log("foodItems: ", foodItems);
            
@@ -41,15 +54,6 @@
             .attr('height', height + margin.top + margin.bottom + legendHeight)
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
-
-    // data
-
-    const data = [
-      {month: "Jan", apples: 3, bananas: 10, cherries: 4, dates: 10},
-      {month: "Feb", apples: 2, bananas: 2, cherries: 20, dates: 4},
-      {month: "March", apples:  5, bananas:  3, cherries: 4, dates: 32},
-      {month: "Apr", apples:  1, bananas:  1, cherries: 1, dates: 12}
-    ];
     
 
     const fruit = Object.keys(data[0]).filter(d => d != "month");
@@ -101,7 +105,7 @@
         .attr('fill', d => color(d.key));
 
     // transition for bars
-    const duration = 1000;
+    const duration = 250 * data.length;
     const t = d3.transition()
         .duration(duration)
         .ease(d3.easeLinear);
