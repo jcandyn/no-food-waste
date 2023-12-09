@@ -1,18 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <title>Zero Food Waste</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Food Analytics</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
-
 <body>
-    <h1>Analytics</h1>
-    <main>
-        <p>Analytics goes here.</p>
-    </main>
+    <h1>Food Analytics for {{ name }}</h1>
 
+      <div id="chart"></div>
+        <div id="lineChart"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          
+            const data = JSON.parse('{{{data}}}');
+            const weeklyExpirations = JSON.parse('{{{weeklyExpirations}}}');
+
+
+            const allFruits = Array.from(new Set(data.flatMap(obj => Object.keys(obj).filter(key => key !== 'month'))));
+
+// Update each row to include all fruits with 0 value if missing
+data.forEach(row => {
+  allFruits.forEach(fruit => {
+    if (!row.hasOwnProperty(fruit)) {
+      row[fruit] = 0;
+    }
+  });
+});
+
+          
+           
+     const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+        const titleMargin = 20;
+        const labelMargin = 15;
+
+        const width = 1000 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+        const legendHeight = 30;
+
+        const svg = d3.select('#chart')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom + legendHeight)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+    
+
+    const fruit = Object.keys(data[0]).filter(d => d != "month");
+    const months = data.map(d => d.month);
+
+    const stackedData = d3.stack()
+        .keys(fruit)(data);
+
+    const xMax = d3.max(stackedData[stackedData.length - 1], d => d[1]);
+
+    // scales
+
+ if (data.length > 0) {
+    const x = d3.scaleLinear()
+        .domain([0, xMax]).nice()
+        .range([0, width]);
+
+    const y = d3.scaleBand()
+        .domain(months)
+        .range([0, height])
+        .padding(0.25);
+
+    const color = d3.scaleOrdinal()
+        .domain(fruit)
+        .range(d3.schemeTableau10);
+
+    // axes
+
+    const xAxis = d3.axisBottom(x).ticks(5, '~s');
+    const yAxis = d3.axisLeft(y);
+
+    svg.append('g')
+        .attr('transform', `translate(0,${height})`)
+        .call(xAxis)
+        .call(g => g.select('.domain').remove());
+
+
+    svg.append("g")
+        .call(yAxis)
+        .call(g => g.select('.domain').remove());
+
+    // draw bars
+
+    // create one group for each fruit
+    const layers = svg.append('g')
+      .selectAll('g')
+      .data(stackedData)
+      .join('g')
+        .attr('fill', d => color(d.key));
+
+    // transition for bars
+    const duration = 1000;
+    const t = d3.transition()
+        .duration(duration)
+        .ease(d3.easeLinear);
+
+    layers.each(function(_, i) {
+      // this refers to the group for a given fruit
+      d3.select(this)
+        .selectAll('rect')
+        .data(d => d)
+        .join('rect')
+          .attr('x', d => x(d[0]))
+          .attr('y', d => y(d.data.month))
+          .attr('height', y.bandwidth())
+        .transition(t)
+          // i is the index of this fruit.
+          // this will give the bars for each fruit a different delay
+          // so that the fruits will be revealed one at a time.
+          // using .each() instead of a normal data join is needed
+          // so that we have access to what fruit each bar belongs to.
+          .delay(i * duration)
+          .attr('width', d => x(d[1]) - x(d[0]));
+
+          //add legend
+          const legend = svg
+            .append("g")
+            .attr("class", "legend")
+            .attr("transform", `translate(0,${height + legendHeight})`);
+
+const legendItems = legend
+  .selectAll(".legend-item")
+  .data(fruit)
+  .enter()
+  .append("g")
+  .attr("class", "legend-item")
+   .attr("transform", (d, i) => `translate(${i * 140}, 0)`);
+
+legendItems
+  .append("rect")
+  .attr("width", 20)
+  .attr("height", 20)
+  .attr("fill", (d) => color(d));
+
+legendItems
+  .append("text")
+  .attr("x", 25)
+  .attr("y", 15)
+  .text((d) => d);
+        });
+
+    const barTitle = 'Monthly Food Expirations (units)';
+
+        svg.append('text')
+            .attr('x', width / 2)
+            .attr('y', 0)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '16px')
+            .text(barTitle);
+
+
+
+        /**
+        */
+ } else {
+     const errorMessage = "Not enough data, please keep on using ZeroWaste to generate bar chart.";
+
+               
+    // Remove any existing chart SVG
+    d3.select('#chart').selectAll('svg').remove();
+
+    // Append an error message to the chart div
+    const errorSvg = d3.select('#chart')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom + legendHeight)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    errorSvg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height / 2)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .style('fill', 'red') // Adjust the color of the error message as needed
+        .text(errorMessage);
+ }
+       
+   
+    // Create a separate SVG for the line chart
+        const lineChartMarginTop = 15; // Adjust the margin as needed
+
+            const lineChart = d3
+                .select('#lineChart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top + lineChartMarginTop})`);
+
+
+      if (weeklyExpirations.length <= 1) {
+                const errorMessage = "Not enough data, please keep on using ZeroWaste to generate line chart.";
+
+                
+                d3.select('#lineChart').selectAll('svg').remove();
+
+    // Append an error message to the line chart div
+    const errorSvg = d3.select('#lineChart')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top + lineChartMarginTop})`);
+
+    errorSvg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height / 2)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .style('fill', 'red') // Adjust the color of the error message as needed
+        .text(errorMessage);
+            } else {
+                // Draw the line chart
+                const xLine = d3.scaleBand().domain(weeklyExpirations.map((d) => d.week)).range([0, width]).padding(0.1);
+                const yLine = d3.scaleLinear().domain([0, d3.max(weeklyExpirations, (d) => d.count)]).range([height, 0]);
+
+                const line = d3
+                    .line()
+                    .x((d) => xLine(d.week) + xLine.bandwidth() / 2)
+                    .y((d) => yLine(d.count));
+
+                lineChart
+                    .append('path')
+                    .datum(weeklyExpirations)
+                    .attr('fill', 'none')
+                    .attr('stroke', 'steelblue')
+                    .attr('stroke-width', 2)
+                    .attr('d', line);
+
+                lineChart.append('g').call(d3.axisLeft(yLine));
+
+                lineChart
+                    .append('g')
+                    .attr('transform', `translate(0,${height})`)
+                    .call(d3.axisBottom(xLine))
+                    .selectAll('.tick text')
+                    .attr('dy', '1.5em') 
+                    .style('text-anchor', 'middle')
+                    .text((d) => `Week ${d}`);
+
+                lineChart
+                    .append('text')
+                    .attr('x', width / 2)
+                    .attr('y', -titleMargin)
+                    .attr('text-anchor', 'middle')
+                    .style('font-size', '16px')
+                    .text('Expirations last month: Weekly');
+
+                    lineChart
+                    .append('text')
+                    .attr('transform', 'rotate(-90)')
+                    .attr('y', 0 - margin.left)
+                    .attr('x', 0 - height / 2)
+                    .attr('dy', '1em')
+                    .style('text-anchor', 'middle')
+                    .style('font-size', '14px')
+                    .text('Units Expired');
+                                    
+            }
+    });
+    
+
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
-
 </html>

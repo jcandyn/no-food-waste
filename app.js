@@ -20,6 +20,9 @@ const handlebarsInstance = exphbs.create({
     eq: function (a, b) {
       return a === b;
     },
+    json: function (context) {
+      return JSON.stringify(context);
+    },
     asJSON: (obj, spacing) => {
       if (typeof spacing === "number")
         return new Handlebars.SafeString(JSON.stringify(obj, null, spacing));
