@@ -6,13 +6,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
-    /* Additional styling */
+
 }
 .ingredient {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
-    /* Additional styling */
 }
 
 /* Basic Reset */
@@ -167,4 +166,3 @@ h1 {
     background-color: var(--secondary-color);
 }
 
-/* More styles... */

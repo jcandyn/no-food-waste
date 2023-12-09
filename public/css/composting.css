@@ -1,0 +1,104 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff;
+    color: #333;
+    line-height: 1.6;
+}
+
+.main-header {
+    background-color: #4a7c59;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.composting-tips {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+.composting-tips .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.composting-tips .accordion-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.composting-tips .accordion-button {
+    font-family: 'Lato', sans-serif; /* Apply Lato font to accordion titles */
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #fff;
+    color: #333;
+}
+
+.composting-tips .accordion-button:not(.collapsed) {
+    background-color: #4a7c59;
+    color: white;
+}
+
+.composting-tips .accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(74, 124, 89, 0.5);
+}
+
+.composting-tips .accordion-body h3 {
+    font-size: 1.2rem;
+    color: #4a7c59;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.composting-tips .accordion-body p {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+.composting-tips .accordion-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: #fff;
+    padding: 15px;
+    border-top: 3px solid #77ab59;
+}
+
+.composting-tips h2 {
+    color: #77ab59;
+}
+
+.main-footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 60px;
+}
+
+.align-self-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-body h3 {
+    font-size: 1.5rem;
+    color: #4a7c59;
+    margin-bottom: 10px;
+}
