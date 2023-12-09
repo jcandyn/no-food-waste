@@ -1,18 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <title>Zero Food Waste</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Food Analytics</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
-
 <body>
-    <h1>Analytics</h1>
-    <main>
-        <p>Analytics goes here.</p>
-    </main>
+    <h1>Food Analytics for {{ name }}</h1>
 
+    <!-- Bar chart for expiry status -->
+    <div id="expiryStatusChart"></div>
+
+    <!-- Bar chart for units -->
+    <div id="unitChart"></div>
+
+    <!-- Bar chart for categories -->
+    <div id="categoryChart"></div>
+
+      <div id="chart"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+           
+   const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+
+            const width = 600 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+            const legendHeight = 30;
+
+            const svg = d3.select('#chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom + legendHeight)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    // data
+
+    const data = [
+      {month: "Jan", apples: 3, bananas: 10, cherries: 4, dates: 10},
+      {month: "Feb", apples: 2, bananas: 2, cherries: 20, dates: 4},
+      {month: "March", apples:  5, bananas:  3, cherries: 4, dates: 32},
+      {month: "Apr", apples:  1, bananas:  1, cherries: 1, dates: 12}
+    ];
+
+    const fruit = Object.keys(data[0]).filter(d => d != "month");
+    const months = data.map(d => d.month);
+
+    const stackedData = d3.stack()
+        .keys(fruit)(data);
+
+    const xMax = d3.max(stackedData[stackedData.length - 1], d => d[1]);
+
+    // scales
+
+
+    const x = d3.scaleLinear()
+        .domain([0, xMax]).nice()
+        .range([0, width]);
+
+    const y = d3.scaleBand()
+        .domain(months)
+        .range([0, height])
+        .padding(0.25);
+
+    const color = d3.scaleOrdinal()
+        .domain(fruit)
+        .range(d3.schemeTableau10);
+
+    // axes
+
+    const xAxis = d3.axisBottom(x).ticks(5, '~s');
+    const yAxis = d3.axisLeft(y);
+
+    svg.append('g')
+        .attr('transform', `translate(0,${height})`)
+        .call(xAxis)
+        .call(g => g.select('.domain').remove());
+
+    svg.append("g")
+        .call(yAxis)
+        .call(g => g.select('.domain').remove());
+
+    // draw bars
+
+    // create one group for each fruit
+    const layers = svg.append('g')
+      .selectAll('g')
+      .data(stackedData)
+      .join('g')
+        .attr('fill', d => color(d.key));
+
+    // transition for bars
+    const duration = 1000;
+    const t = d3.transition()
+        .duration(duration)
+        .ease(d3.easeLinear);
+
+    layers.each(function(_, i) {
+      // this refers to the group for a given fruit
+      d3.select(this)
+        .selectAll('rect')
+        .data(d => d)
+        .join('rect')
+          .attr('x', d => x(d[0]))
+          .attr('y', d => y(d.data.month))
+          .attr('height', y.bandwidth())
+        .transition(t)
+          // i is the index of this fruit.
+          // this will give the bars for each fruit a different delay
+          // so that the fruits will be revealed one at a time.
+          // using .each() instead of a normal data join is needed
+          // so that we have access to what fruit each bar belongs to.
+          .delay(i * duration)
+          .attr('width', d => x(d[1]) - x(d[0]));
+
+          //add legend
+           const legend = svg
+  .append("g")
+  .attr("class", "legend")
+  .attr("transform", `translate(0,${height + legendHeight})`);
+
+const legendItems = legend
+  .selectAll(".legend-item")
+  .data(fruit)
+  .enter()
+  .append("g")
+  .attr("class", "legend-item")
+  .attr("transform", (d, i) => `translate(${i * 100}, 0)`); // Adjust the spacing here
+
+legendItems
+  .append("rect")
+  .attr("width", 20)
+  .attr("height", 20)
+  .attr("fill", (d) => color(d));
+
+legendItems
+  .append("text")
+  .attr("x", 25)
+  .attr("y", 15)
+  .text((d) => d);
+        });
+
+
+
+
+
+        /**
+        */
+
+        
+    });
+    
+
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
-
 </html>

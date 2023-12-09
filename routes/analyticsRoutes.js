@@ -1,15 +1,46 @@
 import express from "express";
 const router = express.Router();
-// const FoodItem = require("../models/foodItem");
+import {
+  getExpiryStatusStatistics,
+  getCategoryStatistics,
+  getUnitStatistics,
+} from "../data/analytics.js";
 
 // Example analytics route
-router.get("/analytics", async (req, res) => {
-  const user = req.user;
+router.get("/", async (req, res) => {
+  console.log("hitting analytics");
+  try {
+    const userId = req.session.user.id;
 
-  const foodItems = await FoodItem.find({ user: user._id }).exec();
-  // Implement analytics logic here and create data for visualization
+    // Retrieve data using your data functions
 
-  res.render("analytics", { foodItems, analyticsData }); // Use Handlebars to render analytics data
+    const foodItems = await getExpiryStatusStatistics(userId);
+    const units = await getUnitStatistics(userId);
+    const category = await getCategoryStatistics(userId);
+    // const expiredItemsByWeek = calculateExpiredItemsByWeek(foodItems);
+    // const totalCostForUser = calculateTotalCost(foodItems);
+    // const itemsByCategory = calculateItemsByCategory(foodItems);
+
+    console.log("food items: ", foodItems);
+    console.log("units: ", units);
+    console.log("category: ", category);
+
+    // Pass data to Handlebars
+    res.render("analytics", {
+      foodItems: JSON.stringify(foodItems),
+      units: JSON.stringify(units),
+      status: JSON.stringify(category),
+      name: req.session.user.name,
+    });
+
+    // Implement analytics logic here and create data for visualization
+  } catch (error) {
+    console.error(error);
+    // Handle errors and render an error page
+    res.render("error", {
+      error: "An error occurred while processing analytics data.",
+    });
+  }
 });
 
 export default router;
