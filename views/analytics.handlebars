@@ -46,7 +46,7 @@ data.forEach(row => {
         const titleMargin = 20;
         const labelMargin = 15;
 
-        const width = 600 - margin.left - margin.right;
+        const width = 1000 - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
         const legendHeight = 30;
 
@@ -142,7 +142,7 @@ const legendItems = legend
   .enter()
   .append("g")
   .attr("class", "legend-item")
-  .attr("transform", (d, i) => `translate(${i * 100}, 0)`); // Adjust the spacing here
+   .attr("transform", (d, i) => `translate(${i * 140}, 0)`);
 
 legendItems
   .append("rect")
