@@ -2,7 +2,7 @@
 import { ObjectId } from "mongodb";
 import { foodCollection } from "./index.js";
 import help from "../validation.js";
-import { startOfWeek, addWeeks, startOfMonth } from "date-fns";
+import { startOfMonth } from "date-fns";
 
 export const getItemNameStatistics = async (userId) => {
   try {
@@ -113,7 +113,6 @@ export const getWeeklyExpirations = async (userId) => {
     };
 
     const expiringItems = await foodCollection.find(query).toArray();
-    console.log(" result of first query : ", expiringItems);
 
     // Calculate the total quantity of expiring foods for the last month
     const totalQuantityLastMonth = expiringItems.reduce(
@@ -142,87 +141,9 @@ export const getWeeklyExpirations = async (userId) => {
       }, [])
       .sort((a, b) => a.week - b.week); // Sort by week number
 
-    // Log the total quantity of expiring foods for the last month
-    console.log(
-      "Total quantity of expiring foods in the last month:",
-      totalQuantityLastMonth
-    );
-
-    // Log the items about to expire per week in the last month
-    console.log(
-      "Expiring items per week in the last month:",
-      weeklyExpirations
-    );
     return weeklyExpirations;
   } catch (error) {
     console.error("Error getting weekly expirations:", error);
     throw error;
   }
-};
-
-function getWeek(date) {
-  const startOfMonthDate = startOfMonth(date);
-  const diff = date - startOfMonthDate;
-  const weekNumber = Math.ceil(diff / (7 * 24 * 60 * 60 * 1000)) + 1; // Start from 1
-  return weekNumber > 4 ? 4 : weekNumber; // Cap weeks at 4
-}
-
-export const getExpiryStatusStatistics = async (userId) => {
-  if (!ObjectId.isValid(userId)) throw "Invalid User ID";
-  userId = help.checkId(userId, "User Id");
-
-  const statusStatistics = await foodCollection
-    .aggregate([
-      { $match: { userId } },
-      {
-        $group: {
-          _id: "$status",
-          count: { $sum: 1 },
-        },
-      },
-      { $project: { _id: 0, status: "$_id", count: 1 } },
-    ])
-    .toArray();
-
-  return statusStatistics;
-};
-
-export const getCategoryStatistics = async (userId) => {
-  if (!ObjectId.isValid(userId)) throw "Invalid User ID";
-  userId = help.checkId(userId, "User Id");
-
-  const categoryStatistics = await foodCollection
-    .aggregate([
-      { $match: { userId } },
-      {
-        $group: {
-          _id: "$category",
-          count: { $sum: 1 },
-        },
-      },
-      { $project: { _id: 0, category: "$_id", count: 1 } },
-    ])
-    .toArray();
-
-  return categoryStatistics;
-};
-
-export const getUnitStatistics = async (userId) => {
-  if (!ObjectId.isValid(userId)) throw "Invalid User ID";
-  userId = help.checkId(userId, "User Id");
-
-  const unitStatistics = await foodCollection
-    .aggregate([
-      { $match: { userId } },
-      {
-        $group: {
-          _id: "$unit",
-          count: { $sum: 1 },
-        },
-      },
-      { $project: { _id: 0, unit: "$_id", count: 1 } },
-    ])
-    .toArray();
-
-  return unitStatistics;
 };
