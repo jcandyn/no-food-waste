@@ -21,7 +21,7 @@ export const getItemNameStatistics = async (userId) => {
                 $month: { $dateFromString: { dateString: "$expiryDate" } },
               },
             },
-            count: { $sum: 1 },
+            quantity: { $sum: "$quantity" }, // Sum up the quantities
           },
         },
         {
@@ -30,7 +30,7 @@ export const getItemNameStatistics = async (userId) => {
             items: {
               $push: {
                 itemName: "$_id.itemName",
-                count: "$count",
+                quantity: "$quantity",
               },
             },
           },
@@ -43,7 +43,7 @@ export const getItemNameStatistics = async (userId) => {
     const result = itemNameStatistics.map((entry) => {
       const item = { month: getMonthName(entry.month) };
       entry.items.forEach((itemEntry) => {
-        item[itemEntry.itemName] = itemEntry.count;
+        item[itemEntry.itemName] = itemEntry.quantity;
       });
       return item;
     });
@@ -73,7 +73,6 @@ const getMonthName = (month) => {
   ];
   return months[month - 1] || null;
 };
-
 export const getExpiryStatusStatistics = async (userId) => {
   if (!ObjectId.isValid(userId)) throw "Invalid User ID";
   userId = help.checkId(userId, "User Id");
