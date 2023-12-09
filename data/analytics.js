@@ -114,12 +114,6 @@ export const getWeeklyExpirations = async (userId) => {
 
     const expiringItems = await foodCollection.find(query).toArray();
 
-    // Calculate the total quantity of expiring foods for the last month
-    const totalQuantityLastMonth = expiringItems.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-
     // Aggregate query to get weekly expirations
     const weeklyExpirations = expiringItems
       .reduce((result, item) => {
