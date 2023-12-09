@@ -105,7 +105,7 @@ data.forEach(row => {
         .attr('fill', d => color(d.key));
 
     // transition for bars
-    const duration = 250 * data.length;
+    const duration = 1000;
     const t = d3.transition()
         .duration(duration)
         .ease(d3.easeLinear);
