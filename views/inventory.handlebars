@@ -148,6 +148,20 @@
         </main>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    // check if we get expirationNotifications
+    let expirationNotifications = {{{json expirationNotifications}}};
+      expirationNotifications = JSON.parse(expirationNotifications);
+
+  // Now you can manipulate the array as needed
+  expirationNotifications.forEach(function(notification) {
+    // Your manipulation logic here
+    console.log("client received notification: ", notification);
+  });
+  });
+    </script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
