@@ -2,6 +2,7 @@
 import { ObjectId } from "mongodb";
 import { foodCollection } from "./index.js";
 import help from "../validation.js";
+import { startOfWeek, addWeeks, startOfMonth } from "date-fns";
 
 export const getItemNameStatistics = async (userId) => {
   try {
@@ -122,19 +123,24 @@ export const getWeeklyExpirations = async (userId) => {
 
     // Aggregate query to get weekly expirations
     const weeklyExpirations = expiringItems
-      .map((item) => ({
-        week: new Date(item.expiryDate).getUTCDay(), 
-        count: item.quantity,
-      }))
       .reduce((result, item) => {
-        const existingItem = result.find((r) => r.week === item.week);
+        const expirationDate = new Date(item.expiryDate);
+        const startOfMonthDate = startOfMonth(expirationDate);
+        const weekNumber = Math.ceil(
+          (expirationDate - startOfMonthDate) / (7 * 24 * 60 * 60 * 1000)
+        );
+
+        const existingItem = result.find((r) => r.week === weekNumber);
+
         if (existingItem) {
-          existingItem.count += item.count;
+          existingItem.count += item.quantity;
         } else {
-          result.push({ week: item.week, count: item.count });
+          result.push({ week: weekNumber, count: item.quantity });
         }
+
         return result;
-      }, []);
+      }, [])
+      .sort((a, b) => a.week - b.week); // Sort by week number
 
     // Log the total quantity of expiring foods for the last month
     console.log(
@@ -147,13 +153,20 @@ export const getWeeklyExpirations = async (userId) => {
       "Expiring items per week in the last month:",
       weeklyExpirations
     );
-
     return weeklyExpirations;
   } catch (error) {
     console.error("Error getting weekly expirations:", error);
     throw error;
   }
 };
+
+function getWeek(date) {
+  const startOfMonthDate = startOfMonth(date);
+  const diff = date - startOfMonthDate;
+  const weekNumber = Math.ceil(diff / (7 * 24 * 60 * 60 * 1000)) + 1; // Start from 1
+  return weekNumber > 4 ? 4 : weekNumber; // Cap weeks at 4
+}
+
 export const getExpiryStatusStatistics = async (userId) => {
   if (!ObjectId.isValid(userId)) throw "Invalid User ID";
   userId = help.checkId(userId, "User Id");
