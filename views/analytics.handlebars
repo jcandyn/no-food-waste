@@ -22,18 +22,20 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
            
-   const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+     const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+        const titleMargin = 20;
+        const labelMargin = 15;
 
-            const width = 600 - margin.left - margin.right;
-            const height = 400 - margin.top - margin.bottom;
-            const legendHeight = 30;
+        const width = 600 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+        const legendHeight = 30;
 
-            const svg = d3.select('#chart')
-                .append('svg')
-                .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom + legendHeight)
-                .append('g')
-                .attr('transform', `translate(${margin.left},${margin.top})`);
+        const svg = d3.select('#chart')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom + legendHeight)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // data
 
@@ -118,10 +120,10 @@
           .attr('width', d => x(d[1]) - x(d[0]));
 
           //add legend
-           const legend = svg
-  .append("g")
-  .attr("class", "legend")
-  .attr("transform", `translate(0,${height + legendHeight})`);
+          const legend = svg
+            .append("g")
+            .attr("class", "legend")
+            .attr("transform", `translate(0,${height + legendHeight})`);
 
 const legendItems = legend
   .selectAll(".legend-item")
@@ -144,12 +146,14 @@ legendItems
   .text((d) => d);
         });
 
-        svg.append("text")
-   .attr("x", 80)
-   .attr("y", 0)
-   .attr("text-anchor", "middle")
-   .style("font-size", "16px")
-   .text("Awesome Barchart");
+    const barTitle = 'Monthly Fruit Consumption';
+
+        svg.append('text')
+            .attr('x', width / 2)
+            .attr('y', 0)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '16px')
+            .text(barTitle);
 
 
 
@@ -166,7 +170,7 @@ legendItems
 
    
     // Create a separate SVG for the line chart
-     const lineChartMarginTop = 15; // Adjust the margin as needed
+        const lineChartMarginTop = 15; // Adjust the margin as needed
         const lineChart = d3
             .select('#chart')
             .append('svg')
@@ -210,12 +214,12 @@ legendItems
 
         // title 
          lineChart
-        .append('text')
-        .attr('x', width / 2)
-        .attr('y', -20)
-        .attr('text-anchor', 'middle')
-        .style('font-size', '16px')
-        .text('Expirations this month');
+            .append('text')
+            .attr('x', width / 2)
+            .attr('y', -titleMargin)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '16px')
+            .text('Expirations this month: Weekly');
     });
     
 
