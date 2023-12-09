@@ -151,27 +151,48 @@
     </div>
 
 <script>
-  toastr.options = {
-    closeButton: true,
-    progressBar: true,
-    positionClass: 'toast-top-right',
-  };
-
+ 
   const ws = new WebSocket("ws://localhost:8080/");
 
   document.addEventListener("DOMContentLoaded", function () {
+       toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    positionClass: 'toast-top-right',
+     timeOut: 10000,  
+  };
+
     // Check if we get expirationNotifications
     let expirationNotifications = {{{json expirationNotifications}}};
 
     // Parse the string as a JSON array
     expirationNotifications = JSON.parse(expirationNotifications);
 
-    // Now you can manipulate the array as needed
-    expirationNotifications.forEach(function (notification) {
+ function displayNotificationWithDelay(notification, delay) {
+      setTimeout(function () {
+        // Display the notification using toastr
+        toastr.warning(notification, 'Food Expiration Alert');
+
+        // Check if browser supports the Notification API
+        if ('Notification' in window && Notification.permission === 'granted') {
+          const notificationObject = new Notification('Food Expiration Alert', {
+            body: notification,
+            icon: '../../public/assets/notification.png', // Replace with the path to your notification icon
+          });
+
+          notificationObject.onclick = function () {
+            console.log('Notification clicked.');
+          };
+        }
+      }, delay);
+    }
+
+    expirationNotifications.forEach(function (notification, index) {
       console.log("client received notification: ", notification);
 
       // Display the notification using toastr
-      toastr.warning(notification, 'Food Expiration Alert');
+       const delay = index * 3000; // 3000 milliseconds = 3 seconds
+      displayNotificationWithDelay(notification, delay);
 
       // Check if browser supports the Notification API
       if ('Notification' in window && Notification.permission === 'granted') {
@@ -195,25 +216,7 @@
     }
   });
 
-  ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.type === 'notification') {
-      // Display the notification using toastr
-      toastr.warning(data.message, 'Food Expiration Alert');
 
-      // Check if browser supports the Notification API
-      if ('Notification' in window && Notification.permission === 'granted') {
-        const notification = new Notification('Food Expiration Alert', {
-          body: data.message,
-          icon: '../../public/assets/notification.png', // Replace with the path to your notification icon
-        });
-
-        notification.onclick = function () {
-          console.log('Notification clicked.');
-        };
-      }
-    }
-  };
 </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
