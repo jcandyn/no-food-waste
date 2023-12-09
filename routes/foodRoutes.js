@@ -20,6 +20,7 @@ router
       res.render("inventory", {
         foodList: foodList,
         name: req.session.user.name,
+        userId: req.session.user.id
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });
