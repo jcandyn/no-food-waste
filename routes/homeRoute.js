@@ -1,6 +1,8 @@
 import express from "express";
 const router = express.Router();
 
+
+/*
 router.route("/recipes").get(async (req, res) => {
   //code here for GET will render the inventory handlebars file
   if (req.session.user) {
@@ -8,7 +10,7 @@ router.route("/recipes").get(async (req, res) => {
   } else {
     res.redirect("../");
   }
-});
+});*/
 
 router.route("/").get(async (req, res) => {
   // Only redirect to '/food' if the user is on the home page ('/')
