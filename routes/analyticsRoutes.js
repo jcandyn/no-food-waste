@@ -4,6 +4,7 @@ import {
   getExpiryStatusStatistics,
   getCategoryStatistics,
   getUnitStatistics,
+  getItemNameStatistics,
 } from "../data/analytics.js";
 
 // Example analytics route
@@ -17,6 +18,8 @@ router.get("/", async (req, res) => {
     const foodItems = await getExpiryStatusStatistics(userId);
     const units = await getUnitStatistics(userId);
     const category = await getCategoryStatistics(userId);
+    const itemNameStatistics = await getItemNameStatistics(userId);
+    console.log("Item Name Statistics:", itemNameStatistics);
     // const expiredItemsByWeek = calculateExpiredItemsByWeek(foodItems);
     // const totalCostForUser = calculateTotalCost(foodItems);
     // const itemsByCategory = calculateItemsByCategory(foodItems);
