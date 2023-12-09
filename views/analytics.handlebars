@@ -25,6 +25,7 @@
             const units = JSON.parse('{{{units}}}');
             const status = JSON.parse('{{{status}}}');
             const data = JSON.parse('{{{data}}}');
+            const weeklyExpirations = JSON.parse('{{{weeklyExpirations}}}');
 
 
             const allFruits = Array.from(new Set(data.flatMap(obj => Object.keys(obj).filter(key => key !== 'month'))));
@@ -169,14 +170,7 @@ legendItems
         /**
         */
 
-        const weeklyExpirations = [
-        { week: 1, count: 10 },
-        { week: 2, count: 15 },
-        { week: 3, count: 8 },
-        { week: 4, count: 12 },
-        // Add more data as needed
-    ];
-
+       
    
     // Create a separate SVG for the line chart
         const lineChartMarginTop = 15; // Adjust the margin as needed

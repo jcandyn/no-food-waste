@@ -73,6 +73,87 @@ const getMonthName = (month) => {
   ];
   return months[month - 1] || null;
 };
+
+export const getWeeklyExpirations = async (userId) => {
+  try {
+    // Validate user ID
+    if (!ObjectId.isValid(userId)) throw "Invalid User ID";
+    userId = help.checkId(userId, "User Id");
+
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    // Format the date as "MM/DD/YYYY"
+    const formattedThreshold = `${(oneMonthAgo.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}/${oneMonthAgo
+      .getDate()
+      .toString()
+      .padStart(2, "0")}/${oneMonthAgo.getFullYear()}`;
+
+    console.log("formatted threshold :", formattedThreshold);
+
+    const formattedCurrentDate = `${(new Date().getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}/${new Date()
+      .getDate()
+      .toString()
+      .padStart(2, "0")}/${new Date().getFullYear()}`;
+
+    console.log("formatted current :", formattedCurrentDate);
+
+    // Find documents with expiryDate within the last month
+    const query = {
+      expiryDate: {
+        $gte: formattedThreshold,
+        $lte: formattedCurrentDate,
+      },
+      userId: userId,
+    };
+
+    const expiringItems = await foodCollection.find(query).toArray();
+    console.log(" result of first query : ", expiringItems);
+
+    // Calculate the total quantity of expiring foods for the last month
+    const totalQuantityLastMonth = expiringItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+    // Aggregate query to get weekly expirations
+    const weeklyExpirations = expiringItems
+      .map((item) => ({
+        week: new Date(item.expiryDate).getUTCDay(), 
+        count: item.quantity,
+      }))
+      .reduce((result, item) => {
+        const existingItem = result.find((r) => r.week === item.week);
+        if (existingItem) {
+          existingItem.count += item.count;
+        } else {
+          result.push({ week: item.week, count: item.count });
+        }
+        return result;
+      }, []);
+
+    // Log the total quantity of expiring foods for the last month
+    console.log(
+      "Total quantity of expiring foods in the last month:",
+      totalQuantityLastMonth
+    );
+
+    // Log the items about to expire per week in the last month
+    console.log(
+      "Expiring items per week in the last month:",
+      weeklyExpirations
+    );
+
+    return weeklyExpirations;
+  } catch (error) {
+    console.error("Error getting weekly expirations:", error);
+    throw error;
+  }
+};
 export const getExpiryStatusStatistics = async (userId) => {
   if (!ObjectId.isValid(userId)) throw "Invalid User ID";
   userId = help.checkId(userId, "User Id");

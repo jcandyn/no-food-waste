@@ -5,6 +5,7 @@ import {
   getCategoryStatistics,
   getUnitStatistics,
   getItemNameStatistics,
+  getWeeklyExpirations,
 } from "../data/analytics.js";
 
 // Example analytics route
@@ -20,9 +21,12 @@ router.get("/", async (req, res) => {
     const category = await getCategoryStatistics(userId);
     const itemNameStatistics = await getItemNameStatistics(userId);
     console.log("Item Name Statistics:", itemNameStatistics);
+    const weeklyExpirations = await getWeeklyExpirations(userId);
     // const expiredItemsByWeek = calculateExpiredItemsByWeek(foodItems);
     // const totalCostForUser = calculateTotalCost(foodItems);
     // const itemsByCategory = calculateItemsByCategory(foodItems);
+
+    console.log("weekly expirations: ", weeklyExpirations);
 
     console.log("food items: ", foodItems);
     console.log("units: ", units);
@@ -34,6 +38,7 @@ router.get("/", async (req, res) => {
       units: JSON.stringify(units),
       status: JSON.stringify(category),
       data: JSON.stringify(itemNameStatistics),
+      weeklyExpirations: JSON.stringify(weeklyExpirations),
       name: req.session.user.name,
     });
 
