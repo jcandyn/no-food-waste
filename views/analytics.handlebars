@@ -222,7 +222,7 @@ legendItems
                     .attr('transform', `translate(0,${height})`)
                     .call(d3.axisBottom(xLine))
                     .selectAll('.tick text')
-                    .attr('dy', '1.5em') // Adjust the y-coordinate based on your preference
+                    .attr('dy', '1.5em') 
                     .style('text-anchor', 'middle')
                     .text((d) => `Week ${d}`);
 
@@ -233,6 +233,17 @@ legendItems
                     .attr('text-anchor', 'middle')
                     .style('font-size', '16px')
                     .text('Expirations last month: Weekly');
+
+                    lineChart
+                    .append('text')
+                    .attr('transform', 'rotate(-90)')
+                    .attr('y', 0 - margin.left)
+                    .attr('x', 0 - height / 2)
+                    .attr('dy', '1em')
+                    .style('text-anchor', 'middle')
+                    .style('font-size', '14px')
+                    .text('Units Expired');
+                                    
             }
     });
     
