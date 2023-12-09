@@ -2,8 +2,7 @@ import express from "express";
 const router = express.Router();
 import foodData from "../data/foods.js";
 import help from "../validation.js";
-import fetch from 'node-fetch';
-
+import fetch from "node-fetch";
 
 import { foodExpirationsMiddleware } from "../middleware.js";
 
@@ -20,7 +19,7 @@ router
       res.render("inventory", {
         foodList: foodList,
         name: req.session.user.name,
-        userId: req.session.user.id
+        userId: req.session.user.id,
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });
@@ -167,6 +166,7 @@ router
         food: food,
         foodId: req.params.Id,
         hasErrors: false,
+        name: req.session.user.name,
       });
       //return res.json(food);
     } catch (e) {
@@ -186,7 +186,7 @@ router
     }
     try {
       const deleteFood = await foodData.removeFood(req.params.Id);
-      return res.status(200).redirect('/')
+      return res.status(200).redirect("/");
       //return res.json(deleteFood);
     } catch (e) {
       return res.status(500).render("error", { error: e });
