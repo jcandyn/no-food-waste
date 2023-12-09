@@ -3,7 +3,7 @@ import { shareCollection } from "./index.js";
 import help from "../validation.js";
 
 const exportedMethods = {
-    async addShareFood(userId,inventoryId,itemName,expiryDate,offer,linkedOrganizations){
+    async addShareFood(userId,inventoryId,itemName,expiryDate,linkedOrganization){
         //Input Check
 
         let shareFood={
@@ -11,8 +11,7 @@ const exportedMethods = {
             inventoryId:inventoryId,
             itemName:itemName,
             expiryDate:expiryDate,
-            offer:offer,
-            linkedOrganizations:linkedOrganizations
+            linkedOrganization:linkedOrganization
         };
         const insertInfo = await shareCollection.insertOne(shareFood);
         if (!insertInfo.acknowledged || !insertInfo.insertedId)
@@ -32,7 +31,7 @@ const exportedMethods = {
     
         let foodList = await shareCollection
           .find({ userId: userId })
-          .project({ _id: 1, itemName: 1, expiryDate: 1, offer: 1, linkedOrganizations: 1 })
+          .project({ _id: 1,inventoryId: 1, itemName: 1, expiryDate: 1, linkedOrganization: 1, })
           .toArray();
     
         if (!foodList) throw "Could not get all food for the user";

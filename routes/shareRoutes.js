@@ -11,6 +11,7 @@ router
     try{
       userId = help.checkId(req.session.user.id, "User Id");
       foodList = await shareData.getShareFood(userId);
+      //console.log(foodList)
       res.render("sharing", {
         foodList: foodList,
         name: req.session.user.name,
@@ -31,15 +32,14 @@ router
         .render("error", { error: "There are no fields in the request body" });
     }
     //Input checking 
-
+    let {inventoryId,itemName,expiryDate,linkedOrganization} = foodInfo;
     try {
       const foodItem = await shareData.addShareFood(
         userId,
         inventoryId,
         itemName,
         expiryDate,
-        offer,
-        linkedOrganizations
+        linkedOrganization
         
       );
 
