@@ -57,7 +57,7 @@ data.forEach(row => {
 
     // scales
 
-
+ if (data.length > 0) {
     const x = d3.scaleLinear()
         .domain([0, xMax]).nice()
         .range([0, width]);
@@ -159,7 +159,28 @@ legendItems
 
         /**
         */
+ } else {
+     const errorMessage = "Not enough data, please keep on using the ZeroWaste to generate line chart.";
 
+                // Append an error message to the line chart div
+
+                {{!-- d3.select('#chart')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom + legendHeight)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`); --}}
+
+
+                d3.select('#chart')
+                    .append('text')
+                    .attr('x', width / 2)
+                    .attr('y', height / 2)
+                    .attr('text-anchor', 'middle')
+                    .style('font-size', '16px')
+                    .style('fill', 'red')  // Adjust the color of the error message as needed
+                    .text(errorMessage);
+ }
        
    
     // Create a separate SVG for the line chart
