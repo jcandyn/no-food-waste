@@ -43,6 +43,7 @@
       {month: "March", apples:  5, bananas:  3, cherries: 4, dates: 32},
       {month: "Apr", apples:  1, bananas:  1, cherries: 1, dates: 12}
     ];
+    
 
     const fruit = Object.keys(data[0]).filter(d => d != "month");
     const months = data.map(d => d.month);
@@ -77,6 +78,7 @@
         .attr('transform', `translate(0,${height})`)
         .call(xAxis)
         .call(g => g.select('.domain').remove());
+
 
     svg.append("g")
         .call(yAxis)
@@ -142,14 +144,78 @@ legendItems
   .text((d) => d);
         });
 
-
+        svg.append("text")
+   .attr("x", 80)
+   .attr("y", 0)
+   .attr("text-anchor", "middle")
+   .style("font-size", "16px")
+   .text("Awesome Barchart");
 
 
 
         /**
         */
 
-        
+        const weeklyExpirations = [
+        { week: 1, count: 10 },
+        { week: 2, count: 15 },
+        { week: 3, count: 8 },
+        { week: 4, count: 12 },
+        // Add more data as needed
+    ];
+
+   
+    // Create a separate SVG for the line chart
+     const lineChartMarginTop = 15; // Adjust the margin as needed
+        const lineChart = d3
+            .select('#chart')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top + lineChartMarginTop})`);
+
+    // Scales for the line chart
+    const xLine = d3.scaleBand().domain(weeklyExpirations.map((d) => d.week)).range([0, width]).padding(0.1);
+    const yLine = d3.scaleLinear().domain([0, d3.max(weeklyExpirations, (d) => d.count)]).range([height, 0]);
+
+    // Line function
+    const line = d3
+        .line()
+        .x((d) => xLine(d.week) + xLine.bandwidth() / 2)
+        .y((d) => yLine(d.count));
+
+    // Draw the line chart
+    lineChart
+        .append('path')
+        .datum(weeklyExpirations)
+        .attr('fill', 'none')
+        .attr('stroke', 'steelblue')
+        .attr('stroke-width', 2)
+        .attr('d', line);
+
+    // Draw the y-axis
+    lineChart.append('g').call(d3.axisLeft(yLine));
+
+    // Draw the x-axis with labels
+      lineChart
+        .append('g')
+        .attr('transform', `translate(0,${height})`)
+        .call(d3.axisBottom(xLine))
+        .selectAll('.tick text')
+        .attr('dy', '1.5em') // Adjust the y-coordinate based on your preference
+        .style('text-anchor', 'middle')
+        .text((d) => `Week ${d}`);
+
+
+        // title 
+         lineChart
+        .append('text')
+        .attr('x', width / 2)
+        .attr('y', -20)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .text('Expirations this month');
     });
     
 
