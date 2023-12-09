@@ -1,39 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>About Us</title>
-    <link rel="stylesheet" href="/public/style.css">
-    {{!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> --}}
+    <link rel="stylesheet" href="/public/css/about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
-<body>
+
+<body class="about-page">
+    <header class="main-header">
+        <h1>About Us</h1>
+    </header>
+
     <div class="container">
-        <header>
-            <h1 class="display-4">About Us</h1>
-        </header>
         <main>
             <section>
                 <h2>Our Story</h2>
                 <p>
-                    Welcome to our journey. Discover the story of how we began and what drives us.
+                    We are a team of passionate graduate students from the Master of Science in Computer Science program
+                    at Stevens Institute of Technology. Our journey began in a classroom where we shared a common
+                    concern about food waste and its impact on our environment and communities. Inspired to make a
+                    difference, we conceptualized ZeroWaste – a Food Waste Management Application, born out of our
+                    collective ambition to leverage technology for a sustainable future.
+                </p>
+                <p>
+                    ZeroWaste is more than just an app; it's a testament to our belief that technology can be a force
+                    for good. From late-night coding sessions to brainstorming the user experience, every step in our
+                    journey has been driven by our commitment to reducing food waste. We have poured our knowledge,
+                    skills, and hearts into developing an app that not only addresses a critical environmental issue but
+                    also empowers individuals and organizations to take meaningful action.
                 </p>
             </section>
+
             <section>
                 <h2>Our Mission</h2>
                 <p>
-                    Our mission is to make a positive impact. Learn about the values that guide us.
+                    At the heart of ZeroWaste lies our mission: to reduce food waste through innovative technology
+                    solutions. We strive to create a world where every bit of food is valued and utilized to its fullest
+                    potential. Our app is designed to assist users in efficiently managing food inventories, tracking
+                    expiration dates, and facilitating the sharing and donation of food items.
+                </p>
+                <p>
+                    We are committed to fostering responsible consumption habits and promoting a community-driven
+                    approach to minimize food waste. Our mission extends beyond the app as we aim to educate and inspire
+                    action towards sustainable food practices. By integrating features like composting guidance, recipe
+                    suggestions, and rewards for efficient food use, we hope to cultivate a culture of mindfulness
+                    around food usage and waste.
                 </p>
             </section>
+
             <section>
                 <h2>Meet the Team</h2>
-                <ul class="list-group">
-                    <li class="list-group-item">Elisa McGraw</li>
-                    <li class="list-group-item">Joscandy Nunez</li>
-                    <li class="list-group-item">Navya Pai</li>
-                    <li class="list-group-item">Alexandre Almeida</li>
-                </ul>
+                <!-- Joscandy Nunes -->
+
+                <div class="accordion" id="teamAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Joscandy Nunes
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                            data-bs-parent="#teamAccordion">
+                            <div class="accordion-body">
+                                Student ID: 20009044
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Alexandre Almeida -->
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Alexandre Almeida
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#teamAccordion">
+                            <div class="accordion-body">
+                                Student ID: 20015992
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Elisa McGraw -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Elisa McGraw
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                            data-bs-parent="#teamAccordion">
+                            <div class="accordion-body">
+                                Student ID: 10477483
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navya Pai -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Navya Pai
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                            data-bs-parent="#teamAccordion">
+                            <div class="accordion-body">
+                                Student ID: 20019589
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </section>
         </main>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
