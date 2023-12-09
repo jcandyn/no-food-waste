@@ -185,7 +185,7 @@ legendItems
                 .attr('transform', `translate(${margin.left},${margin.top + lineChartMarginTop})`);
 
 
-      if (weeklyExpirations.length === 1) {
+      if (weeklyExpirations.length <= 1) {
                 const errorMessage = "Not enough data, please keep on using the ZeroWaste to generate line chart.";
 
                 // Append an error message to the line chart div
