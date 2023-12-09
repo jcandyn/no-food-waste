@@ -160,26 +160,27 @@ legendItems
         /**
         */
  } else {
-     const errorMessage = "Not enough data, please keep on using the ZeroWaste to generate line chart.";
+     const errorMessage = "Not enough data, please keep on using ZeroWaste to generate bar chart.";
 
-                // Append an error message to the line chart div
+               
+    // Remove any existing chart SVG
+    d3.select('#chart').selectAll('svg').remove();
 
-                {{!-- d3.select('#chart')
-            .append('svg')
-            .attr('width', width + margin.left + margin.right)
-            .attr('height', height + margin.top + margin.bottom + legendHeight)
-            .append('g')
-            .attr('transform', `translate(${margin.left},${margin.top})`); --}}
+    // Append an error message to the chart div
+    const errorSvg = d3.select('#chart')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom + legendHeight)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
 
-
-                d3.select('#chart')
-                    .append('text')
-                    .attr('x', width / 2)
-                    .attr('y', height / 2)
-                    .attr('text-anchor', 'middle')
-                    .style('font-size', '16px')
-                    .style('fill', 'red')  // Adjust the color of the error message as needed
-                    .text(errorMessage);
+    errorSvg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height / 2)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .style('fill', 'red') // Adjust the color of the error message as needed
+        .text(errorMessage);
  }
        
    
@@ -196,17 +197,26 @@ legendItems
 
 
       if (weeklyExpirations.length <= 1) {
-                const errorMessage = "Not enough data, please keep on using the ZeroWaste to generate line chart.";
+                const errorMessage = "Not enough data, please keep on using ZeroWaste to generate line chart.";
 
-                // Append an error message to the line chart div
-                d3.select('#lineChart')
-                    .append('text')
-                    .attr('x', width / 2)
-                    .attr('y', height / 2)
-                    .attr('text-anchor', 'middle')
-                    .style('font-size', '16px')
-                    .style('fill', 'red')  // Adjust the color of the error message as needed
-                    .text(errorMessage);
+                
+                d3.select('#lineChart').selectAll('svg').remove();
+
+    // Append an error message to the line chart div
+    const errorSvg = d3.select('#lineChart')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top + lineChartMarginTop})`);
+
+    errorSvg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height / 2)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .style('fill', 'red') // Adjust the color of the error message as needed
+        .text(errorMessage);
             } else {
                 // Draw the line chart
                 const xLine = d3.scaleBand().domain(weeklyExpirations.map((d) => d.week)).range([0, width]).padding(0.1);
