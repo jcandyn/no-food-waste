@@ -3,12 +3,17 @@
 <head>
     <meta charset="utf-8">
     <title>Food Analytics</title>
+      <link rel="stylesheet" href="../public/css/inventory.css">
     <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 <body>
-    <h1>Food Analytics for {{ name }}</h1>
+   <header class="main-header mb-3">
+          <h1>Food Analytics for {{ name }}</h1>
+    </header>
+
 
       <div id="chart"></div>
+      <hr class="rounded">
         <div id="lineChart"></div>
 
     <script>

@@ -3,6 +3,7 @@ const router = express.Router();
 import foodData from "../data/foods.js";
 import help from "../validation.js";
 import fetch from "node-fetch";
+import { getUserInfo } from "../data/users.js";
 
 import { findExpirations } from "../data/expirations.js";
 
@@ -22,10 +23,13 @@ router
       console.log("expiration being passed down: ", expirationNotifications);
       userId = help.checkId(req.session.user.id, "User Id");
       foodList = await foodData.getFoodByUserId(userId);
+      // Retrieve user info once outside the forEach loop
+      const userInfo = await getUserInfo(userId);
       res.render("inventory", {
         foodList: foodList,
         name: req.session.user.name,
         userId: req.session.user.id,
+        phoneNumber: userInfo.phoneNumber,
         expirationNotifications: JSON.stringify(expirationNotifications),
       });
     } catch (e) {

@@ -12,8 +12,11 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="px-4 mb-3">Inventory</h1>
+  
+        <header class="main-header">
+        <h1>Inventory</h1>
+    </header>
+      <div class="container">
         <main>
             {{!-- <button id="addButton" type="submit" >Add food items</button> --}}
             <button class="btn btn-primary addButton active" data-form="addButton">Add Food</button>
@@ -124,29 +127,35 @@
                 </div>
 
             </div>
-            <div id="inventoryList" class="container">
-
-                {{#if foodList.length}}
-                    {{#each foodList}}
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="/food/view/{{_id}}">{{itemName}}</a> </h5>
-                                <p class="card-text">Expiration date: {{expiryDate}}</p>
-                                <img src="{{imageUrl}}" alt="Food Image" class="food-image w-25"><br>
-                                {{!-- <br><button type="button" class = "btn btn-success" id="shareBtn" >Share</button> --}}
-                            </div>
+           <div id="inventoryList" class="container">
+    <div class="d-flex flex-wrap">
+        {{#if foodList.length}}
+            {{#each foodList}}
+                <div class="card mx-2 my-2" style="width: 18rem;" id={{_id}} data-quantity="{{quantity}}">
+                    <div class="card-body">
+                             <div class="d-flex justify-content-end mb-2">
+                            <input type="checkbox" class="form-check-input" id="checkbox{{_id}}" name="foodCheckbox">
                         </div>
-                    {{/each}}
-                {{else}}
-                    <!-- Message card when foodList is empty -->
-                    <div class="card text-center bg-light">
-                        <div class="card-body">
-                            <p class="card-text">No food items, yet. Add some to get started!</p>
-                        </div>
+                        <h5 class="card-title"><a href="/food/view/{{_id}}">{{itemName}}</a> </h5>
+                        <p class="card-text">Expiration date: {{expiryDate}}</p>
+                        <img src="{{imageUrl}}" alt="Food Image" class="food-image w-50"><br>
+                        
                     </div>
-                {{/if}}
-
-            </div><br>
+                </div>
+            {{/each}}
+           
+             </div>
+               <button type="button" class="d-block btn btn-success mt-4 w-100" id="shareBtn">Share</button>
+        {{else}}
+            <!-- Message card when foodList is empty -->
+            <div class="card text-center bg-light mx-2 my-2" style="width: 18rem;">
+                <div class="card-body">
+                    <p class="card-text">No food items, yet. Add some to get started!</p>
+                </div>
+            </div>
+        {{/if}}
+    
+</div>
         </main>
     </div>
 
@@ -167,6 +176,15 @@
 
     // Parse the string as a JSON array
     expirationNotifications = JSON.parse(expirationNotifications);
+
+     if ('Notification' in window) {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          console.log('Notification permission granted.');
+        }
+      });
+    }
+
 
  function displayNotificationWithDelay(notification, delay) {
       setTimeout(function () {
@@ -194,26 +212,43 @@
        const delay = index * 3000; // 3000 milliseconds = 3 seconds
       displayNotificationWithDelay(notification, delay);
 
-      // Check if browser supports the Notification API
-      if ('Notification' in window && Notification.permission === 'granted') {
-        const notificationObject = new Notification('Food Expiration Alert', {
-          body: notification,
-          icon: '../../public/assets/notification.png', // Replace with the path to your notification icon
-        });
-
-        notificationObject.onclick = function () {
-          console.log('Notification clicked.');
-        };
-      }
     });
 
-    if ('Notification' in window) {
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          console.log('Notification permission granted.');
-        }
-      });
-    }
+   
+     const shareBtn = document.getElementById("shareBtn");
+
+        shareBtn.addEventListener("click", function () {
+            // Get the selected food items
+            const selectedFoodItems = document.querySelectorAll('input[name="foodCheckbox"]:checked');
+            
+            if (selectedFoodItems.length > 0) {
+                // Generate the email body
+                let emailBody = "Hi, my name is " + {{{ name }}} + " and my phone number is " + {{{ phoneNumber }}} + ".\n I have selected" + 
+                " a number of food items that were close to expiring but are in good condition. If you are interested, I would like for them " +
+                "to be donated and consumed by someone who can benefit from them. Please see them below, and feel free to contact me " +
+                " to coordinate about dropping them off/picking them up. \n" + "\n\nSelected Food Items For Donation:\n";
+                selectedFoodItems.forEach(function (checkbox) {
+                    const foodCard = checkbox.closest(".card");
+                    const itemName = foodCard.querySelector(".card-title a").innerText;
+                    const expiryDate = foodCard.querySelector(".card-text").innerText;
+                      const quantity = foodCard.getAttribute('data-quantity');
+
+                    emailBody += `\nItem Name: ${itemName}\nQuantity: ${quantity}\nExpiration Date: ${expiryDate}\n`;
+                });
+
+                // Encode the email body for the mailto link
+                emailBody = encodeURIComponent(emailBody);
+
+                // Set the mailto link
+                const mailtoLink = `mailto:?subject=Shared Food Items&body=${emailBody}`;
+
+                // Open the email form
+                window.location.href = mailtoLink;
+            } else {
+                // Show a message or alert if no food items are selected
+                alert("Please select food items to share.");
+            }
+        });
   });
 
 

@@ -186,20 +186,20 @@ $(document).ready(function () {
     }
   });
 
-  const list = $("#inventoryList");
-  const childList = list.children();
-  //console.log(childList)
-  childList.each(function (index, child) {
-    let jqChild = $(child);
-    let shareBtn = $(
-      `<button type="button" class = "btn btn-success btn-sm" id="shareBtn" >Share</button>`
-    );
-    jqChild.append(shareBtn);
+  // const list = $("#inventoryList");
+  // const childList = list.children();
+  // //console.log(childList)
+  // childList.each(function (index, child) {
+  //   let jqChild = $(child);
+  //   let shareBtn = $(
+  //     `<button type="button" class = "btn btn-success btn-sm" id="shareBtn" >Share</button>`
+  //   );
+  //   jqChild.append(shareBtn);
 
-    shareBtn.click(function () {
-      // window.open(`http://localhost:3000/sharing`)
-      //let newWindow = window.open('http://localhost:3000/sharing');
-      location.href = "http://localhost:3000/sharing";
-    });
-  });
+  //   shareBtn.click(function () {
+  //     // window.open(`http://localhost:3000/sharing`)
+  //     //let newWindow = window.open('http://localhost:3000/sharing');
+  //     location.href = "http://localhost:3000/sharing";
+  //   });
+  // });
 });
