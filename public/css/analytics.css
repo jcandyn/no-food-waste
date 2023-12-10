@@ -1,7 +1,3 @@
-.error-list, .error{
-    color: red;
-}
-
 .main-header {
     background-color: #4a7c59;
     color: #fff;
@@ -9,6 +5,11 @@
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+hr.rounded {
+    border-top: 8px solid #bbb;
+    border-radius: 5px;
+  }
 
 
 .main-header h1 {

@@ -1,5 +1,4 @@
 import { foodCollection } from "./index.js";
-import { getUserInfo } from "./users.js";
 
 import { config } from "dotenv";
 config();
@@ -31,9 +30,6 @@ async function findExpirations(user) {
     };
 
     const cursor = foodCollection.find(query);
-
-    // Retrieve user info once outside the forEach loop
-    const userInfo = await getUserInfo(user.id);
 
     for await (const doc of cursor) {
       console.log(
