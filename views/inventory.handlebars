@@ -177,31 +177,13 @@
     // Parse the string as a JSON array
     expirationNotifications = JSON.parse(expirationNotifications);
 
-     if ('Notification' in window) {
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          console.log('Notification permission granted.');
-        }
-      });
-    }
-
+    
 
  function displayNotificationWithDelay(notification, delay) {
       setTimeout(function () {
-        // Display the notification using toastr
-         if ('Notification' in window && Notification.permission === 'granted') {
-          const notificationObject = new Notification('Food Expiration Alert', {
-            body: notification,
-            icon: '../../public/assets/notification.png', 
-          });
-
-          notificationObject.onclick = function () {
-            console.log('Notification clicked.');
-          };
-        } else {
-          // Display the notification using Toastr
-          toastr.warning(notification, 'Food Expiration Alert');
-        }
+       
+       
+  toastr.warning(notification, 'Food Expiration Alert');
       }, delay);
     }
 
