@@ -4,22 +4,29 @@ import foodData from "../data/foods.js";
 import help from "../validation.js";
 import fetch from "node-fetch";
 
-import { foodExpirationsMiddleware } from "../middleware.js";
+import { findExpirations } from "../data/expirations.js";
 
 let userId;
 let foodList;
 // Create a new food item
 router
   .route("/")
-  .get(foodExpirationsMiddleware, async (req, res) => {
+  .get(async (req, res) => {
     try {
+      let expirationNotifications;
       const date = new Date();
+      if (req.session.user) {
+        expirationNotifications = await findExpirations(req.session.user);
+      }
+
+      console.log("expiration being passed down: ", expirationNotifications);
       userId = help.checkId(req.session.user.id, "User Id");
       foodList = await foodData.getFoodByUserId(userId);
       res.render("inventory", {
         foodList: foodList,
         name: req.session.user.name,
         userId: req.session.user.id,
+        expirationNotifications: JSON.stringify(expirationNotifications),
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });
