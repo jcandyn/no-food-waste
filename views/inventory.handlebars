@@ -177,31 +177,13 @@
     // Parse the string as a JSON array
     expirationNotifications = JSON.parse(expirationNotifications);
 
-     if ('Notification' in window) {
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          console.log('Notification permission granted.');
-        }
-      });
-    }
-
+    
 
  function displayNotificationWithDelay(notification, delay) {
       setTimeout(function () {
-        // Display the notification using toastr
-        toastr.warning(notification, 'Food Expiration Alert');
-
-        // Check if browser supports the Notification API
-        if ('Notification' in window && Notification.permission === 'granted') {
-          const notificationObject = new Notification('Food Expiration Alert', {
-            body: notification,
-            icon: '../../public/assets/notification.png', // Replace with the path to your notification icon
-          });
-
-          notificationObject.onclick = function () {
-            console.log('Notification clicked.');
-          };
-        }
+       
+       
+  toastr.warning(notification, 'Food Expiration Alert');
       }, delay);
     }
 
@@ -223,7 +205,7 @@
             
             if (selectedFoodItems.length > 0) {
                 // Generate the email body
-                let emailBody = "Hi, my name is " + " and my phone number is " + {{{ phoneNumber }}} + ".\n I have selected" + 
+                let emailBody = "Hi, my name is " + "{{ name }}" + " and my phone number is " + {{{ phoneNumber }}} + ".\n I have selected" + 
                 " a number of food items that were close to expiring but are in good condition. If you are interested, I would like for them " +
                 "to be donated and consumed by someone who can benefit from them. Please see them below, and feel free to contact me " +
                 " to coordinate about dropping them off/picking them up. \n" + "\n\nSelected Food Items For Donation:\n";

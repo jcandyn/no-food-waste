@@ -13,6 +13,9 @@ let foodList;
 router
   .route("/")
   .get(async (req, res) => {
+    if (!req.session.user) {
+      res.redirect("/");
+    }
     try {
       let expirationNotifications;
       const date = new Date();

@@ -8,6 +8,9 @@ import {
 // Example analytics route
 router.get("/", async (req, res) => {
   console.log("hitting analytics");
+  if (!req.session.user) {
+    res.redirect("/");
+  }
   try {
     const userId = req.session.user.id;
 
