@@ -7,24 +7,55 @@ const router = express.Router();
 
 // Get all items in the shopping list
 router.route("/").get(printMiddleware, async (req, res) => {
-  if (!req.session.user) {
-    res.redirect("/");
-  }
-
   try {
-    const userId = help.checkId(req.session.user.id, "User Id");
+    const userId = req.session.user
+      ? help.checkId(req.session.user.id, "User Id")
+      : null;
+
+    if (!userId) {
+      // Handle the case where req.session.user is not defined or doesn't have an 'id' property
+      res.redirect("/");
+      return;
+    }
     const shoppingList = await shopping.getShoppingListByUserId(userId);
-    res.render("shopping", {
-      shoppingList: shoppingList,
-      name: req.session.user.name,
-    });
+
+    if (!shoppingList || shoppingList.length === 0) {
+      // No shopping list found
+      res.render("shopping", {
+        name: req.session.user.name,
+        errorMessage: "No shopping list yet, start adding items to create one.",
+      });
+    } else {
+      // Shopping list found
+      res.render("shopping", {
+        shoppingList: shoppingList,
+        name: req.session.user.name,
+      });
+    }
   } catch (error) {
     console.error("Error getting shopping list:", error);
+
+    if (
+      typeof error === "string" &&
+      error.includes("No shopping list found for user with id")
+    ) {
+      return res.render("shopping", {
+        name: req.session.user.name,
+        errorMessage: "No shopping list yet, start adding items to create one.",
+      });
+    }
+
+    // Log the error details for further investigation
+    console.error("Unhandled error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post("/", async (req, res) => {
+router.route("/").post(printMiddleware, async (req, res) => {
+  if (!req.session.user) {
+    res.redirect("/");
+  }
+
   try {
     const userId = help.checkId(req.session.user.id, "User Id");
     const { itemName } = req.body;
@@ -42,37 +73,40 @@ router.post("/", async (req, res) => {
       );
     }
 
+    let success;
     if (shoppingList) {
       success = "success adding";
     } else {
       success = "error adding";
     }
 
-    res.render("shopping", {
-      success: success,
-      shoppingList: shoppingList,
-      name: req.session.user.name,
-    });
+    res.status(200).send({ shoppingList: shoppingList });
   } catch (error) {
     console.error("Error adding item to shopping list:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
-// Remove an item from the shopping list
-router.delete("/:id", async (req, res) => {
-  try {
-    const itemId = help.checkId(req.params.id, "Item Id");
 
-    const removedItem = await shopping.removeItemFromShoppingList(itemId);
-    if (removedItem) {
+// Remove an item from the shopping list
+router.delete("/delete", async (req, res) => {
+  try {
+    const userId = help.checkId(req.session.user.id, "User Id");
+    const { itemName } = req.body;
+    console.log("delete itemName: ", itemName);
+
+    const shoppingList = await shopping.removeItemFromShoppingList(
+      userId,
+      itemName
+    );
+
+    let success;
+    if (shoppingList) {
       success = "success deleting";
     } else {
       success = "error deleting";
     }
 
-    res.render("shopping", {
-      success: success,
-    });
+    res.status(200).send({ shoppingList: shoppingList });
   } catch (error) {
     console.error("Error removing item from shopping list:", error);
     res.status(500).json({ error: "Internal server error" });

@@ -13,6 +13,7 @@ const printMiddleware = (req, res, next) => {
     req.originalUrl === "/authenticate" ||
     req.originalUrl === "/food" ||
     req.originalUrl === "/shopping" ||
+    req.originalUrl === "/shopping/delete" ||
     req.originalUrl === "/authenticate/logout"
   ) {
     return next();
