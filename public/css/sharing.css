@@ -1,7 +1,3 @@
-.error-list, .error{
-    color: red;
-}
-
 .main-header {
     background-color: #4a7c59;
     color: #fff;
@@ -17,8 +13,4 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-}
-
-.backLink::hover {
-    color :green ;
 }
