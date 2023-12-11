@@ -54,6 +54,7 @@ router.route("/").get(printMiddleware, async (req, res) => {
 router.route("/").post(printMiddleware, async (req, res) => {
   if (!req.session.user) {
     res.redirect("/");
+    return;
   }
 
   try {
@@ -83,7 +84,9 @@ router.route("/").post(printMiddleware, async (req, res) => {
     res.status(200).send({ shoppingList: shoppingList });
   } catch (error) {
     console.error("Error adding item to shopping list:", error);
-    res.status(500).json({ error: "Internal server error" });
+
+    // Send the error message to the client side with a 400 status code
+    res.status(400).send({ error: error.message || "Internal server error" });
   }
 });
 
