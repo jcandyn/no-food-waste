@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 
   if (!req.session || !req.session.user) {
     // If not authenticated, redirect to login
-    return res.redirect("/login");
+    return res.redirect("/");
   }
   try {
     const userId = req.session.user.id;
