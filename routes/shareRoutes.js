@@ -9,13 +9,14 @@ router
   .route("/")
   .get(async (req, res) => {
     try{
-      userId = help.checkId(req.session.user.id, "User Id");
-      foodList = await shareData.getShareFood(userId);
+     // let state = req.body
+      //userId = help.checkId(req.session.user.id, "User Id");
+      //foodList = await shareData.getShareFood(state);
       //console.log(foodList)
       res.render("sharing", {
-        foodList: foodList,
-        name: req.session.user.name,
-        userId:req.session.user.id
+        // foodList: foodList,
+        // name: req.session.user.name,
+        // userId:req.session.user.id
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });
@@ -32,21 +33,19 @@ router
         .render("error", { error: "There are no fields in the request body" });
     }
     //Input checking 
-    let {inventoryId,itemName,expiryDate,linkedOrganization} = foodInfo;
-    try {
-      const foodItem = await shareData.addShareFood(
-        userId,
-        inventoryId,
-        itemName,
-        expiryDate,
-        linkedOrganization
-        
-      );
-
-      return res.status(200).redirect("/");
+    try{
+      let {state} = foodInfo
+      //userId = help.checkId(req.session.user.id, "User Id");
+      foodList = await shareData.getShareFood(state);
+      //console.log(foodList)
+      res.render("sharing", {
+        foodList: foodList,
+        name: req.session.user.name,
+        userId:req.session.user.id
+      });
     } catch (e) {
       return res.status(500).render("error", { error: e });
     }
-
+    return;
   })
 export default router;

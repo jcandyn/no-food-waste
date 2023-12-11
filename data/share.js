@@ -25,13 +25,14 @@ const exportedMethods = {
         return food;
 
     },
-    async getShareFood(userId){
-        if (!ObjectId.isValid(userId)) throw "Invalid User ID";
-        userId = help.checkId(userId, "User Id");
+    async getShareFood(state){
+        //if (!ObjectId.isValid(userId)) throw "Invalid User ID";
+       // userId = help.checkId(userId, "User Id");
+       //Check state
+       state = state.toLowerCase();
     
         let foodList = await shareCollection
-          .find({ userId: userId })
-          .project({ _id: 1,inventoryId: 1, itemName: 1, expiryDate: 1, linkedOrganization: 1, })
+          .find({ state: state })
           .toArray();
     
         if (!foodList) throw "Could not get all food for the user";
@@ -40,6 +41,7 @@ const exportedMethods = {
           element._id = element._id.toString();
           return element;
         });
+        console.log(foodList)
     
         return foodList;
     }

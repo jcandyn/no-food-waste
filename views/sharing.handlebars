@@ -1,20 +1,89 @@
 
 <head>
-    <link href="/public/css/composting.css" rel="stylesheet" />
+    <link href="/public/css/sharing.css" rel="stylesheet" />
 </head>
 <body>
     <header class="main-header">
     <h1>Food Sharing</h1>
     </header>
     <main>
-        <section class="composting-tips container my-5">
-
-            <div class="card mb-3">
-                <div class="row g-0">
-                    
-                    <p>Welcome to our initiative to share food with local food banks and make a positive impact on our community.</p>
-                
+        <div class="container">
+             <p>Welcome to our initiative to share food with local food banks and make a positive impact on our community.</p>
+             <div class="card">
+                <div class="card-body">
+                  <form method="POST" action="/sharing"> 
+                    <h2 class="card-title">Search here for Foood Donation </h2>
+                            <label for="state">Select the state:
+                                <select name="state" id="state">
+                                    <option value="">Select...</option>
+                                    <option value="texas">Texas</option>
+                                    <option value="az">Arizona</option>
+                                    <option value="c">Cup</option>
+                                    <option value="pt">Pint</option>
+                                    <option value="qt">Quart</option>
+                                    <option value="gal">Gallon</option>
+                                    <option value="oz">Ounce</option>
+                                    <option value="floz">Fluid ounce</option>
+                                    <option value="lb">Pound</option>
+                                </select><br>
+                            </label><br>
+                            <button type="sumbit">Search</button>
+                    </form> 
+                    <div>
+                        {{#if foodList.length}}
+            {{#each foodList}}
+                <div class="card mx-2 my-2" style="width: 18rem;" >
+                    <div class="card-body">
+                            <h3>{{{foodBank}}}</h3>
+        
+                        <p >Address: {{address}}<br>
+                            Number: {{number}}<br>
+                            Email: {{email}}<br>
+                            Site: {{site}}
+                        </p>
+                        
+                    </div>
+                </div>
+            {{/each}}
+           
+            
+        {{else}}
+            <!-- Message card when foodList is empty -->
+            <div class="card text-center bg-light mx-2 my-2" style="width: 18rem;">
+                <div class="card-body">
+                    <p class="card-text">No food banks</p>
                 </div>
             </div>
-            
-        </section>
+        {{/if}}
+                
+                    </div>
+                    
+
+             </div>
+             
+             {{!-- <div class="food-banks">
+            <div class="food-bank" data-foodbank="foodBank1">
+
+                <h2>Food Bank 1</h2>
+                <div class="contact-info">
+                    <p>Contact Person: John Doe</p>
+                    <p>Email: john@example.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+            </div> --}}
+
+            {{!-- <div class="food-bank" data-foodbank="foodBank2">
+                <h2>Food Bank 2</h2>
+                <div class="contact-info">
+                    <p>Contact Person: Jane Smith</p>
+                    <p>Email: jane@example.com</p>
+                    <p>Phone: (987) 654-3210</p>
+                    <a href="#">food bank page</a>
+                </div>
+            </div> --}}
+
+        <!-- Add more food banks as needed -->
+
+        </div>
+    </div>
+    <script src="../public/js/sharing.js"></script>
