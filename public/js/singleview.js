@@ -2,24 +2,27 @@ $(document).ready(function(){
 
     const editBtn =$('#editBtn');
     const editForm=$('#editFood-form');
-    //const editDiv=$('#editDiv');
+    const editDiv=$('#editDiv');
     //const errorDisplay=$('#errorDisplay');
     const errorClass=$('.error-list')
     //const deleteBtn=$('#deleteBtn')
     const closeButton=$('#closeBtn')
     editForm.hide();
+    editDiv.hide();
     
 
     editBtn.click(function () {
         
         errorClass.empty();
         editForm.show();
+        editDiv.show();
         editBtn.hide();
         
     });
 
     closeButton.click(function(){
       editForm.hide();
+      editDiv.hide();
       editBtn.show();
     })
 

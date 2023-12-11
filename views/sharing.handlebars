@@ -1,80 +1,20 @@
- <link rel="stylesheet" href="/public/css/sharing.css" />
-<header class="main-header">
-    <h1>FOODS YOU'VE SHARED</h1>
-</header>
-<div id="shareFood" class="container" >
-    <div class="card">
-        <div class="card-body">
-            <form id="shareForm" method="post" action="/sharing">
-                <div class="row" >
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            {{!-- <input type="hidden" name='_method' value="PUT" /> --}}
-                            <label for="userID">User Id:
-                            <input type="text" name="userID" id="userID" placeholder="UserID" value="" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="inventoryId">Inventory Id:
-                            <input type="text" name="inventoryId" id="inventoryId" placeholder="inventory Id" value="">
-                            </label><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="itemName">itemName:
-                            <input type="text" name="itemName" id="itemName" placeholder="itemName" value="" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="expiryDate">expiry Date:
-                            <input type="text" name="expiryDate" id="expiryDate" placeholder="expiry Date" value="">
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="linkedOrganization">linked Organization:
-                            <input type="text" name="linkedOrganization" id="linkedOrganization" placeholder="linked Organization" value="">
-                            </label><br>      
-                        </div>
-                    </div>
-                </div>
-                <br><button type="submit" class = "btn btn-success" id="shareBtn" >Share</button>
+
+<head>
+    <link href="/public/css/composting.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="main-header">
+    <h1>Food Sharing</h1>
+    </header>
+    <main>
+        <section class="composting-tips container my-5">
+
+            <div class="card mb-3">
+                <div class="row g-0">
+                    
+                    <p>Welcome to our initiative to share food with local food banks and make a positive impact on our community.</p>
                 
-            </form>
-        </div>
-    </div>
-</div>
-<div id="shareFood" class="container" >
-    {{#if foodList.length}}
-        {{#each foodList}}
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="/food/view/{{_id}}">{{itemName}}</a> </h5>
-                    <p class="card-text">
-                        Expiration date: {{expiryDate}}<br>
-                        Linked Organization: {{linkedOrganization}}<br>
-                    
-                    </p>
-                    
                 </div>
             </div>
-    {{/each}}
-    {{else}}
-    <!-- Message card when foodList is empty -->
-    <div class="card text-center bg-light">
-        <div class="card-body">
-            <p class="card-text">No food items, yet. Add some to get started!</p>
-        </div>
-    </div>
-    {{/if}}
-</div>
-
-<script src="/public/js/sh.js"></script>
+            
+        </section>
