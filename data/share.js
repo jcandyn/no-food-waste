@@ -41,7 +41,7 @@ const exportedMethods = {
           element._id = element._id.toString();
           return element;
         });
-        console.log(foodList)
+        //console.log(foodList)
     
         return foodList;
     }
