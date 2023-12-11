@@ -5,6 +5,28 @@ body {
     margin: 0;
     padding: 0;
 }
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Adjust as needed */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.main-header {
+    background-color: #4a7c59;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
 
 .container {
     max-width: 1200px;
@@ -81,3 +103,21 @@ h1 {
     text-align: center;
     margin-top: 20px;
 }
+
+a {
+    color: #2a9d8f; /* Modern link color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Instructions for the user */
+.user-instructions {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: left;
+}
+
