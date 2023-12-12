@@ -4,6 +4,7 @@ import analyticsRoutes from "./analyticsRoutes.js";
 import homeRoute from "./homeRoute.js";
 import authenticationRoutes from "./authenticationRoutes.js";
 import shoppingRoutes from "./shoppingRoutes.js";
+import shareRoutes from "./shareRoutes.js";
 
 const constructorMethod = (app) => {
   app.use("/authenticate", authenticationRoutes);
@@ -13,6 +14,7 @@ const constructorMethod = (app) => {
   app.use("/food/view", foodRoutes);
   app.use("/analyticsRoutes", analyticsRoutes);
   app.use("/shopping", shoppingRoutes);
+  app.use("/sharing", shareRoutes);
   app.use("/", homeRoute);
 
   app.use("*", (req, res) => {
