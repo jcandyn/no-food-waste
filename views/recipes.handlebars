@@ -1,38 +1,55 @@
-  <head>
-    <meta charset="utf-8" />
-    <title>Recipes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/public/css/recipes.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  </head>
-  <body>
-    <header class="main-header">
-      <h1>Recipe Suggestions</h1>
-    </header>
-    <div class="container">
-      <div>
-        {{#if hasIngredients}}
-        
-                <p class="user-instructions">Select an ingredient to find recipe recommendations.</p>
-        
-          <ul class="ingredient-list">
-            {{#each inventoryItems}}
-              <li class="ingredient-item">
-                <a href="#" class="ingredient-link" data-ingredient="{{this.itemName}}">
-                    {{this.itemName}}
-                </a>
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <p class="no-ingredients">You have no ingredients in your inventory.</p>
-          <div class="add-item-container">
-            <a href="/food" class="add-item-button">Forgot to add your items?</a>
-          </div>
-        {{/if}}
-      </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Recipes</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/public/css/recipes.css" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <header class="main-header">
+    <h1>Recipe Suggestions</h1>
+  </header>
+  <div class="container">
+    <div>
+      {{#if hasIngredients}}
 
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="/public/js/recipes.js"></script>
-  </body>
+        <p class="user-instructions">Select an ingredient to find recipe
+          recommendations.</p>
 
+        <ul class="ingredient-list">
+          {{#each inventoryItems}}
+            <li class="ingredient-item">
+              <a
+                href="#"
+                class="ingredient-link"
+                data-ingredient="{{this.itemName}}"
+              >
+                {{this.itemName}}
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <p class="no-ingredients">You have no ingredients in your inventory.</p>
+        <div class="add-item-container">
+          <a href="/food" class="add-item-button">Forgot to add your items?</a>
+        </div>
+      {{/if}}
+    </div>
+    <div id="recipes-container">
+    </div>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+  <script src="/public/js/recipes.js"></script>
+</body>
