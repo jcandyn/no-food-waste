@@ -1,23 +1,32 @@
-document.addEventListener('DOMContentLoaded', function () {
-    let foodBanks = document.querySelectorAll('.food-bank');
+$(document).ready(function(){
+    const searchBtn = $('#searchBtn')
+    const divDisplay = $('#display')
+    
+    
+    searchBtn.click(function(){
+        divDisplay.show()
+    })
+})
 
-    foodBanks.forEach(function (foodBank) {
-        foodBank.addEventListener('click', function () {
-            toggleContact(this.dataset.foodbank);
-        });
-    });
+// document.addEventListener('DOMContentLoaded', function () {
+//     let foodBanks = document.querySelectorAll('.food-bank');
 
-    function toggleContact(foodBankId) {
-        let contactInfo = document.querySelector('[data-foodbank="' + foodBankId + '"] .contact-info');
+//     foodBanks.forEach(function (foodBank) {
+//         foodBank.addEventListener('click', function () {
+//             toggleContact(this.dataset.foodbank);
+//         });
+//     });
 
-        if (contactInfo.style.display === 'none' || contactInfo.style.display === '') {
-            contactInfo.style.display = 'block';
-        } else {
-            contactInfo.style.display = 'none';
-        }
-    }
-});
+//     function toggleContact(foodBankId) {
+//         let contactInfo = document.querySelector('[data-foodbank="' + foodBankId + '"] .contact-info');
 
+//         if (contactInfo.style.display === 'none' || contactInfo.style.display === '') {
+//             contactInfo.style.display = 'block';
+//         } else {
+//             contactInfo.style.display = 'none';
+//         }
+//     }
+// });
 // let requestConfig = {
 //     method: 'GET',
 //     url: 'http://localhost:3000/sharing'

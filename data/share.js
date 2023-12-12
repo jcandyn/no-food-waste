@@ -3,26 +3,31 @@ import { shareCollection } from "./index.js";
 import help from "../validation.js";
 
 const exportedMethods = {
-    async addShareFood(userId,inventoryId,itemName,expiryDate,linkedOrganization){
-        //Input Check
+    async addShareFood(){
 
-        let shareFood={
-            userId:userId,
-            inventoryId:inventoryId,
-            itemName:itemName,
-            expiryDate:expiryDate,
-            linkedOrganization:linkedOrganization
-        };
-        const insertInfo = await shareCollection.insertOne(shareFood);
-        if (!insertInfo.acknowledged || !insertInfo.insertedId)
+    
+           
+            
+        const docs = [
+            
+            // { state:"arkansas",name: "Northwest Arkansas Food Bank", address: "1378 June Self Drive Bethel Heights, AR 72764", number:"479.872.8774",site:"www.NWAfoodbank.org",email:"" },
+            // { state:"arkansas",name: "St. Marys Food Bank", address: "2831 N. 31st Avenue Phoenix, AZ 85009", number:"602.242.3663",site:"www.firstfoodbank.org/",email:"" },
+            // { state:"arkansas",name: "Community Food Bank of Southern Arizona", address: "3003 South Country Club Road Tucson, AZ 85713", number:"520.622.0525",site:"www.communityfoodbank.org/",email:"contactus@communityfoodbank.org" },
+            // { state:"arkansas",name: "Yuma Community Food Bank", address: "2404 E 24th St. Ste. A Yuma, AZ 85365", number:"928.343.1243",site:"www.yumafoodbank.org",email:"info@yumafoodbank.org" },
+
+            //{ state:"alabama",name: "Feeding the Valley Food Bank", address: "6744 Flat Rock Road Midland, GA 31820", number:"706.561.4755",site:"feedingthevalley.org/",email:"jshawa@feedingthevalley.org" },
+            //{ state:"texas",name: "San Antonio Food Bank", address: "5200 Historic Old Hwy 90 San Antonio, TX 78227", number:"210.337.3663",site:"safoodbank.org/",email:"info@safoodbank.org" },
+            
+            
+          
+        ];
+        
+        //const insertInfo = await shareCollection.insertMany(docs);
+        if (!insertInfo.acknowledged )
             throw "Could not add food item to giveaway";
+        console.log(`${insertInfo.insertedCount} documents were inserted`);
 
-        const newId = insertInfo.insertedId.toString();
-        const food = await shareCollection.findOne({ _id: new ObjectId(newId) });
-        if (food === null) throw "No food to share with that id";
-        food._id = food._id.toString();
-
-        return food;
+        
 
     },
     async getShareFood(state){

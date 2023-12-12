@@ -11,12 +11,12 @@ router
     try{
      // let state = req.body
       //userId = help.checkId(req.session.user.id, "User Id");
-      //foodList = await shareData.getShareFood(state);
-      //console.log(foodList)
+      //foodList = await shareData.addShareFood();
+      
       res.render("sharing", {
-        // foodList: foodList,
-        // name: req.session.user.name,
-        // userId:req.session.user.id
+        foodList: foodList,
+        name: req.session.user.name,
+         userId:req.session.user.id
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });
