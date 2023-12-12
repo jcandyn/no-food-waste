@@ -1,0 +1,9 @@
+input[type="text"], input[type="number"], input[type="date"], select {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+
+input[type="text"], input[type="number"], input[type="date"], select {
+    padding: 0px !important;
+}
