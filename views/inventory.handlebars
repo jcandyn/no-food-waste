@@ -180,12 +180,31 @@
     
 
  function displayNotificationWithDelay(notification, delay) {
-      setTimeout(function () {
-       
-       
-  toastr.warning(notification, 'Food Expiration Alert');
-      }, delay);
-    }
+    setTimeout(function () {
+        const today = new Date();
+        
+        // Extract the expiration date from the notification
+        const match = notification.match(/Expiration date: (\d{4}-\d{2}-\d{2})/);
+        const expirationDateString = match ? match[1] : null;
+
+        if (expirationDateString) {
+            // Parse the expiration date in the "yyyy-mm-dd" format
+            const [year, month, day] = expirationDateString.split('-').map(Number);
+            const expirationDate = new Date(year, month - 1, day); // Month is zero-based
+
+            // Check if the expiration date is in the past
+            if (expirationDate < today) {
+                // Replace "approaching" with "passed" if the expiration date is in the past
+                const updatedNotification = notification.replace("approaching", "passed");
+                toastr.error(updatedNotification, 'Food Expiration Alert');
+            } else {
+                toastr.warning(notification, 'Food Expiration Alert');
+            }
+        } else {
+            console.error('Unable to extract expiration date from notification:', notification);
+        }
+    }, delay);
+}
 
     expirationNotifications.forEach(function (notification, index) {
       console.log("client received notification: ", notification);
