@@ -167,7 +167,7 @@ Special thanks to:
 [contributors-shield]: https://img.shields.io/badge/Contributions-4-brightgreen.svg?style=for-the-badge
 [contributors-url]: https://github.com/jcandyn/no-food-waste/graphs/contributors
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/jcandyn/no-food-waste/LICENSE.md
+[license-url]: https://github.com/jcandyn/no-food-waste/release/1.0.0/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 [Express.com]: https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white
 [Express-url]: https://expressjs.com/
