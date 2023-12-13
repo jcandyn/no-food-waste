@@ -2,8 +2,8 @@ import axios from "axios";
 import { config } from "dotenv";
 config();
 
-// Replace with your actual Spoonacular API key
 const SPOONACULAR_API_KEY = process.env.SPOONACULAR_API_KEY;
+console.log(SPOONACULAR_API_KEY);
 
 const BASE_URL = "https://api.spoonacular.com/recipes/findByIngredients";
 

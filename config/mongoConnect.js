@@ -1,4 +1,5 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+import { MongoClient } from "mongodb";
+import { ServerApiVersion } from "mongodb";
 import { config } from "dotenv";
 config();
 
@@ -11,12 +12,25 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+async function connectToDatabase() {
+  try {
+    // Connect the client to the server
+    await client.connect();
+    // Return the connected database
+    return client.db("zeroFoodWaste");
+  } catch (error) {
+    console.error("Error connecting to database:", error);
+    throw error;
+  }
+}
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    await client.db("zeroFoodWaste").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
@@ -26,3 +40,5 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+export { run, connectToDatabase };

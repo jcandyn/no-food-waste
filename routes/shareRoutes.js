@@ -8,21 +8,23 @@ let foodList;
 router
   .route("/")
   .get(async (req, res) => {
-    try{
-     // let state = req.body
+    if (!req.session.user) {
+      return res.redirect("/");
+    }
+    try {
+      // let state = req.body
       //userId = help.checkId(req.session.user.id, "User Id");
       //foodList = await shareData.addShareFood();
-      
+
       res.render("sharing", {
         foodList: foodList,
         name: req.session.user.name,
-         userId:req.session.user.id
+        userId: req.session.user.id,
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });
     }
     return;
-
   })
 
   .post(async (req, res) => {
@@ -32,20 +34,20 @@ router
         .status(400)
         .render("error", { error: "There are no fields in the request body" });
     }
-    //Input checking 
-    try{
-      let {state} = foodInfo
+    //Input checking
+    try {
+      let { state } = foodInfo;
       //userId = help.checkId(req.session.user.id, "User Id");
       foodList = await shareData.getShareFood(state);
       //console.log(foodList)
       res.render("sharing", {
         foodList: foodList,
         name: req.session.user.name,
-        userId:req.session.user.id
+        userId: req.session.user.id,
       });
     } catch (e) {
       return res.status(500).render("error", { error: e });
     }
     return;
-  })
+  });
 export default router;
