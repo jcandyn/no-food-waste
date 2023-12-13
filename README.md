@@ -158,7 +158,7 @@ Special thanks to:
 
 - [Choose an Open Source License](https://choosealicense.com)
 - [Img Shields](https://shields.io)
-- [Best Read Me Template!] (https://github.com/othneildrew/Best-README-Template
+- [Best Read Me Template!](https://github.com/othneildrew/Best-README-Template)
 - [GitHub Pages](https://pages.github.com)
 - [Font Awesome](https://fontawesome.com)
 
