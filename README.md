@@ -217,6 +217,8 @@ Special thanks to:
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: https://github.com/jcandyn/no-food-waste/LICENSE.md
 [product-screenshot]: images/screenshot.png
+[Handlebars.com]: https://img.shields.io/badge/Handlebars-F37726?style=for-the-badge&logo=handlebars&logoColor=white
+[Handlebars-url]: https://handlebarsjs.com/
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
