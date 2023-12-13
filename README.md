@@ -212,7 +212,7 @@ Special thanks to:
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/badge/Contributions-4-brightgreen.svg
+[contributors-shield]: https://img.shields.io/badge/Contributions-4-brightgreen.svg?style=for-the-badge
 [contributors-url]: https://github.com/jcandyn/no-food-waste/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
 [forks-url]: https://github.com/jcandyn/no-food-waste/network/members
