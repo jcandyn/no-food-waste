@@ -51,7 +51,7 @@ data.forEach(row => {
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
     
-
+if (data.length > 0) {
     const fruit = Object.keys(data[0]).filter(d => d != "month");
     const months = data.map(d => d.month);
 
@@ -61,8 +61,9 @@ data.forEach(row => {
     const xMax = d3.max(stackedData[stackedData.length - 1], d => d[1]);
 
     // scales
+  
 
- if (data.length > 0) {
+ 
     const x = d3.scaleLinear()
         .domain([0, xMax]).nice()
         .range([0, width]);

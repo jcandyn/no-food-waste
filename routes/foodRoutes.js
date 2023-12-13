@@ -169,6 +169,9 @@ router.get("/:Id", async (req, res) => {
 router
   .route("/view/:Id")
   .get(async (req, res) => {
+    if (!req.session.user) {
+      res.redirect("/");
+    }
     try {
       req.params.Id = help.checkId(req.params.Id, "Food Id");
     } catch (e) {

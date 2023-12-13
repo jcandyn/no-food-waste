@@ -8,12 +8,14 @@ export const getItemNameStatistics = async (userId) => {
   try {
     // Validate user ID
     if (!ObjectId.isValid(userId)) throw "Invalid User ID";
-    userId = help.checkId(userId, "User Id");
+    userId = help.checkId(userId, "User Id"); // Assuming this line is valid, adjust as needed
+
+    const currentDate = new Date().toISOString();
 
     // Aggregate query to get itemName statistics
     const itemNameStatistics = await foodCollection
       .aggregate([
-        { $match: { userId } },
+        { $match: { userId, expiryDate: { $lt: currentDate } } }, // Only include items with expiry dates less than the current date
         {
           $group: {
             _id: {
@@ -55,7 +57,6 @@ export const getItemNameStatistics = async (userId) => {
     throw error;
   }
 };
-
 // Helper function to get month name from month number
 const getMonthName = (month) => {
   const months = [
