@@ -102,8 +102,8 @@ const exportedMethods = {
 
     // Check if the item already exists in the shopping list
     if (existingShoppingList.items.includes(newItem)) {
-      // If the item already exists, return the current shopping list without modification
-      return existingShoppingList;
+      // If the item already exists, return an error message
+      throw "No duplicates allowed";
     }
 
     // Add the new item to the shopping list

@@ -111,8 +111,12 @@ function addItem(event) {
             $("#itemList").html(itemListHtml);
         },
         error: function (error) {
-            console.error("Error adding item:", error);
-            toastr.error("Error adding item");
+            console.log(error);
+            if (error.responseJSON.error === "No duplicates allowed") {
+                    toastr.error("No duplicates allowed");
+                } else {
+                    toastr.error("Error adding item");
+                }
         }
     });
 }

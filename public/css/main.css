@@ -95,28 +95,6 @@ h1 {
     color: var(--secondary-color);
 }
 
-/* Form Styles */
-input[type="text"], 
-input[type="number"],
-input[type="date"],
-select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: 1px solid #ddd;
-    background: #fff;
-}
-
-input[type="text"]:focus, 
-input[type="number"]:focus,
-input[type="date"]:focus,
-select:focus {
-    background-color: #eee;
-    outline: none;
-    border-color: var(--primary-color);
-}
-
 label {
     display: block;
     margin-bottom: 10px;
@@ -156,10 +134,7 @@ label {
     --background-color: #f4f4f4;
 }
 
-/* Container */
-.container {
-    padding: 20px;
-}
+
 
 /* Header Styles */
 h1 {
