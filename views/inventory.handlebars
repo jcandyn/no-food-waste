@@ -131,7 +131,7 @@
     <div class="d-flex flex-wrap">
         {{#if foodList.length}}
             {{#each foodList}}
-                <div class="card mx-2 my-2" style="width: 18rem;" id={{_id}} data-quantity="{{quantity}}">
+                <div class="card mx-2 my-2" style="width: 18rem;" id={{_id}} unit={{unit}} data-quantity={{quantity}}>
                     <div class="card-body">
                              <div class="d-flex justify-content-end mb-2">
                             <input type="checkbox" class="form-check-input" id="checkbox{{_id}}" name="foodCheckbox">
@@ -224,18 +224,22 @@
             
             if (selectedFoodItems.length > 0) {
                 // Generate the email body
-                let emailBody = "Hi, my name is " + "{{ name }}" + " and my phone number is " + {{{ phoneNumber }}} + ".\n I have selected" + 
+                let emailBody = "Hi, my name is " + "{{ name }}" + " and my phone number is " + {{{ phoneNumber }}} + ".\n\n I have selected" + 
                 " a number of food items that were close to expiring but are in good condition. If you are interested, I would like for them " +
                 "to be donated and consumed by someone who can benefit from them. Please see them below, and feel free to contact me " +
-                " to coordinate about dropping them off/picking them up. \n" + "\n\nSelected Food Items For Donation:\n";
+                " to coordinate about dropping them off/picking them up. \n" + "\nSelected Food Items For Donation:\n";
                 selectedFoodItems.forEach(function (checkbox) {
                     const foodCard = checkbox.closest(".card");
                     const itemName = foodCard.querySelector(".card-title a").innerText;
                     const expiryDate = foodCard.querySelector(".card-text").innerText;
                       const quantity = foodCard.getAttribute('data-quantity');
+                       const unit = foodCard.getAttribute('unit');
 
-                    emailBody += `\nItem Name: ${itemName}\nQuantity: ${quantity}\nExpiration Date: ${expiryDate}\n`;
+                    emailBody += `\nItem Name: ${itemName}\nQuantity: ${quantity}\nUnit: ${unit}\n${expiryDate}\n`;
+                    
                 });
+                
+                  emailBody += "\n\nBest regards,\n{{ name }}";
 
                 // Encode the email body for the mailto link
                 emailBody = encodeURIComponent(emailBody);
