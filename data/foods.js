@@ -146,7 +146,14 @@ const exportedMethods = {
 
     let foodList = await foodCollection
       .find({ userId: userId })
-      .project({ _id: 1, itemName: 1, expiryDate: 1, imageUrl: 1 })
+      .project({
+        _id: 1,
+        itemName: 1,
+        expiryDate: 1,
+        imageUrl: 1,
+        quantity: 1,
+        unit: 1,
+      })
       .toArray();
 
     if (!foodList) throw "Could not get all food for the user";

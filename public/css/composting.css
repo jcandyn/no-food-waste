@@ -5,6 +5,11 @@ body {
     line-height: 1.6;
 }
 
+/* Container */
+.container {
+    padding: 20px;
+}
+
 .main-header {
     background-color: #4a7c59;
     color: #fff;
@@ -102,3 +107,27 @@ body {
     color: #4a7c59;
     margin-bottom: 10px;
 }
+
+
+/* Form Styles */
+input[type="text"], 
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus {
+    background-color: #eee;
+    outline: none;
+    border-color: var(--primary-color);
+}
+

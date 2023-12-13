@@ -9,33 +9,40 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="px-4 mb-3">{{food.itemName}}</h1>
-        <main>
-            <div class="card" id="mainDiv">
-                <div class="card-body">
-                    <p class="card-text" id="foodDetail">
-                        Quantity: {{food.quantity}}<br>
-                        Unit: {{food.unit}}<br>
-                        Expiration date: {{food.expiryDate}}<br>
-                        Cost per item: {{food.costPerItem}}<br>
-                        Total cost: {{food.totalCost}}<br>
-                        Brand: {{food.brand}}<br>
-                        Category: {{food.category}}<br>
-                        Status: {{food.status}}<br>
-                        <img src="{{food.imageUrl}}" alt="Food Image" class="food-image w-25">
-                        
-                    </p>
-                    <p id="forFoodId" hidden>{{foodId}}</p>
-                    <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
-                    <div>
-                    <form id="delete-form" method="post" action="/food/view/{{food._id}}" >
-                        <input type="hidden" name='_method' value="DELETE" /><br>
-                        <button type="submit" class="btn btn-danger"  id="deleteBtn">Delete</button>
-                    </form>
+  <div class="container">
+    <h1 class="px-4 mb-3">{{food.itemName}}</h1>
+    <main>
+        <div class="card w-50" id="mainDiv">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="card-text list-group" id="foodDetail">
+                            <li class="list-group-item">Quantity: {{food.quantity}}</li>
+                            <li class="list-group-item">Unit: {{food.unit}}</li>
+                            <li class="list-group-item">Expiration date: {{food.expiryDate}}</li>
+                            <li class="list-group-item">Cost per item: {{food.costPerItem}}</li>
+                            <li class="list-group-item">Total cost: {{food.totalCost}}</li>
+                            <li class="list-group-item">Brand: {{food.brand}}</li>
+                            <li class="list-group-item">Category: {{food.category}}</li>
+                            <li class="list-group-item">Status: {{food.status}}</li>
+                        </ul>
+                        <p id="forFoodId" hidden>{{foodId}}</p>
+                        <button type="button" class="btn btn-primary mt-2" id="editBtn">Edit</button>
+                        <div>
+                            <form id="delete-form" method="post" action="/food/view/{{food._id}}">
+                                <input type="hidden" name='_method' value="DELETE" /><br>
+                                <button type="submit" class="btn btn-danger" id="deleteBtn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{food.imageUrl}}" alt="Food Image" class="food-image w-100">
                     </div>
                 </div>
-            </div><br>
+            </div>
+        </div>
+    </main>
+</div>
             <div class="card" id="editDiv">
                 <div class="card-body">
                     <form id="editFood-form" method="post" action="/food/view/{{food._id}}" >
@@ -142,7 +149,9 @@
                 
             </div>
             </div>
-            <a class="backLink "   href="/food">Back to inventory</a>
+            <div class="container">
+            <a class="backLink" href="/food">Back to inventory</a>
+            </div>
             {{!-- <div id="errorDisplay">
             
             </div> --}}
