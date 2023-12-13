@@ -165,10 +165,3 @@ h1 {
 .addButton:hover, .closeButton:hover {
     background-color: var(--secondary-color);
 }
-
-.divider {
-    width: 100%;
-    height: 1px;
-    background-color: #000;
-    margin: 10px 0;
-}
