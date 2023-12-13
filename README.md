@@ -113,7 +113,7 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get a free API Key at [Unsplash](https://unsplash.com/documentation) and [Spoonacular](https://spoonacular.com/food-api)
 2. Clone the repo
    ```sh
    git clone https://github.com/jcandyn/no-food-waste.git
@@ -122,9 +122,11 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+4. Enter your API in a new `.env` file
    ```js
-   const API_KEY = "ENTER YOUR API";
+   DB_PASSWORD=myDbPass
+   SPOONACULAR_API_KEY=myAPIkey343423434234dsfdsfsd
+   UNSPLASH_API_KEY=myAPIkey3432423432432dfdsfdsf
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
