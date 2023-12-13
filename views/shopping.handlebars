@@ -24,7 +24,7 @@
                 <div class="input-group mb-3">
                     <input type="text" id="itemName" class="form-control" placeholder="Item name" required>
                      <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary" onsubmit="addItem(event)"><i class="fa-solid fa-pen mr-2"></i>Add Item</button>
+                    <button type="submit" class="btn btn-success" onsubmit="addItem(event)"><i class="fa-solid fa-pen mr-2"></i>Add Item</button>
                     </div>
                 </div>
             
@@ -38,7 +38,7 @@
             {{else}}
             <ul class="list-group w-50" id="itemList">
                 {{#each shoppingList.items}}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-item list-group-item d-flex justify-content-between align-items-center">
                     {{this}}
                     <button id="{{this}}" class="btn btn-danger" onclick="deleteItem(event)"><i id="{{this}}" class="fas fa-trash-alt"></i></button>
                 </li>
