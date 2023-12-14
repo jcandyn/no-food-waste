@@ -7,7 +7,7 @@
      <link rel="stylesheet" href="../public/css/shopping.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" >
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
@@ -24,7 +24,7 @@
                 <div class="input-group mb-3">
                     <input type="text" id="itemName" class="form-control" placeholder="Item name" required>
                      <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary" onsubmit="addItem(event)"><i class="fa-solid fa-pen mr-2"></i>Add Item</button>
+                    <button type="submit" class="btn btn-success" onsubmit="addItem(event)"><i class="fa-solid fa-pen mr-2"></i>Add Item</button>
                     </div>
                 </div>
             
@@ -38,7 +38,7 @@
             {{else}}
             <ul class="list-group w-50" id="itemList">
                 {{#each shoppingList.items}}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-item list-group-item d-flex justify-content-between align-items-center">
                     {{this}}
                     <button id="{{this}}" class="btn btn-danger" onclick="deleteItem(event)"><i id="{{this}}" class="fas fa-trash-alt"></i></button>
                 </li>
@@ -77,7 +77,7 @@ function updateItemList(data) {
     var itemHtmlArray = data.shoppingList.items.map(function(item) {
         return '<li class="list-group-item d-flex justify-content-between align-items-center">' +
             item +
-            '<button id=' + item + ' class="btn btn-danger"><i id=' + item + ' class="fas fa-trash-alt"></i></button>' +
+            '<button id="' + item + '" class="btn btn-danger"><i id="' + item + '" class="fas fa-trash-alt"></i></button>' +
             '</li>';
     });
 
@@ -99,9 +99,10 @@ function addItem(event) {
             var itemListHtml = '<ul>';
 
             var itemHtmlArray = data.shoppingList.items.map(function(item) {
+                console.log("item: ", item);
                 return '<li class="list-group-item d-flex justify-content-between align-items-center">' +
                        item +
-                      '<button id=' + item + ' class="btn btn-danger"><i id=' + item + ' class="fas fa-trash-alt"></i></button>' +
+                      '<button id="' + item + '"class="btn btn-danger"><i id="' + item + '" class="fas fa-trash-alt"></i></button>' +
                        '</li>';
             });
 
@@ -111,8 +112,12 @@ function addItem(event) {
             $("#itemList").html(itemListHtml);
         },
         error: function (error) {
-            console.error("Error adding item:", error);
-            toastr.error("Error adding item");
+            console.log(error);
+            if (error.responseJSON.error === "No duplicates allowed") {
+                    toastr.error("No duplicates allowed");
+                } else {
+                    toastr.error("Error adding item");
+                }
         }
     });
 }

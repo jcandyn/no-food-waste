@@ -6,12 +6,15 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-
 .main-header h1 {
     margin: 0;
     font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+}
+
+#foodDonation, h3{
+    color: #4a7c59;
+    text-align: center;
 }

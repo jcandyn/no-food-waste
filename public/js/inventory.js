@@ -56,7 +56,7 @@ $(document).ready(function () {
   const checkUnit = (unitVal, varName = "Unit") => {
     unitVal = checkString(unitVal, "Unit");
     unitVal = unitVal.toLowerCase();
-    const unitStd = ["tsp", "tbsp", "c", "pt", "qt", "gal", "oz", "floz", "lb"];
+    const unitStd = ["tsp", "tbsp", "cup", "pt", "qt", "gal", "oz", "floz", "lb"];
     if (!unitStd.includes(unitVal)) {
       throw `Provide only standard unit values`;
     }
@@ -185,21 +185,4 @@ $(document).ready(function () {
       form[0].submit();
     }
   });
-
-  // const list = $("#inventoryList");
-  // const childList = list.children();
-  // //console.log(childList)
-  // childList.each(function (index, child) {
-  //   let jqChild = $(child);
-  //   let shareBtn = $(
-  //     `<button type="button" class = "btn btn-success btn-sm" id="shareBtn" >Share</button>`
-  //   );
-  //   jqChild.append(shareBtn);
-
-  //   shareBtn.click(function () {
-  //     // window.open(`http://localhost:3000/sharing`)
-  //     //let newWindow = window.open('http://localhost:3000/sharing');
-  //     location.href = "http://localhost:3000/sharing";
-  //   });
-  // });
 });

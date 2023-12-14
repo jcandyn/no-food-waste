@@ -1,12 +1,14 @@
 import express from "express";
 import foodsData from "../data/foods.js";
 import { findRecipesByIngredients } from "../data/recipes.js";
+import { config } from "dotenv";
+config();
+
 import axios from "axios";
 
 const router = express.Router();
-const SPOONACULAR_API_KEY = process.env.SPOONACULAR_API_KEY;
 
-console.log("Spoonacular API Key:", SPOONACULAR_API_KEY ? "Loaded" : "Not Loaded");
+const SPOONACULAR_API_KEY = process.env.SPOONACULAR_API_KEY;
 
 router.get("/", async (req, res) => {
   console.log("Accessing /recipes route");

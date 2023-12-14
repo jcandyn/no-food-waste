@@ -86,7 +86,7 @@ router.route("/").post(printMiddleware, async (req, res) => {
     console.error("Error adding item to shopping list:", error);
 
     // Send the error message to the client side with a 400 status code
-    res.status(400).send({ error: error.message || "Internal server error" });
+    res.status(400).send({ error: error || "Internal server error" });
   }
 });
 

@@ -2,8 +2,8 @@ import { MongoClient } from "mongodb";
 import { config } from "dotenv";
 config();
 
-const connectToDatabase = async () => {
-  const url = `mongodb+srv://group_2_546:${process.env.DB_PASSWORD}@cluster0.dohb3e9.mongodb.net/?retryWrites=true&w=majority`;
+export const connectToDatabase = async () => {
+  const url = process.env.DB_URI;
   const client = new MongoClient(url);
 
   const dbName = "zeroFoodWaste";
@@ -25,4 +25,5 @@ const getCollection = async (collectionName) => {
 
 export const usersCollection = await getCollection("Users");
 export const foodCollection = await getCollection("Inventory");
+export const giveawayCollection = await getCollection("Giveaway");
 export const shoppingCollection = await getCollection("Shopping");

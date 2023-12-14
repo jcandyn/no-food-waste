@@ -39,12 +39,23 @@ const exportedMethods = {
     checkUnit(unitVal, varName='Unit'){
       unitVal = this.checkString(unitVal,"Unit");
       unitVal=unitVal.toLowerCase();
-      const unitStd=['tsp','tbsp','c','pt','qt','gal','oz','floz','lb']
+      const unitStd=['tsp','tbsp','cup','pt','qt','gal','oz','floz','lb']
       if(!(unitStd.includes(unitVal))){
         throw `Provide only standard unit values`
 
       }
       return unitVal;
+    },
+
+    checkState(stateVal, varName='State'){
+      stateVal = this.checkString(stateVal,"State");
+      stateVal=stateVal.toLowerCase();
+      const stateStd=['alabama','arizona','arkansas','california','colorado','connecticut','delaware','florida','new_jersey','new_york','north_carolina','ohio','texas','washington']
+      if(!(stateStd.includes(stateVal))){
+        throw `Provide only state values present in the option`
+
+      }
+      return stateVal;
     },
 
     checkDate(dateVal, varName='Date'){
