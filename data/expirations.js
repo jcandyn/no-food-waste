@@ -7,6 +7,7 @@ async function findExpirations(user) {
   let expirations = [];
   try {
     console.log("expirations");
+
     // Calculate the date 7 days from today
     const sevenDaysFromNow = new Date();
     sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
@@ -21,12 +22,13 @@ async function findExpirations(user) {
       .toString()
       .padStart(2, "0")}`;
 
-    // Find documents with expiryDate within the next 7 days
+    // Find documents with expiryDate within the next 7 days and snoozed is false
     const query = {
       expiryDate: {
         $lte: formattedThreshold,
       },
       userId: user.id,
+      snoozed: false, // Consider only items with snoozed set to false
     };
 
     const cursor = foodCollection.find(query);
@@ -42,6 +44,7 @@ async function findExpirations(user) {
           ". Expiration date: " +
           doc.expiryDate
       );
+
       // Introduce a delay
       //   await delay(8000); // Delay for 8 seconds
     }

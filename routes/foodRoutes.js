@@ -65,17 +65,16 @@ router
       category,
       status,
     } = foodInfo;
-    
-    itemName =xss(itemName);
-    quantity=xss(quantity);
-    unit=xss(unit);
-    expiryDate=xss(expiryDate);
-    costPerItem=xss(costPerItem);
-    totalCost=xss(totalCost);
-    brand=xss(brand);
-    category=xss(category);
-    status=xss(status);
-    
+
+    itemName = xss(itemName);
+    quantity = xss(quantity);
+    unit = xss(unit);
+    expiryDate = xss(expiryDate);
+    costPerItem = xss(costPerItem);
+    totalCost = xss(totalCost);
+    brand = xss(brand);
+    category = xss(category);
+    status = xss(status);
 
     let error = [];
     try {
@@ -183,6 +182,20 @@ router.get("/:Id", async (req, res) => {
   }
 });
 
+router.post("/snooze/:id", async (req, res) => {
+  try {
+    const foodId = help.checkId(req.params.id, "Food Id");
+    const snoozed = req.body.snoozed; // true or false
+
+    const updatedFood = await foodData.updateFoodSnoozeStatus(foodId, snoozed);
+
+    return res.status(200).json(updatedFood);
+  } catch (e) {
+    console.error("Error updating snooze status:", e);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router
   .route("/view/:Id")
   .get(async (req, res) => {
@@ -258,15 +271,15 @@ router
       category,
       status,
     } = updateData;
-    itemName =xss(itemName);
-    quantity=xss(quantity);
-    unit=xss(unit);
-    expiryDate=xss(expiryDate);
-    costPerItem=xss(costPerItem);
-    totalCost=xss(totalCost);
-    brand=xss(brand);
-    category=xss(category);
-    status=xss(status);
+    itemName = xss(itemName);
+    quantity = xss(quantity);
+    unit = xss(unit);
+    expiryDate = xss(expiryDate);
+    costPerItem = xss(costPerItem);
+    totalCost = xss(totalCost);
+    brand = xss(brand);
+    category = xss(category);
+    status = xss(status);
     try {
       userId = help.checkId(req.session.user.id, "User Id");
     } catch (e) {

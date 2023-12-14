@@ -6,6 +6,7 @@
     <title>Zero Food Waste</title>
      <link rel="stylesheet" href="../public/css/inventory.css">
     {{!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> --}}
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -133,6 +134,18 @@
             {{#each foodList}}
                 <div class="card mx-2 my-2" style="width: 18rem;" id={{_id}} unit={{unit}} data-quantity={{quantity}}>
                     <div class="card-body">
+                         <div class="d-inline justify-content-start mb-2">
+                               
+                                {{#if snoozed}}
+                                    <button id="{{_id}}" class="btn snoozeButton">
+                                        <i class="fas fa-bell-slash"></i>
+                                    </button>
+                                {{else}}
+                                    <button id="{{_id}}" class="btn snoozeButton">
+                                        <i class="fas fa-bell"></i>
+                                    </button>
+                                {{/if}}
+                            </div>
                              <div class="d-flex justify-content-end mb-2">
                             <input type="checkbox" class="form-check-input" id="checkbox{{_id}}" name="foodCheckbox">
                         </div>
@@ -164,6 +177,35 @@
   const ws = new WebSocket("ws://localhost:8080/");
 
   document.addEventListener("DOMContentLoaded", function () {
+      const snoozeButtons = document.querySelectorAll(".snoozeButton");
+
+            // Add a click event listener to each snooze button
+            snoozeButtons.forEach((button) => {
+                button.addEventListener("click", function () {
+                    // Toggle between regular bell and slash bell icons
+                    const bellIcon = button.querySelector("i");
+                    bellIcon.classList.toggle("fa-bell");
+                    bellIcon.classList.toggle("fa-bell-slash");
+
+                     const cardId = button.getAttribute("id");
+                     {{!-- const cardId = event.target.id; --}}
+                     console.log("snoozed id: ", cardId);
+
+                    fetch(`/food/snooze/${cardId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ snoozed: bellIcon.classList.contains("fa-bell-slash") }),
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+                });
+
+         
+            });
+
        toastr.options = {
     closeButton: true,
     progressBar: true,
