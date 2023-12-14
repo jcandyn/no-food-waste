@@ -46,69 +46,22 @@ const exportedMethods = {
       }
       return unitVal;
     },
-    
-    checkDate(dateVal, varName = "Date") {
-      if (!dateVal) throw `Error: You must provide a ${varName}`;
-      dateVal = dateVal.trim();
-      const dateCheck = new Date(dateVal);
-      if (isNaN(dateCheck)) {
-          throw "Invalid Date";
-      }
 
-      const dateParts = dateVal.split("-");
-      if (dateParts.length !== 3) {
-          throw `Enter date in YYYY-MM-DD format.`;
+    checkDate(dateVal, varName='Date'){
+      if(!dateVal) throw`Error: You must provide an ${varName}`;
+      dateVal =dateVal.trim()
+      const dateCheck = new Date(dateVal )
+      if(isNaN(dateCheck)){
+        throw "Invalid  Date "
+        
       }
-
-      const year = parseInt(dateParts[0], 10);
-      const mon = parseInt(dateParts[1], 10);
-      const date = parseInt(dateParts[2], 10);
-
-      if (!(mon >= 1 && mon <= 12)) {
-          throw "Month value is not valid, enter value between 1-12";
-      }
-
-      const day31 = [1, 3, 5, 7, 8, 10, 12];
-      const day30 = [4, 6, 9, 11];
-      if (day31.includes(mon) && !(date >= 1 && date <= 31)) {
-          throw "Invalid date for month";
-      }
-      if (day30.includes(mon) && !(date >= 1 && date <= 30)) {
-          throw "Invalid input, day should be between 1-30";
-      }
-
-      if (mon === 2) {
-          const isLeap = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
-          const maxDay = isLeap ? 29 : 28;
-          if (!(date >= 1 && date <= maxDay)) {
-              throw `Invalid date for February in a ${isLeap ? "leap" : "non-leap"} year`;
-          }
-      }
-
-      const currentDate = new Date();
-      if (dateCheck < currentDate) {
-          throw "Expiry date should be greater than current date.";
-      }
-
-      return dateVal;
-    }
-    /*
-    checkDate(dateVal, varName = "Date") {
-      if (!dateVal) throw `Error: You must provide a ${varName}`;
-      dateVal = dateVal.trim();
-      const dateCheck = new Date(dateVal);
-      if (isNaN(dateCheck)) {
-        throw "Invalid Date";
-      }
-  
-      const dateParts = dateVal.split("-");
-      if (dateParts.length !== 3) {
-        throw `Enter date in YYYY-MM-DD format.`;
-      }
-  
-      const year = parseInt(dateParts[0], 10);
-      const mon = parseInt(dateParts[1], 10);
-      const date = parseInt(dateParts[2], 10);
+      const dateStr = dateVal.split('-')
+      // const mon = dateStr[0]
+      // const date = dateStr[1]
+      // const year = dateStr[2]
+      const year=dateStr[0]
+      const date=dateStr[2]
+      const mon=dateStr[1]
       
       if(mon.length != 2 || date.length != 2 || year.length != 4){
         throw `Enter date: ${dateVal} in MM/DD/YYYY format.`

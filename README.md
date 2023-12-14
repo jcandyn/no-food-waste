@@ -79,7 +79,7 @@
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This section should list any major frameworks/libraries used to bootstrap the project.
 
 - [![HandleBars][Handlebars.com]][Handlebars-url]
 - [![Javascript][Javascript.com]][Javascript-url]
@@ -97,8 +97,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
@@ -113,20 +112,30 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Get a free API Key at [Unsplash](https://unsplash.com/documentation) and [Spoonacular](https://spoonacular.com/food-api)
+2. Create a free Atlas MongoDB Database at [MongoDB](https://www.mongodb.com/atlas/database)
+3. Clone the repo
    ```sh
    git clone https://github.com/jcandyn/no-food-waste.git
    ```
-3. Install NPM packages
+4. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+5. Enter your API and MongoDB connection uri in a new `.env` file
    ```js
-   const API_KEY = "ENTER YOUR API";
+   DB_URI=mongodb+srv://username:passwrod@cluster.zzzzzzz.mongodb.net/?retryWrites=true&w=majority
+   SPOONACULAR_API_KEY=myAPIkey343423434234dsfdsfsd
+   UNSPLASH_API_KEY=myAPIkey3432423432432dfdsfdsf
    ```
-
+6. Seed Database
+   ```sh
+   npm run seed
+   ```
+7. Run application
+   ```sh
+   npm run start
+   ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->

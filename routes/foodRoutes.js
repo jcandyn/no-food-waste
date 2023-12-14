@@ -4,6 +4,12 @@ import foodData from "../data/foods.js";
 import help from "../validation.js";
 import fetch from "node-fetch";
 import { getUserInfo } from "../data/users.js";
+import xss from "xss";
+
+import { config } from "dotenv";
+config();
+
+const UNSPLASH_API_KEY = process.env.UNSPLASH_API_KEY;
 
 import { findExpirations } from "../data/expirations.js";
 
@@ -59,6 +65,18 @@ router
       category,
       status,
     } = foodInfo;
+    
+    itemName =xss(itemName);
+    quantity=xss(quantity);
+    unit=xss(unit);
+    expiryDate=xss(expiryDate);
+    costPerItem=xss(costPerItem);
+    totalCost=xss(totalCost);
+    brand=xss(brand);
+    category=xss(category);
+    status=xss(status);
+    
+
     let error = [];
     try {
       itemName = help.checkString(itemName, "Item Name");
@@ -115,13 +133,12 @@ router
       });
     }
 
-    const apiKey = "0A0cwRBFJMQvKubVKnQJO2wYQTVnxTNY35cFJxXAnyg";
-    const searchWord = itemName; // Replace with the word you want to search for
+    const searchWord = itemName;
 
     let imageUrl;
 
     await fetch(
-      `https://api.unsplash.com/photos/random?query=${searchWord}&client_id=${apiKey}`
+      `https://api.unsplash.com/photos/random?query=${searchWord}&client_id=${UNSPLASH_API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -241,6 +258,15 @@ router
       category,
       status,
     } = updateData;
+    itemName =xss(itemName);
+    quantity=xss(quantity);
+    unit=xss(unit);
+    expiryDate=xss(expiryDate);
+    costPerItem=xss(costPerItem);
+    totalCost=xss(totalCost);
+    brand=xss(brand);
+    category=xss(category);
+    status=xss(status);
     try {
       userId = help.checkId(req.session.user.id, "User Id");
     } catch (e) {
