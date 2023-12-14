@@ -69,6 +69,7 @@ async function seedFoods(userId) {
     status: "Fresh",
     imageUrl:
       "https://images.unsplash.com/photo-1581098365948-6a5a912b7a49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI0MzE1ODJ8&ixlib=rb-4.0.3&q=80&w=1080",
+    snoozed: false,
   };
 
   try {

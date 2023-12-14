@@ -57,7 +57,7 @@ const exportedMethods = {
   async getAllFood() {
     let foodList = await foodCollection
       .find({})
-      .project({ _id: 1, itemName: 1, expiryDate: 1, imageUrl: 1 })
+      .project({ _id: 1, itemName: 1, expiryDate: 1, imageUrl: 1, snoozed: 1 })
       .toArray();
     if (!foodList) throw "Could not get all food";
 
@@ -153,6 +153,7 @@ const exportedMethods = {
         imageUrl: 1,
         quantity: 1,
         unit: 1,
+        snoozed: 1,
       })
       .toArray();
 
@@ -164,6 +165,30 @@ const exportedMethods = {
     });
 
     return foodList;
+  },
+
+  async updateFoodSnoozeStatus(foodId, snoozed) {
+    foodId = help.checkId(foodId, "Food Id");
+    console.log("food id passed to update function: ", foodId);
+    console.log("snoozed : ", snoozed);
+
+    let updateInfo;
+    try {
+      updateInfo = await foodCollection.findOneAndUpdate(
+        { _id: new ObjectId(foodId) },
+        { $set: { snoozed: snoozed } },
+        { returnDocument: "after" }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+
+    console.log(updateInfo);
+
+    if (!updateInfo)
+      throw `Error: Update failed! Could not update snooze status for food with id ${foodId}`;
+
+    return updateInfo;
   },
 };
 
