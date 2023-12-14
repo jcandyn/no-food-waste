@@ -12,152 +12,275 @@
 </head>
 
 <body>
-  
-        <header class="main-header">
-        <h1>Inventory</h1>
-    </header>
-      <div class="container">
-        <main>
-            {{!-- <button id="addButton" type="submit" >Add food items</button> --}}
-            <button class="btn btn-success addButton active" data-form="addButton">Add Food</button>
-            <button class="btn btn-secondary closeButton" data-form="closeButton">Close </button>
-            <div id="addFood" class="container" >
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Enter the food details </h5>
-                <form id="addFood-form" method="post" action="/food">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="itemName">Item Name:
-                                <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk"  >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="quantity">Quantity:
-                                <input type="number" step="0.01" name="quantity" id="quantity" placeholder="Eg:2" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="unit"> Unit:
-                                <select name="unit" id="unit">
-                                    <option value="">Select...</option>
-                                    <option value="tsp">Teaspoon</option>
-                                    <option value="tbsp">Tablespoon</option>
-                                    <option value="cup">Cup</option>
-                                    <option value="pt">Pint</option>
-                                    <option value="qt">Quart</option>
-                                    <option value="gal">Gallon</option>
-                                    <option value="oz">Ounce</option>
-                                    <option value="floz">Fluid ounce</option>
-                                    <option value="lb">Pound</option>
-                                </select><br>
-                            </label><br>
-                        </div>
-                    </div>
-                </div> 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="expiryDate">Expiry Date:
-                                <input type="date" name="expiryDate" id="expiryDate"  placeholder="MM/DD/YYYY">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="costPerItem">Cost per item:
-                                <input type="number" step="0.01" name="costPerItem" id="costPerItem" placeholder="Eg:20" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="totalCost">Total Cost:
-                                <input type="number" step="0.01" name="totalCost" id="totalCost" placeholder="Eg:200" >
-                            </label><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="brand">Brand:
-                                <input type="text" name="brand" id="brand" placeholder="Eg:Costco" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="category">Category:
-                                <input type="text" name="category" id="category" placeholder="Eg:Dairy" >
-                            </label><br>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="status">Status:
-                                <select name="status" id="status">
-                                    <option value="">Select...</option>
-                                    <option value="Fresh">Fresh</option>
-                                    <option value="Early Decline">Early Decline</option>
-                                </select>
-                            </label><br>
-                        </div>
-                    </div>
-                </div>
-                <button id="formAddButton" class="btn btn-primary" type="submit">Add</button>
-                <button type="reset" class="btn btn-secondary" id="clearBtn">Clear</button>
+  <body>
 
-                </form>
-                {{#if hasErrors}}
-                    <ul class="error-list">
-                        {{#each error}}
-                        <li>
-                        {{this}}
-                        </li>
-                        {{/each}}
-                    </ul>
-                {{/if}}
+  <header class="main-header">
+    <h1>Inventory</h1>
+  </header>
+  <div class="container">
+    <main>
+      {{!-- <button id="addButton" type="submit">Add food items</button> --}}
+    <button class="btn btn-primary addButton active" data-form="addButton">Add Food</button>
+    <button class="btn btn-secondary closeButton" data-form="closeButton">Close</button>
+    <div id="addFood" class="container">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Enter the food details</h5>
+          <form id="addFood-form" method="post" action="/food">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="itemName" class="form-label">Item Name:</label>
+                  <input type="text" class="form-control" name="itemName" id="itemName" placeholder="Eg: Milk">
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="unit" class="form-label">Unit:</label>
+                  <select class="form-control" name="unit" id="unit">
+                    <!-- options here -->
+                    <option value="">Select...</option>
+                        <option value="tsp">Teaspoon</option>
+                        <option value="tbsp">Tablespoon</option>
+                        <option value="c">Cup</option>
+                        <option value="pt">Pint</option>
+                        <option value="qt">Quart</option>
+                        <option value="gal">Gallon</option>
+                        <option value="oz">Ounce</option>
+                        <option value="floz">Fluid ounce</option>
+                        <option value="lb">Pound</option>
+                  </select>
                 </div>
-
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="quantity" class="form-label">Quantity:</label>
+                  <input type="number" class="form-control" step="1" name="quantity" id="quantity" placeholder="Eg: 2">
+                </div>
+              </div>
             </div>
-           <div id="inventoryList" class="container">
-    <div class="d-flex flex-wrap">
-        {{#if foodList.length}}
-            {{#each foodList}}
-                <div class="card mx-2 my-2" style="width: 18rem;" id={{_id}} unit={{unit}} data-quantity={{quantity}}>
-                    <div class="card-body">
-                             <div class="d-flex justify-content-end mb-2">
-                            <input type="checkbox" class="form-check-input" id="checkbox{{_id}}" name="foodCheckbox">
-                        </div>
-                        <h5 class="card-title"><a href="/food/view/{{_id}}">{{itemName}}</a> </h5>
-                        <p class="card-text">Expiration date: {{expiryDate}}</p>
-                        <img src="{{imageUrl}}" alt="Food Image" class="food-image w-50"><br>
-                        
-                    </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="expiryDate" class="form-label">Expiry Date:</label>
+                  <input type="date" class="form-control" name="expiryDate" id="expiryDate" placeholder="MM/DD/YYYY">
                 </div>
-            {{/each}}
-           
-             </div>
-               <button type="button" class="d-block btn btn-success mt-4 w-100" id="shareBtn">Share</button>
-        {{else}}
-            <!-- Message card when foodList is empty -->
-            <div class="card text-center bg-light mx-2 my-2" style="width: 18rem;">
-                <div class="card-body">
-                    <p class="card-text">No food items, yet. Add some to get started!</p>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="costPerItem" class="form-label">Item Cost:</label>
+                  <input type="number" class="form-control" step="0.01" name="costPerItem" id="costPerItem" placeholder="Eg: 20">
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="totalCost" class="form-label">Total Cost:</label>
+                  <input type="text" class="form-control" name="totalCost" id="totalCost" placeholder="$0.00" readonly>
+                </div>
+              </div>
             </div>
-        {{/if}}
-    
-</div>
-        </main>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="brand" class="form-label">Brand:</label>
+                  <input type="text" class="form-control" name="brand" id="brand" placeholder="Eg: Costco">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="category" class="form-label">Category:</label>
+                  <select class="form-control" name="category" id="category">
+                    <option value="">Select...</option>
+                        <!-- Dairy & Eggs -->
+                        <optgroup label="Dairy & Eggs">
+                          <option value="Milk & Cream">Milk & Cream</option>
+                          <option value="Cheese">Cheese</option>
+                          <option value="Yogurt">Yogurt</option>
+                          <option value="Eggs">Eggs</option>
+                          <option value="Butter & Margarine">Butter & Margarine</option>
+                        </optgroup>
+                        <!-- Meat & Poultry -->
+                        <optgroup label="Meat & Poultry">
+                          <option value="Beef">Beef</option>
+                          <option value="Pork">Pork</option>
+                          <option value="Chicken">Chicken</option>
+                          <option value="Turkey">Turkey</option>
+                          <option value="Lamb">Lamb</option>
+                        </optgroup>
+                        <!-- Seafood -->
+                        <optgroup label="Seafood">
+                          <option value="Fish">Fish</option>
+                          <option value="Shellfish">Shellfish</option>
+                          <option value="Canned Seafood">Canned Seafood</option>
+                        </optgroup>
+                        <!-- Fruits -->
+                        <optgroup label="Fruits">
+                          <option value="Citrus Fruits">Citrus Fruits</option>
+                          <option value="Berries">Berries</option>
+                          <option value="Tropical Fruits">Tropical Fruits</option>
+                          <option value="Apples & Pears">Apples & Pears</option>
+                          <option value="Stone Fruits">Stone Fruits</option>
+                        </optgroup>
+                        <!-- Vegetables -->
+                        <optgroup label="Vegetables">
+                          <option value="Leafy Greens">Leafy Greens</option>
+                          <option value="Root Vegetables">Root Vegetables</option>
+                          <option value="Squashes">Squashes</option>
+                          <option value="Cruciferous Vegetables">Cruciferous Vegetables</option>
+                          <option value="Nightshade Vegetables">Nightshade Vegetables</option>
+                        </optgroup>
+                        <!-- Grains & Cereals -->
+                        <optgroup label="Grains & Cereals">
+                          <option value="Rice">Rice</option>
+                          <option value="Pasta">Pasta</option>
+                          <option value="Bread">Bread</option>
+                          <option value="Cereal">Cereal</option>
+                          <option value="Oats">Oats</option>
+                        </optgroup>
+                        <!-- Legumes & Beans -->
+                        <optgroup label="Legumes & Beans">
+                          <option value="Beans">Beans</option>
+                          <option value="Lentils">Lentils</option>
+                          <option value="Peas">Peas</option>
+                          <option value="Chickpeas">Chickpeas</option>
+                        </optgroup>
+                        <!-- Nuts & Seeds -->
+                        <optgroup label="Nuts & Seeds">
+                          <option value="Almonds">Almonds</option>
+                          <option value="Peanuts">Peanuts</option>
+                          <option value="Sunflower Seeds">Sunflower Seeds</option>
+                          <option value="Chia Seeds">Chia Seeds</option>
+                          <option value="Flax Seeds">Flax Seeds</option>
+                        </optgroup>
+                        <!-- Beverages -->
+                        <optgroup label="Beverages">
+                          <option value="Juices">Juices</option>
+                          <option value="Sodas">Sodas</option>
+                          <option value="Tea & Coffee">Tea & Coffee</option>
+                          <option value="Alcoholic Beverages">Alcoholic Beverages</option>
+                          <option value="Water">Water</option>
+                        </optgroup>
+                        <!-- Snacks & Sweets -->
+                        <optgroup label="Snacks & Sweets">
+                          <option value="Chips & Crackers">Chips & Crackers</option>
+                          <option value="Candy & Chocolate">Candy & Chocolate</option>
+                          <option value="Baked Goods">Baked Goods</option>
+                          <option value="Ice Cream & Desserts">Ice Cream & Desserts</option>
+                        </optgroup>
+                        <!-- Condiments & Spices -->
+                        <optgroup label="Condiments & Spices">
+                          <option value="Herbs & Spices">Herbs & Spices</option>
+                          <option value="Sauces & Dressings">Sauces & Dressings</option>
+                          <option value="Oils & Vinegars">Oils & Vinegars</option>
+                          <option value="Condiments">Condiments</option>
+                        </optgroup>
+                        <!-- Frozen Foods -->
+                        <optgroup label="Frozen Foods">
+                          <option value="Frozen Vegetables">Frozen Vegetables</option>
+                          <option value="Frozen Fruits">Frozen Fruits</option>
+                          <option value="Frozen Meals">Frozen Meals</option>
+                          <option value="Ice Cream">Ice Cream</option>
+                        </optgroup>
+                        <!-- Canned & Jarred Goods -->
+                        <optgroup label="Canned & Jarred Goods">
+                          <option value="Canned Vegetables">Canned Vegetables</option>
+                          <option value="Canned Fruits">Canned Fruits</option>
+                          <option value="Preserves & Spreads">Preserves & Spreads</option>
+                          <option value="Pickles">Pickles</option>
+                        </optgroup>
+                        <!-- Special Diets -->
+                        <optgroup label="Special Diets">
+                          <option value="Gluten-Free">Gluten-Free</option>
+                          <option value="Vegan">Vegan</option>
+                          <option value="Organic">Organic</option>
+                          <option value="Non-Dairy Alternatives">Non-Dairy Alternatives</option>
+                        </optgroup>
+                        <!-- Others -->
+                        <optgroup label="Others">
+                          <option value="Miscellaneous">Miscellaneous</option>
+                          <option value="Non-Food Items">Non-Food Items</option>
+                        </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="status" class="form-label">Status:</label>
+                  <select class="form-control" name="status" id="status">
+                    <option value="">Select...</option>
+                <option value="Fresh">Fresh</option>
+                <option value="Good">Good</option>
+                <option value="Near Expiry">Near Expiry</option>
+                <option value="Expired">Expired</option>
+                <option value="Spoiled">Spoiled</option>
+                <option value="Frozen">Frozen</option>
+                <option value="Canned">Canned</option>
+                <option value="Dried">Dried</option>
+                <option value="Partially Used">Partially Used</option>
+                <option value="Reserved">Reserved</option>
+                <option value="Donation Ready">Donation Ready</option>
+                <option value="Needs Review">Needs Review</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button id="formAddButton" class="btn btn-primary" type="submit">Add</button>
+            <button type="reset" class="btn btn-secondary" id="clearBtn">Clear</button>
+          </form>
+          <!-- Error list -->
+          {{#if hasErrors}}
+            <ul class="error-list">
+              {{#each error}}
+              <li>
+                {{this}}
+              </li>
+              {{/each}}
+            </ul>
+            {{/if}}
+        </div>
+      </div>
     </div>
+    <!-- Inventory List Section -->
+
+    <div id="inventoryList" class="container">
+        <h5 id="selectItemsParagraph">Select items below to share with others:</h5>
+
+        <div class="row">
+            {{#if foodList.length}}
+                {{#each foodList}}
+                    <div class="col-md-4 my-2">
+                        <div class="card h-100">
+                            <img src="{{imageUrl}}" alt="Food Image" class="card-img-top">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">
+                                    <a href="/food/view/{{_id}}">{{itemName}}</a>
+                                </h5>
+                                <p class="card-text mb-2">Expiration date: {{expiryDate}}</p>
+                                <div class="mt-auto">
+                                    <input type="checkbox" class="form-check-input" id="checkbox{{_id}}" name="foodCheckbox">
+                                    <label for="checkbox{{_id}}" class="form-check-label">Select for Sharing</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="col-12">
+                    <div class="card text-center bg-light">
+                        <div class="card-body">
+                            <p class="card-text">No food items yet. Add some to get started!</p>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+        {{#if foodList.length}}
+            <button type="button" class="btn btn-success mt-4 w-100" id="shareBtn">Share Selected Items</button>
+        {{/if}}
+    </div>
+
+  </main>
+</div>
 
 <script>
  

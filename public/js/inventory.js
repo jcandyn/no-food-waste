@@ -13,6 +13,43 @@ $(document).ready(function () {
   closeButton.hide();
   //addButton.hide();
 
+  // Function to format currency
+  function formatCurrency(value) {
+    return "$" + parseFloat(value).toFixed(2);
+  }
+
+  // Function to calculate and update total cost
+  /*
+  function updateTotalCost() {
+    // Inside updateTotalCost function
+    let qty = parseFloat($('#quantity').val()) || 0; // Default to 0 if not a number
+    let costItem = parseFloat($('#costPerItem').val().replace('$', '')) || 0; // Default to 0 if not a number
+    let total = qty * costItem;
+    $('#totalCost').val(formatCurrency(total));
+  }*/
+  function updateTotalCost() {
+    let qty = parseFloat($('#quantity').val()) || 0; // Default to 0 if not a number
+    let costItem = parseFloat($('#costPerItem').val().replace('$', '')) || 0; // Default to 0 if not a number
+    console.log("Quantity:", qty, "Cost per Item:", costItem);
+
+    let total = parseFloat(qty) * parseFloat(costItem);
+    console.log("Total Cost:", total);
+
+    $("#totalCost").val(total);
+  }
+
+  console.log(
+    "Quantity:",
+    $("#quantity").val(),
+    "Cost per Item:",
+    $("#costPerItem").val()
+  );
+
+  // Event listener for changes in quantity or cost per item
+  $("#quantity, #costPerItem").on("input", function () {
+    updateTotalCost();
+  });
+
   addButton.click(function () {
     foodDiv.addClass("active");
     addButton.hide();
@@ -31,7 +68,6 @@ $(document).ready(function () {
     clear.click();
     closeButton.hide();
   });
-
   const checkString = (strVal, varName = "input") => {
     if (!strVal) throw `Error: You must supply a ${varName}!`;
     if (typeof strVal !== "string") throw `Error: ${varName} must be a string!`;
@@ -56,59 +92,93 @@ $(document).ready(function () {
   const checkUnit = (unitVal, varName = "Unit") => {
     unitVal = checkString(unitVal, "Unit");
     unitVal = unitVal.toLowerCase();
-    const unitStd = ["tsp", "tbsp", "cup", "pt", "qt", "gal", "oz", "floz", "lb"];
+    const unitStd = [
+      "tsp",
+      "tbsp",
+      "cup",
+      "pt",
+      "qt",
+      "gal",
+      "oz",
+      "floz",
+      "lb",
+    ];
     if (!unitStd.includes(unitVal)) {
       throw `Provide only standard unit values`;
     }
     return unitVal;
   };
+  console.log("Year:", year, "Type:", typeof year);
+
+  function isLeapYear(year) {
+    if (typeof year !== "number") {
+      throw new TypeError(
+        `Expected year to be of type 'number', got '${typeof year}'`
+      );
+    }
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }
+
+  // Test the function
+  console.log(isLeapYear(2020)); // Expected: true
+  console.log(isLeapYear(2021)); // Expected: false
 
   const checkDate = (dateVal, varName = "Date") => {
-    if (!dateVal) throw `Error: You must provide an ${varName}`;
+    if (!dateVal) throw `Error: You must provide a ${varName}`;
     dateVal = dateVal.trim();
     const dateCheck = new Date(dateVal);
     if (isNaN(dateCheck)) {
-      throw "Invalid  Date ";
-    }
-    const dateStr = dateVal.split("-");
-
-    const year = dateStr[0];
-    const date = dateStr[2];
-    const mon = dateStr[1];
-
-    if (mon.length != 2 || date.length != 2 || year.length != 4) {
-      throw `Enter date: ${dateVal} in MM/DD/YYYY format.`;
+      throw "Invalid Date";
     }
 
-    if (!(mon >= 1 && mon <= 12))
+    // Split the date based on '-' (for YYYY-MM-DD format)
+    const dateParts = dateVal.split("-");
+
+    // Ensure we have the correct parts (year, month, day)
+    if (dateParts.length !== 3) {
+      throw `Enter date in YYYY-MM-DD format.`;
+    }
+
+    // Destructuring assignment to get year, month, and date
+    const [yearStr, monStr, dateStr] = dateParts;
+    const year = parseInt(yearStr, 10);  // Corrected to use yearStr
+    const mon = parseInt(monStr, 10);
+    const date = parseInt(dateStr, 10);
+
+    // Convert strings to numbers
+    console.log("Year:", year, "Type of year:", typeof year);
+    isLeapYear(year);
+
+  
+
+    if (!(mon >= 1 && mon <= 12)) {
       throw "Month value is not valid, enter value between 1-12";
-    const day31 = ["01", "03", "05", "07", "08", "10", "12"];
-    const day30 = ["04", "06", "09", "11"];
-    if (day31.includes(mon)) {
-      if (!(date >= 1 && date <= 31)) {
-        throw "Invalid date ";
+    }
+
+    const day31 = [1, 3, 5, 7, 8, 10, 12];
+    const day30 = [4, 6, 9, 11];
+
+    if (day31.includes(mon) && !(date >= 1 && date <= 31)) {
+      throw "Invalid date for month";
+    }
+    if (day30.includes(mon) && !(date >= 1 && date <= 30)) {
+      throw "Invalid input, day should be between 1-30";
+    }
+    if (mon === 2) {
+      const isLeap = isLeapYear(year);
+      const maxDay = isLeap ? 29 : 28;
+      if (!(date >= 1 && date <= maxDay)) {
+        throw `Invalid date for February in a ${
+          isLeap ? "leap" : "non-leap"
+        } year`;
       }
     }
-    if (day30.includes(mon)) {
-      if (!(date >= 1 && date <= 30)) {
-        throw "Invalid input, day should be between 1-30 ";
-      }
-    }
-    if (mon == "02") {
-      if (isLeapYear(year)) {
-        if (!(date >= 1 && date <= 29)) {
-          throw "Leap year feb should have date in between 1-29";
-        }
-      } else {
-        if (!(date >= 1 && date <= 28)) {
-          throw "Feb should have date in between 1-28";
-        }
-      }
-    }
+
     const currentDate = new Date();
     if (dateCheck < currentDate) {
       throw "Expiry date should be greater than current date.";
     }
+
     return dateVal;
   };
 
@@ -119,7 +189,7 @@ $(document).ready(function () {
     let unit = $("#unit").val();
     let expiryDate = $("#expiryDate").val();
     let costPerItem = $("#costPerItem").val();
-    let totalCost = $("#totalCost").val();
+    let totalCost = parseFloat($("#totalCost").val().replace("$", ""));
     let brand = $("#brand").val();
     let category = $("#category").val();
     let status = $("#status").val();
@@ -152,6 +222,7 @@ $(document).ready(function () {
     } catch (e) {
       errorList.push(e);
     }
+
     try {
       const tcost = checkNum(totalCost, "Total Cost");
     } catch (e) {
