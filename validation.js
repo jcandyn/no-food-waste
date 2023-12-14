@@ -47,6 +47,17 @@ const exportedMethods = {
       return unitVal;
     },
 
+    checkState(stateVal, varName='State'){
+      stateVal = this.checkString(stateVal,"State");
+      stateVal=stateVal.toLowerCase();
+      const stateStd=['alabama','arizona','arkansas','california','colorado','connecticut','delaware','florida','new_jersey','new_york','north_carolina','ohio','texas','washington']
+      if(!(stateStd.includes(stateVal))){
+        throw `Provide only state values present in the option`
+
+      }
+      return stateVal;
+    },
+
     checkDate(dateVal, varName='Date'){
       if(!dateVal) throw`Error: You must provide an ${varName}`;
       dateVal =dateVal.trim()
