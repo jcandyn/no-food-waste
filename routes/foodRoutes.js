@@ -5,6 +5,12 @@ import help from "../validation.js";
 import fetch from "node-fetch";
 import { getUserInfo } from "../data/users.js";
 import xss from "xss";
+
+import { config } from "dotenv";
+config();
+
+const UNSPLASH_API_KEY = process.env.UNSPLASH_API_KEY;
+
 import { findExpirations } from "../data/expirations.js";
 
 let userId;
@@ -127,13 +133,12 @@ router
       });
     }
 
-    const apiKey = "0A0cwRBFJMQvKubVKnQJO2wYQTVnxTNY35cFJxXAnyg";
-    const searchWord = itemName; // Replace with the word you want to search for
+    const searchWord = itemName;
 
     let imageUrl;
 
     await fetch(
-      `https://api.unsplash.com/photos/random?query=${searchWord}&client_id=${apiKey}`
+      `https://api.unsplash.com/photos/random?query=${searchWord}&client_id=${UNSPLASH_API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {

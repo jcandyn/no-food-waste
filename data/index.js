@@ -3,7 +3,7 @@ import { config } from "dotenv";
 config();
 
 export const connectToDatabase = async () => {
-  const url = `mongodb+srv://group_2_546:${process.env.DB_PASSWORD}@cluster0.dohb3e9.mongodb.net/?retryWrites=true&w=majority`;
+  const url = process.env.DB_URI;
   const client = new MongoClient(url);
 
   const dbName = "zeroFoodWaste";
