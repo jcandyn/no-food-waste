@@ -94,3 +94,16 @@ ul {
     display: flex;
     justify-content: space-around;
 }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.add-item-button {
+    width: 18%;
+    margin: 0 10px;
+}
