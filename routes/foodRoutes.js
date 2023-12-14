@@ -145,6 +145,8 @@ router
       })
       .catch((error) => console.error("Error fetching image:", error));
 
+    let snoozed = false; // default
+
     try {
       const foodItem = await foodData.addFood(
         userId,
@@ -157,7 +159,8 @@ router
         brand,
         category,
         status,
-        imageUrl
+        imageUrl,
+        snoozed
       );
 
       return res.status(200).redirect("/");
