@@ -31,6 +31,7 @@ const exportedMethods = {
     //if (!ObjectId.isValid(userId)) throw "Invalid User ID";
     // userId = help.checkId(userId, "User Id");
     //Check state
+    state=help.checkState(state,'State')
     state = state.toLowerCase();
 
     let foodList = await giveawayCollection.find({ state: state }).toArray();

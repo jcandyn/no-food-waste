@@ -34,13 +34,29 @@ router
         .status(400)
         .render("error", { error: "There are no fields in the request body" });
     }
+    let { state } = foodInfo;
+    let error=[];
     //Input checking
     try {
-      let { state } = foodInfo;
+      state = help.checkState(state, "State");
+    } catch (e) {
+      error.push(e);
+    }
+    if (error.length > 0) {
+      return res.status(400).render("sharing", {
+        foodList: foodList,
+        name: req.session.user.name,
+        userId: req.session.user.id,
+        hasErrors: true,
+        error: error,
+      });
+    }
+    try {
+      
       //userId = help.checkId(req.session.user.id, "User Id");
       foodList = await shareData.getShareFood(state);
       //console.log(foodList)
-      res.render("sharing", {
+      return res.render("sharing", {
         foodList: foodList,
         name: req.session.user.name,
         userId: req.session.user.id,
