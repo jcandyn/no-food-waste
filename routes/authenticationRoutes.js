@@ -24,12 +24,6 @@ router
   .post(printMiddleware, async (req, res) => {
     let response;
 
-    req.body.location = {
-      streetAddress: req.body.streetAddress,
-      city: req.body.city,
-      state: req.body.state,
-      zip: req.body.zip,
-    };
     const user = req.body;
 
     try {
@@ -38,20 +32,34 @@ router
         throw "Passwords do not match";
       }
     } catch (e) {
-      return res.render("authenticate", {error: e,});
+      return res.render("authenticate", { error: e });
     }
     try {
       // Check if the inputs are valid
-      valid( req.body.email, req.body.password, req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.location, req.body.phoneNumber );
+      valid(
+        req.body.email,
+        req.body.password,
+        req.body.firstName,
+        req.body.lastName,
+        req.body.dateOfBirth,
+        req.body.phoneNumber
+      );
     } catch (e) {
-      return res.render("authenticate", {error: e,});
+      return res.render("authenticate", { error: e });
     }
 
     // Try to input the user
     try {
-      response = await registerUser( req.body.email, req.body.password, req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.location, req.body.phoneNumber );
+      response = await registerUser(
+        req.body.email,
+        req.body.password,
+        req.body.firstName,
+        req.body.lastName,
+        req.body.dateOfBirth,
+        req.body.phoneNumber
+      );
     } catch (e) {
-        return res.render("authenticate", {error: e,});
+      return res.render("authenticate", { error: e });
     }
 
     if (response) {
@@ -82,7 +90,9 @@ router
     try {
       user = await loginUser(email.toLowerCase(), password);
     } catch (error) {
-      res.status(401).render("authenticate", {error: "Invalid Username and/or Password",});
+      res
+        .status(401)
+        .render("authenticate", { error: "Invalid Username and/or Password" });
     }
     if (user) {
       req.session.user = {
@@ -93,7 +103,9 @@ router
       };
       res.redirect("../");
     } else {
-      res.status(401).render("authenticate", {error: "Invalid Username and/or Password",});
+      res
+        .status(401)
+        .render("authenticate", { error: "Invalid Username and/or Password" });
     }
   });
 

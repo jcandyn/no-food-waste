@@ -11,9 +11,6 @@ import {
 
 async function connectAndDropDatabase() {
   try {
-    // Use the run function from mongoConnect.js
-    // await mongoConnectRun();
-
     // Dropping the database after connecting
     const db = await connectToDatabase();
     await db.dropDatabase();
@@ -32,12 +29,6 @@ async function seedUsers() {
     name: "Beyonce",
     lastName: "Knowles",
     dateOfBirth: "1989-09-19",
-    location: {
-      streetAddress: "110 Colgate Ave",
-      city: "Perth Amboy",
-      state: "NC",
-      zip: "08864",
-    },
     phoneNumber: "+17347425024",
   };
 
@@ -149,9 +140,9 @@ async function seedFoods(userId) {
   ];
 
   try {
-    const insertInfo = await foodCollection.insertOne(foodData);
+    const insertInfo = await foodCollection.insertMany(foodData);
     if (!insertInfo.acknowledged || !insertInfo.insertedId)
-      throw "Could not add food item";
+      throw "Could not add food item(s)";
 
     console.log("Food seeded successfully");
   } catch (error) {
@@ -351,14 +342,12 @@ async function seedGiveaway() {
   }
 }
 
-// Usage example
 async function seedData() {
   const userId = await seedUsers();
   if (userId) {
     await seedFoods(userId);
     await seedShoppingList(userId);
     await seedGiveaway();
-    // Add more seed functions as needed
   }
 }
 
