@@ -345,6 +345,22 @@ async function seedGiveaway() {
       site: "www.fbd.org",
       email: "info@communityfoodshare.org",
     },
+    {
+      state: "florida",
+      name: "Feeding Tampa Bay",
+      address: "4702 Transport Dr., Bldg. 6 Tampa, FL 33605",
+      number: "813.254.1190",
+      site: "feedingtampabay.org",
+      email: "info@feedingtampabay.org",
+    },
+    {
+      state: "new_jersey",
+      name: "Fulfill",
+      address: "3300 Route 66 Neptune, NJ 07753",
+      number: "732.918.2600",
+      site: "fulfillnj.org/",
+      email: "main@fulfillnj.org",
+    },
   ];
 
   try {
