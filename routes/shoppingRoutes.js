@@ -2,6 +2,7 @@ import express from "express";
 import shopping from "../data/shopping.js";
 import { printMiddleware } from "../middleware.js";
 import help from "../validation.js";
+import xss from 'xss';
 
 const router = express.Router();
 
@@ -50,7 +51,8 @@ router.route("/").post(printMiddleware, async (req, res) => {
 
   try {
     const userId = help.checkId(req.session.user.id, "User Id");
-    const { itemName } = req.body;
+    let { itemName } = req.body;
+    itemName=xss(itemName)
 
     let shoppingList = await shopping.getShoppingListByUserId(userId);
 
