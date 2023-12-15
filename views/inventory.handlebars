@@ -243,10 +243,10 @@
     <!-- Inventory List Section -->
 
     <div id="inventoryList" class="container">
-        <h5 id="selectItemsParagraph">Select items below to share with others:</h5>
 
         <div class="row">
             {{#if foodList.length}}
+                    <h5 id="selectItemsParagraph">Select items below to share with others:</h5>
                 {{#each foodList}}
                     <div class="col-md-4 my-2">
                         <div class="card h-100" unit={{unit}} data-quantity={{quantity}}>

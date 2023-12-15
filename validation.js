@@ -62,6 +62,7 @@ const exportedMethods = {
       if(!dateVal) throw`Error: You must provide an ${varName}`;
       dateVal =dateVal.trim()
       const dateCheck = new Date(dateVal )
+      
       if(isNaN(dateCheck)){
         throw "Invalid  Date "
         
@@ -107,6 +108,7 @@ const exportedMethods = {
         
       }
       const currentDate = new Date()
+      //currentDate.setHours(0, 0, 0, 0); // Reset time part to midnight
       if(dateCheck < currentDate){
         throw "Expiry date should be greater than current date."
       }
