@@ -115,7 +115,7 @@ export const loginUser = async (email, password) => {
   let user;
 
   try {
-    user = await usersCollection.findOne({ email: email });
+    user = await usersCollection.findOne({ email: email.toLowerCase() });
   } catch (error) {
     throw error;
   }
