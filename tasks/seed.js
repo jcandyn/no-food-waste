@@ -22,34 +22,46 @@ async function connectAndDropDatabase() {
 
 // Seed function for users
 async function seedUsers() {
-  const userData = {
-    dateJoined: new Date().toUTCString(),
-    email: "email@gmail.com",
-    password: "$2b$10$Yg.jhi9OWOuyXlBteKTFVuLcHEhh7JyBm1.m6C..e6ESinrS.lvbK",
-    name: "Beyonce",
-    lastName: "Knowles",
-    dateOfBirth: "1989-09-19",
-    phoneNumber: "+17347425024",
-  };
+  const userData = [
+    {
+      dateJoined: new Date().toUTCString(),
+      email: "test@gmail.com",
+      password: "$2b$10$dfr7.aTkng2LGPbD/.KLZ.Psezd4M3vDJychd1YVAwQIA3nwu2QCC",
+      name: "Jules",
+      lastName: "Marte",
+      dateOfBirth: "1996-12-16",
+      phoneNumber: "+17317420024",
+    },
+    {
+      dateJoined: new Date().toUTCString(),
+      email: "email@gmail.com",
+      password: "$2b$10$dfr7.aTkng2LGPbD/.KLZ.Psezd4M3vDJychd1YVAwQIA3nwu2QCC",
+      name: "Beyonce",
+      lastName: "Knowles",
+      dateOfBirth: "1989-09-19",
+      phoneNumber: "+17347425024",
+    },
+  ];
 
   try {
-    const newInsertInformation = await usersCollection.insertOne(userData);
-    if (!newInsertInformation.insertedId) throw "User insert failed!";
+    const newInsertInformation = await usersCollection.insertMany(userData);
 
-    console.log("User seeded successfully");
+    // Extract and return the array of inserted _ids
+    const insertedIds = newInsertInformation.insertedIds;
+    console.log("Users seeded successfully with IDs:", insertedIds);
 
+    return insertedIds;
     // Return the inserted _id to be used as userId in other seed functions
-    return newInsertInformation.insertedId;
   } catch (error) {
     console.error("Error seeding user:", error);
   }
 }
 
 // Seed function for foods
-async function seedFoods(userId) {
+async function seedFoods(userIds) {
   const foodData = [
     {
-      userId: userId.toString(), // Use the userId captured from seedUsers
+      userId: userIds[0].toString(), // Use the userId captured from seedUsers
       itemName: "soda",
       quantity: 1,
       unit: "gal",
@@ -64,7 +76,7 @@ async function seedFoods(userId) {
       snoozed: false,
     },
     {
-      userId: userId.toString(),
+      userId: userIds[0].toString(),
       itemName: "Strawberry",
       quantity: 3,
       unit: "tbsp",
@@ -79,11 +91,11 @@ async function seedFoods(userId) {
       snoozed: false,
     },
     {
-      userId: userId.toString(),
+      userId: userIds[0].toString(),
       itemName: "Linguini Pasta",
       quantity: 2,
       unit: "oz",
-      expiryDate: "2024-01-12",
+      expiryDate: "2023-11-12",
       costPerItem: 1,
       totalCost: 2,
       brand: "Cotsco",
@@ -93,7 +105,7 @@ async function seedFoods(userId) {
         "https://images.unsplash.com/photo-1633614201174-a5172e93c21e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI1MzU3NTN8&ixlib=rb-4.0.3&q=80&w=1080",
     },
     {
-      userId: userId.toString(),
+      userId: userIds[0].toString(),
       itemName: "chocolate",
       quantity: 1,
       unit: "qt",
@@ -108,11 +120,11 @@ async function seedFoods(userId) {
       snoozed: false,
     },
     {
-      userId: userId.toString(),
+      userId: userIds[0].toString(),
       itemName: "bread",
       quantity: 1,
       unit: "oz",
-      expiryDate: "2025-01-01",
+      expiryDate: "2023-10-10",
       costPerItem: 1,
       totalCost: 1,
       brand: "Cotsco",
@@ -123,7 +135,7 @@ async function seedFoods(userId) {
       snoozed: false,
     },
     {
-      userId: userId.toString(),
+      userId: userIds[0].toString(),
       itemName: "Beans",
       quantity: 1,
       unit: "oz",
@@ -141,7 +153,7 @@ async function seedFoods(userId) {
 
   try {
     const insertInfo = await foodCollection.insertMany(foodData);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId)
+    if (!insertInfo.acknowledged || !insertInfo.insertedIds)
       throw "Could not add food item(s)";
 
     console.log("Food seeded successfully");
@@ -151,9 +163,9 @@ async function seedFoods(userId) {
 }
 
 // Seed function for shopping list
-async function seedShoppingList(userId) {
+async function seedShoppingList(userIds) {
   const shoppingListData = {
-    userId: userId.toString(), // Use the userId captured from seedUsers
+    userId: userIds[0].toString(), // Use the userId captured from seedUsers
     items: ["2 oranges", "2 apples", "1 lactose-free milk"],
   };
 
@@ -343,10 +355,10 @@ async function seedGiveaway() {
 }
 
 async function seedData() {
-  const userId = await seedUsers();
-  if (userId) {
-    await seedFoods(userId);
-    await seedShoppingList(userId);
+  const userIds = await seedUsers();
+  if (userIds) {
+    await seedFoods(userIds);
+    await seedShoppingList(userIds);
     await seedGiveaway();
   }
 }
