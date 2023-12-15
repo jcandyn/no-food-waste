@@ -1,13 +1,17 @@
-import { run as connectToDatabase } from "../config/mongoConnect.js";
+import {
+  run as mongoConnectRun,
+  connectToDatabase,
+} from "../config/mongoConnect.js";
 import {
   usersCollection,
   foodCollection,
   shoppingCollection,
   giveawayCollection,
 } from "../data/index.js";
-
 async function connectAndDropDatabase() {
   try {
+    // Use the run function from mongoConnect.js
+
     // Dropping the database after connecting
     const db = await connectToDatabase();
     await db.dropDatabase();
