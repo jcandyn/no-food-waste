@@ -98,17 +98,6 @@ export const valid = async (
   }
 };
 
-export const isEmailAlreadyExists = async (email) => {
-  try {
-    const existingUser = await usersCollection.findOne({
-      email: email.toLowerCase(),
-    });
-    return existingUser !== null;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const registerUser = async (
   email,
   password,
