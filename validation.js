@@ -70,7 +70,7 @@ const exportedMethods = {
       // const mon = dateStr[0]
       // const date = dateStr[1]
       // const year = dateStr[2]
-      const year=dateStr[0]
+      let year=dateStr[0]
       const date=dateStr[2]
       const mon=dateStr[1]
       
@@ -93,6 +93,7 @@ const exportedMethods = {
         }
       }
       if(mon == '02'){
+        year =parseInt(year)
         if(isLeapYear(year)){
           if(!(date>=1 && date<=29)){
             throw "Leap year feb should have date in between 1-29";
