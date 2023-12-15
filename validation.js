@@ -136,8 +136,12 @@ const exportedMethods = {
         }
         
       }
-      const currentDate = new Date()
-      //currentDate.setHours(0, 0, 0, 0); // Reset time part to midnight
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0); // Set the time of the current date to midnight
+
+      dateCheck.setHours(0, 0, 0, 0); // Also set the time of dateCheck to midnight for an accurate comparison
+
+
       if(dateCheck < currentDate){
         throw "Expiry date should be greater than current date."
       }
