@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { usersCollection } from "./index.js";
 import { ObjectId } from "mongodb";
 
-export function valid ( email, password, firstName, lastName, dateOfBirth, location, phoneNumber ) {
+export function valid ( email, password, firstName, lastName, dateOfBirth, phoneNumber ) {
   // Check if values are provided
 	if (
 		!email ||
@@ -11,7 +11,6 @@ export function valid ( email, password, firstName, lastName, dateOfBirth, locat
 		!firstName ||
     !lastName ||
     !dateOfBirth ||
-    !location ||
     !phoneNumber) {
 		throw "All fields need to have valid values";
 	}
@@ -22,7 +21,6 @@ export function valid ( email, password, firstName, lastName, dateOfBirth, locat
 		typeof password !== 'string' || password.trim() === '' ||
 		typeof firstName !== 'string' || firstName.trim() === '' ||
     typeof lastName !== 'string' || lastName.trim() === '' ||
-    typeof location !== 'object' ||
     typeof phoneNumber !== 'string' || phoneNumber.trim() === '') {
 		throw "Values provided are incorrect";
 	}
@@ -75,19 +73,6 @@ export function valid ( email, password, firstName, lastName, dateOfBirth, locat
     throw "You must be 18 years or older";
   }
 
-  // Check that location is valid
-	const validState = /^(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)$/;
-	const validZip = /^\d{5}$/;
-	if (
-		!location.streetAddress || typeof location.streetAddress !== 'string' || location.streetAddress.length < 3 || location.streetAddress.trim() === '' ||
-		!location.city || typeof location.city !== 'string' || location.city.length < 3 || location.city.trim() === '' ||
-		!location.state || typeof location.state !== 'string' || location.state.trim() === '' ||
-		!location.zip || typeof location.zip !== 'string' || location.zip.trim() === '' ||
-		!validState.test(location.state.trim().toUpperCase()) ||
-		!validZip.test(location.zip.trim())) {
-		throw "Location is invalid, must be in the form of 'NJ', 'NY', 'ME', etc.";
-	}
-
   // Check that phoneNumber is valid
   const validPhoneNumber = /^\d{10}$/;
   if (!validPhoneNumber.test(phoneNumber.trim())) {
@@ -95,13 +80,13 @@ export function valid ( email, password, firstName, lastName, dateOfBirth, locat
   }
 };
 
-export const registerUser = async ( email, password, firstName, lastName, dateOfBirth, location, phoneNumber ) => {
+export const registerUser = async ( email, password, firstName, lastName, dateOfBirth, phoneNumber ) => {
 	
 	// Check if the values are valid running the valid method
-	valid(email, password, firstName, lastName, dateOfBirth, location, phoneNumber);
+	valid(email, password, firstName, lastName, dateOfBirth, phoneNumber);
 	
 	const usero = await usersCollection.findOne(
-		{ email: email }
+		{ email: email.toLowerCase() }
 	);
 
 	if (usero !== null) {
@@ -117,7 +102,6 @@ export const registerUser = async ( email, password, firstName, lastName, dateOf
     name: firstName,
     lastName: lastName,
     dateOfBirth: dateOfBirth,
-    location: location,
     phoneNumber: phoneNumber,
   };
 
