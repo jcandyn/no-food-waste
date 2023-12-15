@@ -17,11 +17,11 @@ let userId;
 let foodList;
 // Create a new food item
 router
-  .route("/")
   .get(async (req, res) => {
     if (!req.session.user) {
-      res.redirect("/");
+      return res.redirect("/");
     }
+
     try {
       let expirationNotifications;
       const date = new Date();
@@ -32,7 +32,7 @@ router
       console.log("expiration being passed down: ", expirationNotifications);
       userId = help.checkId(req.session.user.id, "User Id");
       foodList = await foodData.getFoodByUserId(userId);
-      // Retrieve user info once outside the forEach loop
+      // Retrieve user info
       const userInfo = await getUserInfo(userId);
       res.render("inventory", {
         foodList: foodList,
@@ -44,7 +44,6 @@ router
     } catch (e) {
       return res.status(500).render("error", { error: e });
     }
-    return;
   })
   .post(async (req, res) => {
     let foodInfo = req.body;
