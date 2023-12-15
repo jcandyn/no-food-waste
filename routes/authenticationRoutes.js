@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import { registerUser, loginUser, valid } from "../data/users.js";
 // import { passwordValidation } from "../helpers.js";
-
+import xss from "xss";
 import {
   printMiddleware,
   loginMiddleware,
@@ -47,16 +47,28 @@ router
     } catch (e) {
       return res.render("authenticate", { error: e });
     }
+    let emailVal = xss(req.body.email)
+    let passwordVal = xss(req.body.password)
+    let firstNameVal = xss(req.body.firstName)
+    let lastNameVal = xss(req.body.lastName)
+    let dateOfBirthVal =xss(req.body.dateOfBirth)
+    let phoneNumberVal = xss(req.body.phoneNumber)
 
     // Try to input the user
     try {
       response = await registerUser(
-        req.body.email,
-        req.body.password,
-        req.body.firstName,
-        req.body.lastName,
-        req.body.dateOfBirth,
-        req.body.phoneNumber
+        // req.body.email,
+        // req.body.password,
+        // req.body.firstName,
+        // req.body.lastName,
+        // req.body.dateOfBirth,
+        // req.body.phoneNumber
+        emailVal,
+        passwordVal, 
+        firstNameVal,
+        lastNameVal, 
+        dateOfBirthVal,
+        phoneNumberVal
       );
     } catch (e) {
       return res.render("authenticate", { error: e });
@@ -82,8 +94,10 @@ router
   })
   .post(printMiddleware, async (req, res) => {
     //code here for POST
-    const email = req.body["email"];
-    const password = req.body["password"];
+    let email = req.body["email"];
+    let password = req.body["password"];
+    email=xss(email)
+    password=xss(password)
 
     let user;
 
