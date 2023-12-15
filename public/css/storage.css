@@ -1,29 +1,9 @@
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #fff;
-    color: #333;
-    line-height: 1.6;
-}
+
 
 .container {
     padding: 20px;
 }
 
-.main-header {
-    background-color: #4a7c59;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.main-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
 
 .storage-tips {
     font-family: 'Roboto', sans-serif;
