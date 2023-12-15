@@ -39,7 +39,7 @@ const exportedMethods = {
     checkUnit(unitVal, varName='Unit'){
       unitVal = this.checkString(unitVal,"Unit");
       unitVal=unitVal.toLowerCase();
-      const unitStd=['tsp','tbsp','cup','pt','qt','gal','oz','floz','lb']
+      const unitStd=['tsp','tbsp','cup','pt','qt','gal','oz','floz','lb','whole']
       if(!(unitStd.includes(unitVal))){
         throw `Provide only standard unit values`
 
