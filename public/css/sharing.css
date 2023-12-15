@@ -1,20 +1,118 @@
-.main-header {
-    background-color: #4a7c59;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+
+/* Main Content */
+.sharing-container {
+    width: 90%;
+    margin: 30px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.main-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+.sharing-info {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-#foodDonation, h3{
+/* Card Styles */
+.card {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.4rem;
     color: #4a7c59;
-    text-align: center;
+    margin-bottom: 20px;
+}
+
+.error-list {
+    color: #d9534f;
+    margin-top: 15px;
+    padding-left: 20px;
+    list-style: inside;
+}
+
+/* Form Styles */
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+form select {
+    width: 60%; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: block; 
+    margin: 0 auto; 
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block; 
+    margin: 0 auto; 
+    width: auto; 
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+
+/* Display Cards Container */
+#display {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+/* Individual Cards */
+#display .card {
+    width: 24rem; 
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin: 10px 0; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#display .card-body {
+    padding: 15px;
+}
+
+#display .card-body h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#display .card-body p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+    form select {
+        width: 100%; /* Full width for smaller screens */
+    }
 }

@@ -1,89 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
     <title>Sharing</title>
-    <link href="../public/css/sharing.css" rel="stylesheet" >
+    <link href="../public/css/sharing.css" rel="stylesheet">
 </head>
-<body>
+
+<body class="sharing-page">
     <header class="main-header">
-    <h1>Food Sharing</h1>
+        <h1>Food Sharing</h1>
     </header>
     <main>
-        <div class="container">
-             <p>Welcome to our initiative to share food with local food banks and make a positive impact on our community.</p>
-             <div class="card">
+        <div class="sharing-container">
+            <p class="sharing-info">Welcome to our initiative to share food with local food banks and make a positive
+                impact on our community.</p>
+            <div class="card">
                 <div class="card-body">
-                  <form id="foodDonation" method="POST" action="/sharing"> 
-                    <h2 class="card-title">Search here for Food Donation </h2>
-                            <label for="state">Select the state:
-                                <select name="state" id="state">
-                                    <option value="">Select...</option>
-                                    <option value="alabama">Alabama</option>
-                                    <option value="arizona">Arizona</option>
-                                    <option value="arkansas">Arkansas</option>
-                                    <option value="california">California</option>
-                                    <option value="colorado">Colorado</option>
-                                    <option value="connecticut">Connecticut</option>
-                                    <option value="delaware">Delaware</option>
-                                    <option value="florida">Florida</option>
-                                    <option value="new_jersey">New Jersey</option>
-                                    <option value="new_york">New York</option>
-                                    <option value="north_carolina">North Carolina</option>
-                                    <option value="ohio">Ohio</option>
-                                    <option value="texas">Texas</option>
-                                    <option value="washington">Washington</option>
+                    <form id="foodDonation" method="POST" action="/sharing">
+                        <h2 class="card-title">Search here for Food Donation </h2>
+                        <label for="state">Select the state:
+                            <select name="state" id="state">
+                                <option value="">Select...</option>
+                                <option value="alabama">Alabama</option>
+                                <option value="arizona">Arizona</option>
+                                <option value="arkansas">Arkansas</option>
+                                <option value="california">California</option>
+                                <option value="colorado">Colorado</option>
+                                <option value="connecticut">Connecticut</option>
+                                <option value="delaware">Delaware</option>
+                                <option value="florida">Florida</option>
+                                <option value="new_jersey">New Jersey</option>
+                                <option value="new_york">New York</option>
+                                <option value="north_carolina">North Carolina</option>
+                                <option value="ohio">Ohio</option>
+                                <option value="texas">Texas</option>
+                                <option value="washington">Washington</option>
 
-                                    
-                                    
-                                    
-                                    
-                                </select>
-                            </label>
-                            <button type="submit" class="btn btn-success" id="searchBtn" >Search</button>
+                            </select>
+                        </label>
+                        <button type="submit" class="btn btn-success" id="searchBtn">Search</button>
                     </form>
                     {{#if hasErrors}}
                     <ul class="error-list">
                         {{#each error}}
                         <li>
-                        {{this}}
+                            {{this}}
                         </li>
                         {{/each}}
                     </ul>
-                    {{/if}} 
+                    {{/if}}
                 </div>
-                </div>
+            </div>
 
-                    <div class="container"  id="display" > 
-                        {{#if foodList.length}}
-                        {{#each foodList}}
-                        <div class="card mx-2 my-2" style="width: 18rem;" >
-                            <div class="card-body">
-                                 <h3>{{{name}}}</h3>
-        
-                                <p >Address: {{address}}<br>
-                                Number: {{number}}<br>
-                                Site: {{site}}<br>
-                                {{email}}<br>
-                                </p>
-                        
-                            </div>
-                        </div>
-                        {{/each}}
-           
-            
-                        {{else}}
-                        <!-- Message card when foodList is empty -->
-                        <div class="card text-center bg-light mx-2 my-2" style="width: 18rem;">
-                            <div class="card-body">
-                                <p class="card-text">No food banks</p>
-                            </div>
-                        </div>
-                        {{/if}}
-                
+            <div class="container" id="display">
+                {{#if foodList.length}}
+                {{#each foodList}}
+                <div class="card mx-2 my-2">
+                    <div class="card-body">
+                        <h3>{{{name}}}</h3>
+
+                        <p>Address: {{address}}<br>
+                            Number: {{number}}<br>
+                            Site: {{site}}<br>
+                            {{email}}<br>
+                        </p>
+
                     </div>
+                </div>
+                {{/each}}
+
+                {{else}}
+                <!-- Message card when foodList is empty -->
+                <div class="card text-center bg-light mx-2 my-2" style="width: 18rem;">
+                    <div class="card-body">
+                        <p class="card-text">No food banks</p>
+                    </div>
+                </div>
+                {{/if}}
+
+            </div>
         </div>
     </main>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="../public/js/sharing.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<script src="../public/js/sharing.js"></script>
+</body>
+</html>
