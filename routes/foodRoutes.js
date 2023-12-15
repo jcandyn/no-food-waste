@@ -119,7 +119,7 @@ router
       error.push(e);
     }
     try {
-      status = help.checkString(status, "Status");
+      status = help.checkStatus(status, "Status");
     } catch (e) {
       error.push(e);
     }
@@ -331,7 +331,7 @@ router
       error.push(e);
     }
     try {
-      status = help.checkString(status, "Status");
+      status = help.checkStatus(status, "Status");
     } catch (e) {
       error.push(e);
     }

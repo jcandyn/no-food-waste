@@ -121,7 +121,17 @@ $("#quantity, #costPerItem").on("input", function () {
     }
 
     return categoryVal;
-}
+  }
+  const checkStatus =(statusVal, varName='Status')=>{
+    statusVal = checkString(statusVal,"Status");
+    //statusVal=statusVal.toLowerCase();
+    const statusOption=["Fresh","Good","Near Expiry","Expired","Spoiled","Frozen","Canned","Dried","Partially Used","Reserved","Donation Ready","Needs Review"]
+    if(!(statusOption.includes(statusVal))){
+     throw `Provide only valid Status values from the option`
+
+    }
+    return statusVal;
+  }
 
   const checkDate = (dateVal, varName = "Date") => {
     if (!dateVal) throw `Error: You must provide an ${varName}`;
@@ -248,7 +258,7 @@ $("#quantity, #costPerItem").on("input", function () {
       errorList.push(e);
     }
     try {
-      const stat = checkString(status, "Status");
+      const stat = checkStatus(status, "Status");
     } catch (e) {
       errorList.push(e);
     }
