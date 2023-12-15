@@ -5,87 +5,270 @@
     <meta charset="utf-8">
     <title>Zero Food Waste</title>
     <link rel="stylesheet" href="../public/css/storage.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-<main>
-    <h1>General Rule for Storage</h1>
-        <h2>Storing Food in the Fridge</h2>
-            <p>Your fridge temperature should be at 40 °F or below. The freezer temperature should be below 5 °F. Use a thermometer to check the temperature in your fridge.</p>
-        <h2>Freezing food safely</h2>
-            <p>When shopping, buy chilled and frozen foods at the end of your trip and take them home to store as quickly as possible. On hot days or for trips longer than 30 minutes, try to take an insulated cooler bag or ice pack to keep frozen foods cold. Keep hot and cold foods separate while you take them home.</p>
-            <p>When you arrive home, put chilled and frozen foods into the fridge or freezer immediately. Make sure foods stored in the freezer are frozen hard.</p>
-        <h2>Storing cooked food safely</h2>
-            <p>When you have cooked food and want to cool it:</p>
-                <ul>
-                    <li>Put hot food into shallow dishes or separate into smaller portions to help cool the food as quickly as possible.</li>
-                    <li>Don't put very hot food into the refrigerator. Wait until steam has stopped rising from the food before putting it in the fridge.</li>
-                </ul>
-        <h2>Avoid refreezing thawed food</h2>
-            <p>Food poisoning bacteria can grow in frozen food while it is thawing, so avoid thawing frozen food in the temperature danger zone. Keep defrosted food in the fridge until it is ready to be cooked. If using a microwave oven to defrost food, cook it immediately after defrosting.</p>
-            <p>As a general rule, avoid refreezing thawed food. Food that is frozen a second time is likely to have higher levels of food poisoning bacteria. The risk depends on the condition of the food when frozen, and how the food is handled between thawing and refreezing. Raw food should never be refrozen once thawed.</p>
-        <h2>Store raw food separately from cooked food</h2>
-            <p>Raw food and cooked food should be stored separately in the fridge. Bacteria from raw food can contaminate cold cooked food, and the bacteria can multiply to dangerous levels if the food is not cooked thoroughly again.</p>
-            <p>Always store raw food in sealed or covered containers at the bottom of the fridge. Keep raw foods below cooked foods, to avoid liquid such as meat juices dripping down and contaminating the cooked food.</p>
-        <h2>Choose strong, non-toxic food storage containers</h2>
-            <p>Make sure your food storage containers are clean and in good condition, and only use them for storing food. Cover them with tight-fitting lids, foil or plastic film to minimise potential contamination. Transfer the contents of opened cans into suitable containers.</p>
-        <h2>If in doubt, throw it out!</h2>
-            <p>Throw out high-risk food left in the temperature danger zone for more than 4 hours - don't put it in the fridge and don't keep it for later. Check the use-by dates on food products and discard out-of-date food. If you are uncertain of the use-by date, throw it out.</p>
-    <div class="divider"></div>
-    <h1>Other Food Storage Tips:</h1>
-    <div class="button-container">
-      <button class="add-item-button" id="dairyLink">Dairy</button>
-      <button class="add-item-button" id="meatLink">Meats</button>
-      <button class="add-item-button" id="fishLink">Fish</button>
-      <button class="add-item-button" id="pastaLink">Pasta</button>
-      <button class="add-item-button" id="greensLink">Leafy Greens</button>
-    </div>
+<body>
+    <header class="main-header">
+        <h1>General Rule for Storage</h1>
+    </header>
 
-    <div id="dairyInfo" style="display: none;">
-        <h1>Special Storage for Dairy</h1>
-            <p>Most dairy products need to be refrigerated. The main exceptions are powdered milk products and UHT (ultra-high temperature) products, which you can store in the pantry. And, of course, ice cream, which needs to be kept in the freezer.</p>
-            <p>The best thing to do is follow the instructions on the product label. The best-before date gives you an idea of how long your dairy product will last before it starts to lose its quality (as long as you have stored it correctly). But it doesn’t necessarily mean that after this date, the dairy product is dangerous to eat or drink.</p>
-            <p>The same thing goes for dairy alternatives. Follow the directions on the packet. Some non-dairy milks need to be kept in the fridge while others are fine in the pantry. And remember, even though non-dairy milk generally lasts longer than it’s dairy counterpart, it will still sour in time.</p>
-            <p>One last thing. If you find that your dairy products and dairy alternatives are spoiling before the best before date, check your refrigerator. It may not be cold enough.</p>
-    </div>
-    <div id="meatInfo" style="display: none;">
-        <h1>Special Storage for Meats</h1>
-            <p>The safe temperature to store minced meat, sausages is 71 °F</p>
-            <p>The safe temperature to store beef, veal, lamb, and pork is 63 °F</p>
-            <p>The safe temperature to store chicken and turkey is 74 °F</p>
-            <p>Store unwrapped fresh raw meat in clean containers in the coldest part of your fridge (at 0–3 ºF). If the container is ventilated to allow air circulation, you can keep it for up to 5 days (the surface of the meat will dry out a little, but this stops the growth of micro-organisms).</p>
-            <p>You can leave meat and poultry wrapped in its original packaging (for example, a plastic bag from the butcher or a sealed package from the supermarket), but this keeps moisture trapped, which enables bacteria to grow. Meat or poultry refrigerated in its shop packaging should be used within 3 days.</p>
-            <p>Store raw minced meat in the coldest part of the fridge and use within 3 days.</p>
-    </div>
-    <div id="fishInfo" style="display: none;">
-        <h1>Special Storage for Fish</h1>
+    <main class="container my-4 storage-tips">
+        <section class="storage-tips container my-5">
+            <!-- Introduction to Food Storage -->
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="public/assets/how-to-store-food-properly.png" class="img-fluid rounded-start"
+                            alt="Food Storage Image">
+                    </div>
+                    <div class="col-md-8 align-self-center">
+                        <div class="card-body">
+                            <h3>Understanding Food Storage</h3>
+                            <p class="card-text">Proper food storage is essential for maintaining the freshness and
+                                nutritional value of your groceries. It helps in reducing food waste and ensures food
+                                safety.</p>
+                            <p class="card-text">This guide will cover various methods and tips for storing different
+                                types of food, such as dairy, meats, vegetables, and more, to maximize their shelf life
+                                and maintain quality.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="accordion storage-accordion" id="storageAccordion">
+            <!-- Accordion Item: Storing Food in the Fridge -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Storing Food in the Fridge
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    data-bs-parent="#storageAccordion">
+                    <div class="accordion-body">
+                        <p>Your fridge temperature should be at 40 °F or below. The freezer temperature should be below
+                            5 °F. Use a thermometer to check the temperature in your fridge.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item: Freezing Food Safely -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Freezing Food Safely
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                    data-bs-parent="#storageAccordion">
+                    <div class="accordion-body">
+                        <p>When shopping, buy chilled and frozen foods at the end of your trip and take them home to
+                            store
+                            as quickly as possible. On hot days or for trips longer than 30 minutes, try to take an
+                            insulated cooler bag or ice pack to keep frozen foods cold. Keep hot and cold foods separate
+                            while you take them home.</p>
+                        <p>When you arrive home, put chilled and frozen foods into the fridge or freezer immediately.
+                            Make
+                            sure foods stored in the freezer are frozen hard.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item: Storing Cooked Food Safely -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Storing Cooked Food Safely
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                    data-bs-parent="#storageAccordion">
+                    <div class="accordion-body">
+                        <p>When you have cooked food and want to cool it:</p>
+                        <ul>
+                            <li>Put hot food into shallow dishes or separate into smaller portions to help cool the food
+                                as quickly as possible.</li>
+                            <li>Don't put very hot food into the refrigerator. Wait until steam has stopped rising from
+                                the food before putting it in the fridge.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Accordion Item: Avoiding Refreezing Thawed Food -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                        Avoiding Refreezing Thawed Food
+                    </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
+                    data-bs-parent="#storageAccordion">
+                    <div class="accordion-body">
+                        <p>Food poisoning bacteria can grow in frozen food while it is thawing, so avoid thawing frozen
+                            food in the temperature danger zone. Keep defrosted food in the fridge until it is ready to
+                            be cooked. If using a microwave oven to defrost food, cook it immediately after defrosting.
+                        </p>
+                        <p>As a general rule, avoid refreezing thawed food. Food that is frozen a second time is likely
+                            to have higher levels of food poisoning bacteria. The risk depends on the condition of the
+                            food when frozen, and how the food is handled between thawing and refreezing. Raw food
+                            should never be refrozen once thawed.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item: Store Raw Food Separately from Cooked Food -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                        Store Raw Food Separately from Cooked Food
+                    </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
+                    data-bs-parent="#storageAccordion">
+                    <div class="accordion-body">
+                        <p>Raw food and cooked food should be stored separately in the fridge. Bacteria from raw food
+                            can contaminate cold cooked food, and the bacteria can multiply to dangerous levels if the
+                            food is not cooked thoroughly again.</p>
+                        <p>Always store raw food in sealed or covered containers at the bottom of the fridge. Keep raw
+                            foods below cooked foods, to avoid liquid such as meat juices dripping down and
+                            contaminating the cooked food.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item: Choose Strong, Non-Toxic Food Storage Containers -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                        Choose Strong, Non-Toxic Food Storage Containers
+                    </button>
+                </h2>
+                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix"
+                    data-bs-parent="#storageAccordion">
+                    <div class="accordion-body">
+                        <p>Make sure your food storage containers are clean and in good condition, and only use them for
+                            storing food. Cover them with tight-fitting lids, foil or plastic film to minimise potential
+                            contamination. Transfer the contents of opened cans into suitable containers.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item: If in Doubt, Throw It Out! -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                        If in Doubt, Throw It Out!
+                    </button>
+                </h2>
+                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven"
+                    data-bs-parent="#storageAccordion">
+                    <div class="accordion-body">
+                        <p>Throw out high-risk food left in the temperature danger zone for more than 4 hours - don't
+                            put it in the fridge and don't keep it for later. Check the use-by dates on food products
+                            and discard out-of-date food. If you are uncertain of the use-by date, throw it out.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion: END -->
+        </div>
+        <div class="container my-4">
+            <h1 class="food-storage-tips-title">Other Food Storage Tips:</h1>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-outline-primary btn-custom mx-1" id="meatLink">Meats</button>
+                <button class="btn btn-outline-primary btn-custom mx-1" id="fishLink">Fish</button>
+                <button class="btn btn-outline-primary btn-custom mx-1" id="pastaLink">Pasta</button>
+                <button class="btn btn-outline-primary btn-custom mx-1" id="greensLink">Leafy Greens</button>
+            </div>
+
+
+
+            <div id="meatInfo" class="info-section mt-4" style="display: none;">
+                <!-- Content for Meat Info -->
+                <h1>Special Storage for Dairy</h1>
+                <p>Most dairy products need to be refrigerated. The main exceptions are powdered milk products and UHT
+                    (ultra-high temperature) products, which you can store in the pantry. And, of course, ice cream,
+                    which needs to be kept in the freezer.</p>
+                <p>The best thing to do is follow the instructions on the product label. The best-before date gives you
+                    an idea of how long your dairy product will last before it starts to lose its quality (as long as
+                    you have stored it correctly). But it doesn’t necessarily mean that after this date, the dairy
+                    product is dangerous to eat or drink.</p>
+                <p>The same thing goes for dairy alternatives. Follow the directions on the packet. Some non-dairy milks
+                    need to be kept in the fridge while others are fine in the pantry. And remember, even though
+                    non-dairy milk generally lasts longer than it’s dairy counterpart, it will still sour in time.</p>
+                <p>One last thing. If you find that your dairy products and dairy alternatives are spoiling before the
+                    best before date, check your refrigerator. It may not be cold enough.</p>
+            </div>
+        </div>
+        <div id="fishInfo" class="info-section mt-4" style="display: none;">
+            <!-- Content for Fish Info -->
+            <h1>Special Storage for Fish</h1>
             <p>The safe temperature to store fish is 63 °F</p>
-            <p>Put seafood on ice or in the refrigerator or freezer within two hours after buying it (one hour if it is exposed to a temperature of 90°F or more, such as in a car parked in the sun). If seafood will be used within 2 days after purchase, store it in a clean refrigerator at a temperature of 40°F (4°C) or below. Use a refrigerator thermometer to check!</p>
+            <p>Put seafood on ice or in the refrigerator or freezer within two hours after buying it (one hour if it
+                is exposed to a temperature of 90°F or more, such as in a car parked in the sun). If seafood will be
+                used within 2 days after purchase, store it in a clean refrigerator at a temperature of 40°F (4°C)
+                or below. Use a refrigerator thermometer to check!</p>
             <p>Otherwise, wrap it tightly in plastic, foil, or moisture-proof paper and store it in the freezer.</p>
-    </div>
-    <div id="pastaInfo" style="display: none;">
-        <h1>Special Storage for Pasta</h1>
+        </div>
+        <div id="pastaInfo" class="info-section mt-4" style="display: none;">
+            <!-- Content for Pasta Info -->
+            <h1>Special Storage for Pasta</h1>
             <h2>How to Store Dry Pasta</h2>
-            <p>Tight, secure seals will prevent bugs from infesting dry pasta. Once you've opened the original box or container of pasta, it's important to transfer any leftover dry pasta to a fresh, airtight storage container. Keep airtight pasta containers in a cool, dark, dry place, like a cupboard. Stored in this way, dry pasta lasts indefinitely. </p>
+            <p>Tight, secure seals will prevent bugs from infesting dry pasta. Once you've opened the original box
+                or container of pasta, it's important to transfer any leftover dry pasta to a fresh, airtight
+                storage container. Keep airtight pasta containers in a cool, dark, dry place, like a cupboard.
+                Stored in this way, dry pasta lasts indefinitely. </p>
             <h2>How to Store Fresh Pasta</h2>
-            <p>Fresh pasta hasn't been dehydrated, so it doesn't last as long as dry pasta does. It's best to eat fresh pasta the day it's made, but if kept in the refrigerator, it'll stay good for another day. Alternatively, fresh pasta can be frozen. Fresh pasta dough, tightly wrapped in plastic wrap and stored in a freezer-safe plastic bag, lasts for about a month in the freezer. Just thaw it in the refrigerator overnight before rolling it out.</p>
-            <p>You can also freeze fresh pasta noodles; just make sure to take the necessary steps so they don't stick together. To begin, toss them in flour, then lay them out in a single layer on a baking sheet. Let the noodles air dry for about an hour, then store them in a freezer-safe plastic bag and put them in the freezer.</p>
-    </div>
-    <div id="greensInfo" style="display: none;">
-        <h1>Special Storage for Leafy Greens</h1>
+            <p>Fresh pasta hasn't been dehydrated, so it doesn't last as long as dry pasta does. It's best to eat
+                fresh pasta the day it's made, but if kept in the refrigerator, it'll stay good for another day.
+                Alternatively, fresh pasta can be frozen. Fresh pasta dough, tightly wrapped in plastic wrap and
+                stored in a freezer-safe plastic bag, lasts for about a month in the freezer. Just thaw it in the
+                refrigerator overnight before rolling it out.</p>
+            <p>You can also freeze fresh pasta noodles; just make sure to take the necessary steps so they don't
+                stick together. To begin, toss them in flour, then lay them out in a single layer on a baking sheet.
+                Let the noodles air dry for about an hour, then store them in a freezer-safe plastic bag and put
+                them in the freezer.</p>
+        </div>
+        <div id="greensInfo" class="info-section mt-4" style="display: none;">
+            <!-- Content for Leafy Greens Info -->
+            <h1>Special Storage for Leafy Greens</h1>
             <p>The safe temperature for greens is 40 °F</p>
-            <p>Remember to store your greens in a cripser drawer if available since those drawers are designed to release the gases and moisture that can accelerate spoilage</p>
-            <p>Remove wilted leaves from your bag of leafy greens. Keep the greens dry, even pre-packaged greens can have excess moisture on the leaves. The moiture can host bacteria that increase the rate that it decomposes. You can remove the moisture by using a paper towel</p>
+            <p>Remember to store your greens in a cripser drawer if available since those drawers are designed to
+                release the gases and moisture that can accelerate spoilage</p>
+            <p>Remove wilted leaves from your bag of leafy greens. Keep the greens dry, even pre-packaged greens can
+                have excess moisture on the leaves. The moiture can host bacteria that increase the rate that it
+                decomposes. You can remove the moisture by using a paper towel</p>
+        </div>
+        </div>
+
+
+    </main>
+    <div class="divider"></div>
+    <div class="external-links">
+        <p><a href="https://www.betterhealth.vic.gov.au/health/healthyliving/food-safety-and-storage">See
+                betterhealth.vic.gov.au for more information</a></p>
+        <p><a
+                href="https://www.foodsafety.gov/blog/safe-selection-and-handling-fish-and-shellfish#:~:text=Keep%20Fish%20and%20Shellfish%20Cold&text=If%20seafood%20will%20be%20used,store%20it%20in%20the%20freezer.">See
+                foodsafety.gov for more information</a></p>
+        <p><a
+                href="https://www.realsimple.com/how-to-store-pasta-6931366#:~:text=Once%20you've%20opened%20the,way%2C%20dry%20pasta%20lasts%20indefinitely.">See
+                realsimple.com for more information</a></p>
+        <p><a href="https://www.eatingwell.com/article/8044069/how-to-keep-bagged-salad-fresh-longer/">See
+                eatingwell.com
+                for more information</a></p>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../public/js/storage.js"></script>
-</main>
-<div class="divider"></div>
-<p><a href="https://www.betterhealth.vic.gov.au/health/healthyliving/food-safety-and-storage">See betterhealth.vic.gov.au for more information</a></p>
-<p><a href="https://www.foodsafety.gov/blog/safe-selection-and-handling-fish-and-shellfish#:~:text=Keep%20Fish%20and%20Shellfish%20Cold&text=If%20seafood%20will%20be%20used,store%20it%20in%20the%20freezer.">See foodsafety.gov for more information</a></p>
-<p><a href="https://www.realsimple.com/how-to-store-pasta-6931366#:~:text=Once%20you've%20opened%20the,way%2C%20dry%20pasta%20lasts%20indefinitely.">See realsimple.com for more information</a></p>
-<p><a href="https://www.eatingwell.com/article/8044069/how-to-keep-bagged-salad-fresh-longer/">See eatingwell.com for more information</a></p>
+</body>
+
 </html>

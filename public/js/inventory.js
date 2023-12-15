@@ -13,6 +13,37 @@ $(document).ready(function () {
   closeButton.hide();
   //addButton.hide();
 
+  // Function to format currency
+  function formatCurrency(value) {
+    return "$" + parseFloat(value).toFixed(2);
+  }
+
+  // Function to calculate and update total cost
+  
+
+  function updateTotalCost() {
+    let qty = parseFloat($('#quantity').val()) || 0; // Default to 0 if not a number
+    let costItem = parseFloat($('#costPerItem').val().replace('$', '')) || 0; // Default to 0 if not a number
+    console.log("Quantity:", qty, "Cost per Item:", costItem);
+
+    let total = parseFloat(qty) * parseFloat(costItem);
+    console.log("Total Cost:", total);
+
+    $("#totalCost").val(total);
+  }
+
+console.log(
+  "Quantity:",
+  $("#quantity").val(),
+  "Cost per Item:",
+  $("#costPerItem").val()
+);
+
+// Event listener for changes in quantity or cost per item
+$("#quantity, #costPerItem").on("input", function () {
+  updateTotalCost();
+});
+
   addButton.click(function () {
     foodDiv.addClass("active");
     addButton.hide();

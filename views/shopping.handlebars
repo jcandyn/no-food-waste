@@ -15,12 +15,17 @@
 <body>
     <header class="main-header">
         <div class="container">
-            <h1>Shopping</h1>
+            <h1>shopping list</h1>
         </div>
     </header>
-    <div class="container">
+    <div class="container mt-4">
         <main>
-            <form class="mt-3 w-50" id="addItemForm">
+            <div class="shopping-card">
+            <div class="instructions">
+                <p>Enter the name of the item you wish to add to your shopping list and click "Add Item". To remove an
+                    item, click the trash icon next to it.</p>
+            </div>
+            <form class="addItemForm mb-4" id="addItemForm">
                 <div class="input-group mb-3">
                     <input type="text" id="itemName" class="form-control" placeholder="Item name" required>
                      <div class="input-group-append">
@@ -45,6 +50,7 @@
                 {{/each}}
             </ul>
               {{/if}}
+              </div>
         </main>
     </div>
 

@@ -1,10 +1,4 @@
-.main-header {
-    background-color: #4a7c59;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+
 
 hr.rounded {
     border-top: 8px solid #bbb;
@@ -12,10 +6,13 @@ hr.rounded {
   }
 
 
-.main-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+  .analytics-info {
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px; 
+    font-size: 1rem;
+    color: #333;
+    background-color: #f9f9f9; 
+    border-radius: 5px; 
 }
+
