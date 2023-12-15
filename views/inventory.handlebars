@@ -6,8 +6,8 @@
     <title>Zero Food Waste</title>
      <link rel="stylesheet" href="../public/css/inventory.css">
     {{!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+   
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
@@ -249,13 +249,25 @@
             {{#if foodList.length}}
                 {{#each foodList}}
                     <div class="col-md-4 my-2">
-                        <div class="card h-100">
+                        <div class="card h-100" unit={{unit}} data-quantity={{quantity}}>
                             <img src="{{imageUrl}}" alt="Food Image" class="card-img-top">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">
                                     <a href="/food/view/{{_id}}">{{itemName}}</a>
                                 </h5>
                                 <p class="card-text mb-2">Expiration date: {{expiryDate}}</p>
+                                     <div class="mt-auto">
+
+                                {{#if snoozed}}
+                                    <button id="{{_id}}" class="btn snoozeButton">
+                                        <i class="fas fa-bell-slash fa-lg"></i>
+                                    </button>
+                                {{else}}
+                                    <button id="{{_id}}" class="btn snoozeButton">
+                                        <i class="fas fa-bell fa-lg"></i>
+                                    </button>
+                                {{/if}}
+                            </div>
                                 <div class="mt-auto">
                                     <input type="checkbox" class="form-check-input" id="checkbox{{_id}}" name="foodCheckbox">
                                     <label for="checkbox{{_id}}" class="form-check-label">Select for Sharing</label>
@@ -287,6 +299,31 @@
   const ws = new WebSocket("ws://localhost:8080/");
 
   document.addEventListener("DOMContentLoaded", function () {
+       const snoozeButtons = document.querySelectorAll(".snoozeButton");
+            // Add a click event listener to each snooze button
+            snoozeButtons.forEach((button) => {
+                button.addEventListener("click", function () {
+                    // Toggle between regular bell and slash bell icons
+                    const bellIcon = button.querySelector("i");
+                    bellIcon.classList.toggle("fa-bell");
+                    bellIcon.classList.toggle("fa-bell-slash");
+                     const cardId = button.getAttribute("id");
+                     {{!-- const cardId = event.target.id; --}}
+                     console.log("snoozed id: ", cardId);
+                    fetch(`/food/snooze/${cardId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ snoozed: bellIcon.classList.contains("fa-bell-slash") }),
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+                });
+         
+            });
+            
        toastr.options = {
     closeButton: true,
     progressBar: true,

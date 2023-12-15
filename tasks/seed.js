@@ -11,9 +11,6 @@ import {
 
 async function connectAndDropDatabase() {
   try {
-    // Use the run function from mongoConnect.js
-    // await mongoConnectRun();
-
     // Dropping the database after connecting
     const db = await connectToDatabase();
     await db.dropDatabase();
@@ -25,57 +22,139 @@ async function connectAndDropDatabase() {
 
 // Seed function for users
 async function seedUsers() {
-  const userData = {
-    dateJoined: new Date().toUTCString(),
-    email: "email@gmail.com",
-    password: "$2b$10$Yg.jhi9OWOuyXlBteKTFVuLcHEhh7JyBm1.m6C..e6ESinrS.lvbK",
-    name: "Beyonce",
-    lastName: "Knowles",
-    dateOfBirth: "1989-09-19",
-    location: {
-      streetAddress: "110 Colgate Ave",
-      city: "Perth Amboy",
-      state: "NC",
-      zip: "08864",
+  const userData = [
+    {
+      dateJoined: new Date().toUTCString(),
+      email: "test@gmail.com",
+      password: "$2b$10$dfr7.aTkng2LGPbD/.KLZ.Psezd4M3vDJychd1YVAwQIA3nwu2QCC",
+      name: "Jules",
+      lastName: "Marte",
+      dateOfBirth: "1996-12-16",
+      phoneNumber: "+17317420024",
     },
-    phoneNumber: "+17347425024",
-  };
+    {
+      dateJoined: new Date().toUTCString(),
+      email: "email@gmail.com",
+      password: "$2b$10$dfr7.aTkng2LGPbD/.KLZ.Psezd4M3vDJychd1YVAwQIA3nwu2QCC",
+      name: "Beyonce",
+      lastName: "Knowles",
+      dateOfBirth: "1989-09-19",
+      phoneNumber: "+17347425024",
+    },
+  ];
 
   try {
-    const newInsertInformation = await usersCollection.insertOne(userData);
-    if (!newInsertInformation.insertedId) throw "User insert failed!";
+    const newInsertInformation = await usersCollection.insertMany(userData);
 
-    console.log("User seeded successfully");
+    // Extract and return the array of inserted _ids
+    const insertedIds = newInsertInformation.insertedIds;
+    console.log("Users seeded successfully with IDs:", insertedIds);
 
+    return insertedIds;
     // Return the inserted _id to be used as userId in other seed functions
-    return newInsertInformation.insertedId;
   } catch (error) {
     console.error("Error seeding user:", error);
   }
 }
 
 // Seed function for foods
-async function seedFoods(userId) {
-  const foodData = {
-    userId: userId.toString(), // Use the userId captured from seedUsers
-    itemName: "soda",
-    quantity: 1,
-    unit: "gal",
-    expiryDate: "2023-12-30",
-    costPerItem: 5.6,
-    totalCost: 5.6,
-    brand: "Shoprite",
-    category: "Beverage",
-    status: "Fresh",
-    imageUrl:
-      "https://images.unsplash.com/photo-1581098365948-6a5a912b7a49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI0MzE1ODJ8&ixlib=rb-4.0.3&q=80&w=1080",
-    snoozed: false,
-  };
+async function seedFoods(userIds) {
+  const foodData = [
+    {
+      userId: userIds[0].toString(), // Use the userId captured from seedUsers
+      itemName: "soda",
+      quantity: 1,
+      unit: "gal",
+      expiryDate: "2023-12-30",
+      costPerItem: 5.6,
+      totalCost: 5.6,
+      brand: "Shoprite",
+      category: "Beverage",
+      status: "Fresh",
+      imageUrl:
+        "https://images.unsplash.com/photo-1581098365948-6a5a912b7a49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI0MzE1ODJ8&ixlib=rb-4.0.3&q=80&w=1080",
+      snoozed: false,
+    },
+    {
+      userId: userIds[0].toString(),
+      itemName: "Strawberry",
+      quantity: 3,
+      unit: "tbsp",
+      expiryDate: "2023-12-23",
+      costPerItem: 3,
+      totalCost: 3,
+      brand: "Dole",
+      category: "Fruit",
+      status: "Early Decline",
+      imageUrl:
+        "https://images.unsplash.com/photo-1619679347986-dc7b1c423e67?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI1MzM2NTJ8&ixlib=rb-4.0.3&q=80&w=1080",
+      snoozed: false,
+    },
+    {
+      userId: userIds[0].toString(),
+      itemName: "Linguini Pasta",
+      quantity: 2,
+      unit: "oz",
+      expiryDate: "2023-11-12",
+      costPerItem: 1,
+      totalCost: 2,
+      brand: "Cotsco",
+      category: "Pasta",
+      status: "Good",
+      imageUrl:
+        "https://images.unsplash.com/photo-1633614201174-a5172e93c21e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI1MzU3NTN8&ixlib=rb-4.0.3&q=80&w=1080",
+    },
+    {
+      userId: userIds[0].toString(),
+      itemName: "chocolate",
+      quantity: 1,
+      unit: "qt",
+      expiryDate: "2023-12-30",
+      costPerItem: 1,
+      totalCost: 1,
+      brand: "Cotsco",
+      category: "Miscellaneous",
+      status: "Fresh",
+      imageUrl:
+        "https://images.unsplash.com/photo-1571091799989-e88304d6aed3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI1MzY2NTV8&ixlib=rb-4.0.3&q=80&w=1080",
+      snoozed: false,
+    },
+    {
+      userId: userIds[0].toString(),
+      itemName: "bread",
+      quantity: 1,
+      unit: "oz",
+      expiryDate: "2023-10-10",
+      costPerItem: 1,
+      totalCost: 1,
+      brand: "Cotsco",
+      category: "Bread",
+      status: "Good",
+      imageUrl:
+        "https://images.unsplash.com/photo-1517141544637-42b300cb4ee9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI1Mzc4NDd8&ixlib=rb-4.0.3&q=80&w=1080",
+      snoozed: false,
+    },
+    {
+      userId: userIds[0].toString(),
+      itemName: "Beans",
+      quantity: 1,
+      unit: "oz",
+      expiryDate: "2024-01-23",
+      costPerItem: 2.03,
+      totalCost: 2.03,
+      brand: "Cotsco",
+      category: "Beans",
+      status: "Fresh",
+      imageUrl:
+        "https://images.unsplash.com/photo-1584947893013-2163cd4e01ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI1ODk5NTR8&ixlib=rb-4.0.3&q=80&w=1080",
+      snoozed: false,
+    },
+  ];
 
   try {
-    const insertInfo = await foodCollection.insertOne(foodData);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId)
-      throw "Could not add food item";
+    const insertInfo = await foodCollection.insertMany(foodData);
+    if (!insertInfo.acknowledged || !insertInfo.insertedIds)
+      throw "Could not add food item(s)";
 
     console.log("Food seeded successfully");
   } catch (error) {
@@ -84,10 +163,10 @@ async function seedFoods(userId) {
 }
 
 // Seed function for shopping list
-async function seedShoppingList(userId) {
+async function seedShoppingList(userIds) {
   const shoppingListData = {
-    userId: userId.toString(), // Use the userId captured from seedUsers
-    items: ["2 oranges", "2 dates", "1 milk"],
+    userId: userIds[0].toString(), // Use the userId captured from seedUsers
+    items: ["2 oranges", "2 apples", "1 lactose-free milk"],
   };
 
   try {
@@ -268,12 +347,6 @@ async function seedGiveaway() {
 
   try {
     const insertInfo = await giveawayCollection.insertMany(giveawayInfo);
-    // if (
-    //   !insertInfo.acknowledged ||
-    //   !insertInfo.insertedIds ||
-    //   !insertInfo.insertedIds.length
-    // )
-    //   throw "Could not add items to the list";
 
     console.log("Giveaway seeded successfully");
   } catch (error) {
@@ -281,14 +354,12 @@ async function seedGiveaway() {
   }
 }
 
-// Usage example
 async function seedData() {
-  const userId = await seedUsers();
-  if (userId) {
-    await seedFoods(userId);
-    await seedShoppingList(userId);
+  const userIds = await seedUsers();
+  if (userIds) {
+    await seedFoods(userIds);
+    await seedShoppingList(userIds);
     await seedGiveaway();
-    // Add more seed functions as needed
   }
 }
 
