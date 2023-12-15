@@ -49,22 +49,22 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <input type="hidden" name='_method' value="PUT" >
-                                    <label for="itemName">Item Name:
-                                        <input type="text" name="itemName" id="itemName" placeholder="Eg:Milk" value="{{food.itemName}}" >
+                                    <label for="itemName" class="form-label">Item Name:
+                                        <input type="text" class="form-control" name="itemName" id="itemName" placeholder="Eg:Milk" value="{{food.itemName}}" >
                                     </label><br>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="quantity">Quantity:
-                                        <input type="number" step="0.01" name="quantity" id="quantity" placeholder="Eg:2" value="{{food.quantity}}">
+                                    <label for="quantity" class="form-label">Quantity:
+                                        <input type="number" class="form-control" step="0.01" name="quantity" id="quantity" placeholder="Eg:2" value="{{food.quantity}}">
                                     </label><br>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="unit"> Unit:
-                                        <select name="unit" id="unit" value="{{food.unit}}">
+                                    <label for="unit" class="form-label"> Unit:
+                                        <select class="form-control" name="unit" id="unit" value="{{food.unit}}">
                                             <option value="">Select...</option>
                                             <option value="tsp">Teaspoon</option>
                                             <option value="tbsp">Tablespoon</option>
@@ -83,22 +83,22 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="expiryDate">Expiry Date:
-                                        <input type="date" name="expiryDate" id="expiryDate"  value="{{food.expiryDate}}">
+                                    <label for="expiryDate" class="form-label">Expiry Date:
+                                        <input type="date" class="form-control" name="expiryDate" id="expiryDate"  value="{{food.expiryDate}}">
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="costPerItem">Cost per item:
-                                        <input type="number" step="0.01" name="costPerItem" id="costPerItem" placeholder="Eg:20" value="{{food.costPerItem}}" >
+                                    <label for="costPerItem" class="form-label">Item Cost:
+                                        <input type="number" class="form-control" step="0.01" name="costPerItem" id="costPerItem" placeholder="Eg:20" value="{{food.costPerItem}}" >
                                     </label><br>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="totalCost">Total Cost:
-                                        <input type="number" step="0.01" name="totalCost" id="totalCost" placeholder="Eg:200" value="{{food.totalCost}}" >
+                                    <label for="totalCost" class="form-label">Total Cost:
+                                        <input type="text" class="form-control" name="totalCost" id="totalCost" placeholder="$0.00" value="{{food.totalCost}}" readonly >
                                     </label><br>
                                 </div>
                             </div>
@@ -106,16 +106,16 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="brand">Brand:
-                                        <input type="text" name="brand" id="brand" placeholder="Eg:Costco" value="{{food.brand}}" >
+                                    <label for="brand" class="form-label">Brand:
+                                        <input type="text" class="form-control" name="brand" id="brand" placeholder="Eg:Costco" value="{{food.brand}}" >
                                     </label><br>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="category">Category:
+                                    <label for="category" class="form-label">Category:
                                         {{!-- <input type="text" name="category" id="category" placeholder="Eg:Dairy" value="{{food.category}}" > --}}
-                                        <select name="category" id="category" value="{{food.category}}">
+                                        <select name="category" class="form-control" id="category" value="{{food.category}}">
                                             <option value="">Select...</option>
                                             <!-- Dairy & Eggs -->
                                             <optgroup label="Dairy & Eggs">
@@ -232,8 +232,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="status">Status:
-                                        <select name="status" id="status" value="{{food.status}}">
+                                    <label for="status" class="form-label">Status:
+                                        <select class="form-control" name="status" id="status" value="{{food.status}}">
                                             <option value="">Select...</option>
                                             <option value="Fresh">Fresh</option>
                                             <option value="Good">Good</option>
