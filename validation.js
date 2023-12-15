@@ -47,6 +47,35 @@ const exportedMethods = {
       return unitVal;
     },
 
+    checkCategory(categoryVal, varName='Category') {
+      categoryVal = this.checkString(categoryVal, "Category");
+  
+      const categoryOptions = [
+          "Milk & Cream", "Cheese", "Yogurt", "Eggs", "Butter & Margarine",
+          "Beef", "Pork", "Chicken", "Turkey", "Lamb",
+          "Fish", "Shellfish", "Canned Seafood",
+          "Citrus Fruits", "Berries", "Tropical Fruits", "Apples & Pears", "Stone Fruits",
+          "Leafy Greens", "Root Vegetables", "Squashes", "Cruciferous Vegetables", "Nightshade Vegetables",
+          "Rice", "Pasta", "Bread", "Cereal", "Oats",
+          "Beans", "Lentils", "Peas", "Chickpeas",
+          "Almonds", "Peanuts", "Sunflower Seeds", "Chia Seeds", "Flax Seeds",
+          "Juices", "Sodas", "Tea & Coffee", "Alcoholic Beverages", "Water",
+          "Chips & Crackers", "Candy & Chocolate", "Baked Goods", "Ice Cream & Desserts",
+          "Herbs & Spices", "Sauces & Dressings", "Oils & Vinegars", "Condiments",
+          "Frozen Vegetables", "Frozen Fruits", "Frozen Meals", "Ice Cream",
+          "Canned Vegetables", "Canned Fruits", "Preserves & Spreads", "Pickles",
+          "Gluten-Free", "Vegan", "Organic", "Non-Dairy Alternatives",
+          "Miscellaneous", "Non-Food Items"
+      ];
+  
+      if (!categoryOptions.includes(categoryVal)) {
+          throw `Provide only valid category values`;
+      }
+  
+      return categoryVal;
+  },
+  
+
     checkState(stateVal, varName='State'){
       stateVal = this.checkString(stateVal,"State");
       stateVal=stateVal.toLowerCase();
