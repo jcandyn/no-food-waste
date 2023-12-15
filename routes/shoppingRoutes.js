@@ -19,19 +19,10 @@ router.route("/").get(printMiddleware, async (req, res) => {
     }
     const shoppingList = await shopping.getShoppingListByUserId(userId);
 
-    if (!shoppingList || shoppingList.length === 0) {
-      // No shopping list found
-      res.render("shopping", {
-        name: req.session.user.name,
-        errorMessage: "No shopping list yet, start adding items to create one.",
-      });
-    } else {
-      // Shopping list found
-      res.render("shopping", {
-        shoppingList: shoppingList,
-        name: req.session.user.name,
-      });
-    }
+    res.render("shopping", {
+      shoppingList: shoppingList,
+      name: req.session.user.name,
+    });
   } catch (error) {
     console.error("Error getting shopping list:", error);
 
@@ -64,6 +55,7 @@ router.route("/").post(printMiddleware, async (req, res) => {
     let shoppingList = await shopping.getShoppingListByUserId(userId);
 
     if (!shoppingList) {
+      console.log("shopping list route POST");
       // If the user doesn't have a shopping list, create a new one
       shoppingList = await shopping.createShoppingList(userId, [itemName]);
     } else {
@@ -72,13 +64,6 @@ router.route("/").post(printMiddleware, async (req, res) => {
         userId,
         itemName
       );
-    }
-
-    let success;
-    if (shoppingList) {
-      success = "success adding";
-    } else {
-      success = "error adding";
     }
 
     res.status(200).send({ shoppingList: shoppingList });
@@ -95,7 +80,6 @@ router.delete("/delete", async (req, res) => {
   try {
     const userId = help.checkId(req.session.user.id, "User Id");
     const { itemName } = req.body;
-    console.log("delete itemName: ", itemName);
 
     const shoppingList = await shopping.removeItemFromShoppingList(
       userId,

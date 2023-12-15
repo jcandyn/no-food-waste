@@ -21,41 +21,43 @@
     <div class="container mt-4">
         <main>
             <div class="shopping-card">
-            <div class="instructions">
-                <p>Enter the name of the item you wish to add to your shopping list and click "Add Item". To remove an
-                    item, click the trash icon next to it.</p>
-            </div>
-            <form class="addItemForm mb-4" id="addItemForm">
-                <div class="input-group mb-3">
-                    <input type="text" id="itemName" class="form-control" placeholder="Item name" required>
-                     <div class="input-group-append">
-                    <button type="submit" class="btn btn-success" onsubmit="addItem(event)"><i class="fa-solid fa-pen mr-2"></i>Add Item</button>
+                <div class="instructions">
+                    <p>Enter the name of the item you wish to add to your shopping list and click "Add Item". To remove an
+                        item, click the trash icon next to it.</p>
+                </div>
+                <form class="addItemForm mb-4" id="addItemForm">
+                    <div class="input-group mb-3">
+                        <input type="text" id="itemName" class="form-control" placeholder="Item name" required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-success" onsubmit="addItem(event)"><i
+                                    class="fa-solid fa-pen mr-2"></i>Add Item</button>
+                        </div>
                     </div>
-                </div>
-            
-            </form>
+                </form>
 
- {{#if errorMessage}}
-                <!-- Display error message if available -->
-                <div class="alert alert-danger" role="alert">
-                    {{errorMessage}}
-                </div>
-            {{else}}
-            <ul class="list-group w-50" id="itemList">
-                {{#each shoppingList.items}}
-                <li class="list-item list-group-item d-flex justify-content-between align-items-center">
-                    {{this}}
-                    <button id="{{this}}" class="btn btn-danger" onclick="deleteItem(event)"><i id="{{this}}" class="fas fa-trash-alt"></i></button>
-                </li>
-                {{/each}}
-            </ul>
-              {{/if}}
-              </div>
+                {{#if shoppingList.items}}
+                    <ul class="list-group w-50" id="itemList">
+                        {{#each shoppingList.items}}
+                            <li class="list-item list-group-item d-flex justify-content-between align-items-center">
+                                {{this}}
+                                <button id="{{this}}" class="btn btn-danger" onclick="deleteItem(event)"><i
+                                        id="{{this}}" class="fas fa-trash-alt"></i></button>
+                            </li>
+                        {{/each}}
+                    </ul>
+                {{else}}
+                    <div id="errorMessage" class="alert alert-danger" role="alert">
+                        <p>No shopping list? Add some items to get started.</p>
+                    </div>
+                    <ul class="list-group w-100" id="itemList"></ul>
+                {{/if}}
+            </div>
         </main>
     </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
    <script>
+
       $(document).on("click", "#itemList .btn-danger", function(event) {
     deleteItem(event);
 });
@@ -102,7 +104,9 @@ function addItem(event) {
         url: "/shopping",
         data: { itemName: itemName },
         success: function (data) {
+            console.log("data: ", data);
             var itemListHtml = '<ul>';
+
 
             var itemHtmlArray = data.shoppingList.items.map(function(item) {
                 console.log("item: ", item);
@@ -116,9 +120,11 @@ function addItem(event) {
             itemListHtml += '</ul>';
 
             $("#itemList").html(itemListHtml);
+             $("#errorMessage").hide();
         },
         error: function (error) {
             console.log(error);
+
             if (error.responseJSON.error === "No duplicates allowed") {
                     toastr.error("No duplicates allowed");
                 } else {
