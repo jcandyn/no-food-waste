@@ -306,7 +306,7 @@
                     bellIcon.classList.toggle("fa-bell");
                     bellIcon.classList.toggle("fa-bell-slash");
                      const cardId = button.getAttribute("id");
-                     {{!-- const cardId = event.target.id; --}}
+                   
                      console.log("snoozed id: ", cardId);
                     fetch(`/food/snooze/${cardId}`, {
                         method: 'POST',

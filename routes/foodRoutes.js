@@ -17,6 +17,7 @@ let userId;
 let foodList;
 // Create a new food item
 router
+  .route("/")
   .get(async (req, res) => {
     if (!req.session.user) {
       return res.redirect("/");
