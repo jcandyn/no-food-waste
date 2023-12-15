@@ -109,7 +109,7 @@ export const registerUser = async (
   // Check if the values are valid running the valid method
   valid(email, password, firstName, lastName, dateOfBirth, phoneNumber);
 
-  const usero = await usersCollection.findOne({ email: email });
+  const usero = await usersCollection.findOne({ email: email.toLowerCase() });
 
   if (usero !== null) {
     throw "Email is already in use";
@@ -137,7 +137,7 @@ export const loginUser = async (email, password) => {
   let user;
 
   try {
-    user = await usersCollection.findOne({ email: email });
+    user = await usersCollection.findOne({ email: email.toLowerCase() });
   } catch (error) {
     throw error;
   }
