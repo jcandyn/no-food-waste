@@ -3,70 +3,41 @@ import { shoppingCollection } from "./index.js";
 import help from "../validation.js";
 
 const exportedMethods = {
-  async addItem(userId, items) {
-    userId = help.checkId(userId, "User Id");
-
-    const newShoppingList = {
-      userId: userId,
-      items: items,
-    };
-
-    const insertInfo = await shoppingCollection.insertOne(newShoppingList);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-      throw "Could not add shopping list";
-    }
-
-    const newId = insertInfo.insertedId.toString();
-    const shoppingList = await shoppingCollection.findOne({
-      _id: new ObjectId(newId),
-    });
-    if (shoppingList === null) {
-      throw "No shopping list with that id";
-    }
-    shoppingList._id = shoppingList._id.toString();
-
-    return shoppingList;
-  },
-
   async createShoppingList(userId, items) {
     userId = help.checkId(userId, "User Id");
+    let result;
 
     // Check if the user already has a shopping list
-    const existingShoppingList = await shoppingCollection.findOne({
+    let existingShoppingList = await shoppingCollection.findOne({
       userId: userId,
     });
 
     if (existingShoppingList) {
       // User already has a shopping list, return it
-      existingShoppingList._id = existingShoppingList._id.toString();
-      return existingShoppingList;
+      result = existingShoppingList;
+    } else {
+      // If the user doesn't have a shopping list, create a new one
+      const newShoppingList = {
+        userId: userId,
+        items: items,
+      };
+
+      const insertInfo = await shoppingCollection.insertOne(newShoppingList);
+
+      if (!insertInfo.acknowledged || !insertInfo.insertedId) {
+        throw `Could not create shopping list for user with id ${userId}`;
+      }
+
+      result = await shoppingCollection.findOne({
+        _id: insertInfo.insertedId,
+      });
     }
 
-    // If the user doesn't have a shopping list, create a new one
-    const newShoppingList = {
-      userId: userId,
-      items: items,
-    };
-
-    const insertInfo = await shoppingCollection.insertOne(newShoppingList);
-
-    if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-      throw `Could not create shopping list for user with id ${userId}`;
-    }
-
-    const newId = insertInfo.insertedId.toString();
-    const shoppingList = await shoppingCollection.findOne({
-      _id: new ObjectId(newId),
-    });
-
-    if (!shoppingList) {
-      throw `No shopping list found for user with id ${userId}`;
-    }
-
-    shoppingList._id = shoppingList._id.toString();
-    return shoppingList;
+    console.log("POST result in data functions: ", result);
+    return result;
   },
   async addItemToShoppingListByUserId(userId, newItem) {
+    let result;
     userId = help.checkId(userId, "User Id");
 
     // Find the shopping list for the user
@@ -96,32 +67,36 @@ const exportedMethods = {
         throw `No shopping list found for user with id ${userId}`;
       }
 
-      createdShoppingList._id = createdShoppingList._id.toString();
-      return createdShoppingList;
-    }
+      result = createdShoppingList;
+    } else {
+      // Check if the item already exists in the shopping list
+      if (existingShoppingList.items.includes(newItem)) {
+        console.log("existing shopping list: ", existingShoppingList);
+        console.log("existingShoppingList items: ", existingShoppingList.items);
+        console.log("newItem: ", newItem);
+        // If the item already exists, return an error message
+        throw "No duplicates allowed";
+      }
 
-    // Check if the item already exists in the shopping list
-    if (existingShoppingList.items.includes(newItem)) {
-      // If the item already exists, return an error message
-      throw "No duplicates allowed";
+      // Add the new item to the shopping list
+      existingShoppingList.items.push(newItem);
     }
-
-    // Add the new item to the shopping list
-    existingShoppingList.items.push(newItem);
 
     // Update the shopping list in the database
-    const updateResult = await shoppingCollection.updateOne(
+    result = await shoppingCollection.updateOne(
       { userId: userId },
       { $set: { items: existingShoppingList.items } }
     );
 
-    if (updateResult.modifiedCount === 0) {
+    if (result.modifiedCount === 0) {
       throw `Could not update shopping list for user with id ${userId}`;
     }
 
-    // Return the updated shopping list
-    existingShoppingList._id = existingShoppingList._id.toString();
-    return existingShoppingList;
+    result = await shoppingCollection.findOne({
+      userId: userId,
+    });
+
+    return result;
   },
   async removeItemFromShoppingList(userId, itemName) {
     userId = help.checkId(userId, "User Id");
@@ -167,12 +142,11 @@ const exportedMethods = {
   async getShoppingListByUserId(userId) {
     userId = help.checkId(userId, "User Id");
 
-    const shoppingList = await shoppingCollection.findOne({ userId: userId });
+    let shoppingList = await shoppingCollection.findOne({ userId: userId });
 
     if (!shoppingList) {
-      return null; // Return null if no shopping list is found
+      shoppingList = null; // Return null if no shopping list is found
     }
-    shoppingList._id = shoppingList._id.toString();
 
     return shoppingList;
   },
