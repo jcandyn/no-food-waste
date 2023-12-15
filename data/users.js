@@ -3,14 +3,14 @@ import bcrypt from "bcrypt";
 import { usersCollection } from "./index.js";
 import { ObjectId } from "mongodb";
 
-export function valid(
+export const valid = async (
   email,
   password,
   firstName,
   lastName,
   dateOfBirth,
   phoneNumber
-) {
+) => {
   // Check if values are provided
   if (
     !email ||
@@ -96,7 +96,18 @@ export function valid(
   if (!validPhoneNumber.test(phoneNumber.trim())) {
     throw "Phone number is invalid, must be 10 numbers";
   }
-}
+};
+
+export const isEmailAlreadyExists = async (email) => {
+  try {
+    const existingUser = await usersCollection.findOne({
+      email: email.toLowerCase(),
+    });
+    return existingUser !== null;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const registerUser = async (
   email,
@@ -106,31 +117,44 @@ export const registerUser = async (
   dateOfBirth,
   phoneNumber
 ) => {
-  // Check if the values are valid running the valid method
-  valid(email, password, firstName, lastName, dateOfBirth, phoneNumber);
+  try {
+    // Check if the values are valid running the validate method
 
-  const usero = await usersCollection.findOne({ email: email.toLowerCase() });
+    await valid(email, password, firstName, lastName, dateOfBirth, phoneNumber);
 
-  if (usero !== null) {
-    throw "Email is already in use";
+    // Check if the user with the provided email already exists
+    const existingUser = await usersCollection.findOne({
+      email: email.toLowerCase(),
+    });
+
+    if (existingUser) {
+      throw "Email is already in use";
+    }
+
+    let hash = bcrypt.hashSync(password, 10);
+
+    let newUser = {
+      dateJoined: new Date().toUTCString(),
+      email: email.toLowerCase(),
+      password: hash,
+      name: firstName,
+      lastName: lastName,
+      dateOfBirth: dateOfBirth,
+      phoneNumber: phoneNumber,
+    };
+
+    const newInsertInformation = await usersCollection.insertOne(newUser);
+
+    if (!newInsertInformation.insertedId) {
+      throw "Insert failed!";
+    }
+
+    return { insertedUser: true, id: newInsertInformation.insertedId };
+  } catch (error) {
+    // Handle validation errors or other issues
+    console.error("Error in registerUser:", error);
+    throw error;
   }
-
-  let hash = bcrypt.hashSync(password, 10);
-
-  let newUser = {
-    dateJoined: new Date().toUTCString(),
-    email: email.toLowerCase(),
-    password: hash,
-    name: firstName,
-    lastName: lastName,
-    dateOfBirth: dateOfBirth,
-    phoneNumber: phoneNumber,
-  };
-
-  const newInsertInformation = await usersCollection.insertOne(newUser);
-  if (!newInsertInformation.insertedId) throw "Insert failed!";
-
-  return { insertedUser: true, id: newInsertInformation.insertedId };
 };
 
 export const loginUser = async (email, password) => {
@@ -141,7 +165,7 @@ export const loginUser = async (email, password) => {
   } catch (error) {
     throw error;
   }
-  if (!user) throw "no user found associated with this email";
+  if (!user) throw "no user found associated with this";
 
   if (!bcrypt.compareSync(password, user.password)) {
     // Passwords do not match

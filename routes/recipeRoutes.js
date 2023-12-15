@@ -9,7 +9,6 @@ import axios from "axios";
 const router = express.Router();
 
 const SPOONACULAR_API_KEY = process.env.SPOONACULAR_API_KEY;
-console.log(SPOONACULAR_API_KEY);
 
 router.get("/", async (req, res) => {
   console.log("Accessing /recipes route");

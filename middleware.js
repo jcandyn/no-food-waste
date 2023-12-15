@@ -23,7 +23,7 @@ const printMiddleware = (req, res, next) => {
 };
 
 const loginMiddleware = (req, res, next) => {
-  if (req.session.user) {
+  if (req.session.user && req.method === "POST") {
     return res.redirect("/food");
   } else {
     return next();
@@ -31,7 +31,7 @@ const loginMiddleware = (req, res, next) => {
 };
 
 const registrationMiddleware = (req, res, next) => {
-  if (req.path === "/signup" && req.method === "GET") {
+  if (req.path === "/signup" && req.method === "POST") {
     if (req.session.user) {
       return res.redirect("/food");
     }

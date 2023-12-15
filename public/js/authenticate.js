@@ -5,51 +5,15 @@ $(document).ready(function () {
     positionClass: "toast-top-right",
     timeOut: 10000,
   };
-  $("#login-form").submit(function (event) {
+
+  $("#signup-form").submit(function (event) {
     // Prevent the form from submitting
     event.preventDefault();
 
     // Clear previous error messages
     clearErrorMessage();
 
-    // Get form data
-    var formData = $(this).serialize();
-
-    // Make AJAX request
-    $.ajax({
-      type: "POST",
-      url: "/authenticate/login",
-      data: formData,
-      success: function (response) {
-        window.location.href = "/food";
-      },
-      error: function (xhr, status, error) {
-        var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
-        displayErrorMessage(errorMessage);
-      },
-    });
-  });
-
-  function clearErrorMessage() {
-    toastr.clear();
-  }
-
-  function displayErrorMessage(message) {
-    clearErrorMessage();
-    toastr.info(message);
-  }
-
-  $("#signup-form").submit(function (event) {
-    event.preventDefault();
-
-    if (!validateSignUpForm()) {
-      return;
-    }
-
-    this.submit();
-  });
-
-  function validateSignUpForm() {
+    console.log("validating");
     var isValid = true;
 
     var firstName = $("#firstName").val();
@@ -111,7 +75,61 @@ $(document).ready(function () {
       isValid = false;
     }
 
-    return isValid;
+    // Get form data
+    var formData = $(this).serialize();
+
+    // Make AJAX request
+    if (isValid) {
+      $.ajax({
+        type: "POST",
+        url: "/authenticate/signup",
+        data: formData,
+        success: function () {
+          window.location.href = "/food";
+        },
+        error: function (xhr, error) {
+          var errorMessage = xhr.responseJSON.error
+            ? xhr.responseJSON.error
+            : xhr.responseJSON;
+          console.log("error to display: ", errorMessage);
+          displayErrorMessage(errorMessage);
+        },
+      });
+    }
+  });
+
+  $("#login-form").submit(function (event) {
+    // Prevent the form from submitting
+    event.preventDefault();
+
+    // Clear previous error messages
+    clearErrorMessage();
+
+    // Get form data
+    var formData = $(this).serialize();
+
+    // Make AJAX request
+    $.ajax({
+      type: "POST",
+      url: "/authenticate/login",
+      data: formData,
+      success: function () {
+        window.location.href = "/food";
+      },
+      error: function (xhr, error) {
+        var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+        displayErrorMessage(errorMessage);
+      },
+    });
+  });
+
+  function clearErrorMessage() {
+    toastr.clear();
+  }
+
+  function displayErrorMessage(message) {
+    clearErrorMessage();
+    toastr.info(message);
   }
 
   function isValidEmail(email) {
