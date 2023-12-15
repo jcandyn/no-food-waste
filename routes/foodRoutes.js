@@ -203,7 +203,7 @@ router
   .route("/view/:Id")
   .get(async (req, res) => {
     if (!req.session.user) {
-      res.redirect("/");
+      return res.redirect("/");
     }
     try {
       req.params.Id = help.checkId(req.params.Id, "Food Id");
@@ -218,9 +218,9 @@ router
         hasErrors: false,
         name: req.session.user.name,
       });
-      //return res.json(food);
     } catch (e) {
-      return res.status(404).render("error", { error: e });
+      console.error("Error getting food by ID:", e);
+      return res.redirect("/");
     }
   })
   .delete(async (req, res) => {
