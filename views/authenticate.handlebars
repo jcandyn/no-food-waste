@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <title>Sign Up / Login</title>
     <link rel="stylesheet" href="/public/css/welcomeAnimation.css">  
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -23,11 +25,7 @@
                 <button class="btn btn-primary signup-button active" data-form="signup">Sign Up</button>
                 <button class="btn btn-secondary login-button" data-form="login">Login</button>
             </div>
-            {{#if error}}
-                <div id="error">
-                    {{error}}
-                </div>
-            {{/if}}
+           
             <div class="container">
                 <form id="signup-form" method="POST" action="/authenticate/signup">
                     <div class="row">
@@ -96,6 +94,7 @@
                     <button type="submit" class="btn btn-secondary">Login</button>
                 </form>
             </div>
+        
         </main>
     </div>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -106,3 +105,5 @@
 </body>
 
 </html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+

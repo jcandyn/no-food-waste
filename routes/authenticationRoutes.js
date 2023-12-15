@@ -18,23 +18,20 @@ router.route("/").get(printMiddleware, async (req, res) => {
 router
   .route("/signup")
   .get(registrationMiddleware, printMiddleware, async (req, res) => {
-    //code here for GET
+    // Code here for GET
     res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
-    let response;
-
-    const user = req.body;
-
     try {
+      let response;
+
+      const user = req.body;
+
       // Check if the confirm password and password are equal to each other
       if (req.body.password !== req.body.confirmPassword) {
-        throw "Passwords do not match";
+        throw new Error("Passwords do not match");
       }
-    } catch (e) {
-      return res.render("authenticate", { error: e });
-    }
-    try {
+
       // Check if the inputs are valid
       valid(
         req.body.email,
@@ -44,12 +41,8 @@ router
         req.body.dateOfBirth,
         req.body.phoneNumber
       );
-    } catch (e) {
-      return res.render("authenticate", { error: e });
-    }
 
-    // Try to input the user
-    try {
+      // Try to input the user
       response = await registerUser(
         req.body.email,
         req.body.password,
@@ -58,30 +51,32 @@ router
         req.body.dateOfBirth,
         req.body.phoneNumber
       );
-    } catch (e) {
-      return res.render("authenticate", { error: e });
-    }
 
-    if (response) {
-      req.session.user = {
-        id: response.id,
-        email: user.email,
-        password: user.password,
-        name: user.firstName,
-      };
-      res.render("inventory", { name: user.firstName });
+      if (response) {
+        req.session.user = {
+          id: response.id,
+          email: user.email,
+          password: user.password,
+          name: user.firstName,
+        };
+      }
+
+      return res.status(200).send("User registered successfully");
+    } catch (error) {
+      // Log the error for debugging purposes
+      console.error(error);
+
+      // Render the authenticate view with the error message
+      return res.status(400).send({ error: error.message });
     }
-    return;
   });
 
 router
   .route("/login")
   .get(printMiddleware, loginMiddleware, async (req, res) => {
-    //code here for GET
     res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
-    //code here for POST
     const email = req.body["email"];
     const password = req.body["password"];
 
@@ -90,10 +85,9 @@ router
     try {
       user = await loginUser(email.toLowerCase(), password);
     } catch (error) {
-      res
-        .status(401)
-        .render("authenticate", { error: "Invalid Username and/or Password" });
+      return res.status(401).send({ error: error });
     }
+
     if (user) {
       req.session.user = {
         id: user._id,
@@ -101,11 +95,9 @@ router
         password: user.password,
         name: user.name,
       };
-      res.redirect("../");
+      return res.redirect("../");
     } else {
-      res
-        .status(401)
-        .render("authenticate", { error: "Invalid Username and/or Password" });
+      return res.status(401).send({ error: error });
     }
   });
 
