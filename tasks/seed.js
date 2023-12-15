@@ -1,7 +1,4 @@
-import {
-  run as mongoConnectRun,
-  connectToDatabase,
-} from "../config/mongoConnect.js";
+import { run as connectToDatabase } from "../config/mongoConnect.js";
 import {
   usersCollection,
   foodCollection,
