@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import { registerUser, loginUser, valid } from "../data/users.js";
 // import { passwordValidation } from "../helpers.js";
-
+import xss from "xss";
 import {
   printMiddleware,
   loginMiddleware,
@@ -34,14 +34,23 @@ router
         req.body.phoneNumber
       );
 
-      // Attempt to register the user
-      const response = await registerUser(
-        req.body.email,
-        req.body.password,
-        req.body.firstName,
-        req.body.lastName,
-        req.body.dateOfBirth,
-        req.body.phoneNumber
+
+    let emailVal = xss(req.body.email)
+    let passwordVal = xss(req.body.password)
+    let firstNameVal = xss(req.body.firstName)
+    let lastNameVal = xss(req.body.lastName)
+    let dateOfBirthVal =xss(req.body.dateOfBirth)
+    let phoneNumberVal = xss(req.body.phoneNumber)
+
+
+      // Try to input the user
+      response = await registerUser(
+        emailVal,
+        passwordVal, 
+        firstNameVal,
+        lastNameVal, 
+        dateOfBirthVal,
+        phoneNumberVal
       );
 
       // If registration is successful, update the session and redirect
@@ -66,8 +75,13 @@ router
     res.render("authenticate");
   })
   .post(printMiddleware, async (req, res) => {
-    const email = req.body.email.toLowerCase();
-    const password = req.body.password;
+
+    //code here for POST
+    let email = req.body["email"].toLowerCase();
+    let password = req.body["password"];
+    email=xss(email)
+    password=xss(password)
+
 
     try {
       // Attempt to log in the user

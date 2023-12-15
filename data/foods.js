@@ -20,11 +20,11 @@ const exportedMethods = {
     itemName = help.checkString(itemName, "Item Name");
     quantity = help.checkNum(quantity, "Quantity");
     unit = help.checkUnit(unit);
-    expiryDate = help.checkDate(expiryDate, "Expiry Date"); //need to change the validation for date
+    expiryDate = help.checkDate(expiryDate, "Expiry Date"); 
     costPerItem = help.checkNum(costPerItem, "Cost per Item");
     totalCost = help.checkNum(totalCost, "Total Cost");
     brand = help.checkString(brand, "Brand");
-    category = help.checkString(category, "Category");
+    category = help.checkCategory(category, "Category");
     status = help.checkString(status, "Status");
 
     //  Create a new document
@@ -112,7 +112,7 @@ const exportedMethods = {
     costPerItem = help.checkNum(costPerItem, "Cost per Item");
     totalCost = help.checkNum(totalCost, "Total Cost");
     brand = help.checkString(brand, "Brand");
-    category = help.checkString(category, "Category");
+    category = help.checkCategory(category, "Category");
     status = help.checkString(status, "Status");
 
     let FoodItem = {

@@ -114,7 +114,7 @@ router
       error.push(e);
     }
     try {
-      category = help.checkString(category, "Category");
+      category = help.checkCategory(category, "Category");
     } catch (e) {
       error.push(e);
     }
@@ -326,7 +326,7 @@ router
       error.push(e);
     }
     try {
-      category = help.checkString(category, "Category");
+      category = help.checkCategory(category, "Category");
     } catch (e) {
       error.push(e);
     }

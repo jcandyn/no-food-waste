@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import shareData from "../data/share.js";
 import help from "../validation.js";
+import xss from "xss";
 
 let userId;
 let foodList;
@@ -36,6 +37,7 @@ router
     }
     let { state } = foodInfo;
     let error=[];
+    state=xss(state)
     //Input checking
     try {
       state = help.checkState(state, "State");
