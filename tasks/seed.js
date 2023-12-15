@@ -103,6 +103,7 @@ async function seedFoods(userIds) {
       status: "Good",
       imageUrl:
         "https://images.unsplash.com/photo-1633614201174-a5172e93c21e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzQxNzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDI1MzU3NTN8&ixlib=rb-4.0.3&q=80&w=1080",
+      snoozed: false,
     },
     {
       userId: userIds[0].toString(),
