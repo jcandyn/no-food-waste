@@ -25,7 +25,7 @@ const exportedMethods = {
     totalCost = help.checkNum(totalCost, "Total Cost");
     brand = help.checkString(brand, "Brand");
     category = help.checkCategory(category, "Category");
-    status = help.checkString(status, "Status");
+    status = help.checkStatus(status, "Status");
 
     //  Create a new document
     let newFoodItem = {
@@ -113,7 +113,7 @@ const exportedMethods = {
     totalCost = help.checkNum(totalCost, "Total Cost");
     brand = help.checkString(brand, "Brand");
     category = help.checkCategory(category, "Category");
-    status = help.checkString(status, "Status");
+    status = help.checkStatus(status, "Status");
 
     let FoodItem = {
       _id: new ObjectId(foodId),

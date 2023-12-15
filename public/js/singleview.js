@@ -25,6 +25,36 @@ $(document).ready(function(){
       editDiv.hide();
       editBtn.show();
     })
+    function formatCurrency(value) {
+      return "$" + parseFloat(value).toFixed(2);
+    }
+  
+    // Function to calculate and update total cost
+    
+  
+    function updateTotalCost() {
+      let qty = parseFloat($('#quantity').val()) || 0; // Default to 0 if not a number
+      let costItem = parseFloat($('#costPerItem').val().replace('$', '')) || 0; // Default to 0 if not a number
+      console.log("Quantity:", qty, "Cost per Item:", costItem);
+  
+      let total = parseFloat(qty) * parseFloat(costItem);
+      console.log("Total Cost:", total);
+  
+      $("#totalCost").val(total);
+    }
+  
+  console.log(
+    "Quantity:",
+    $("#quantity").val(),
+    "Cost per Item:",
+    $("#costPerItem").val()
+  );
+  
+  // Event listener for changes in quantity or cost per item
+  $("#quantity, #costPerItem").on("input", function () {
+    updateTotalCost();
+  });
+  
 
     const foodDetail= $('#foodDetail').text().trim()
     let obj={};
@@ -100,7 +130,17 @@ $(document).ready(function(){
       }
   
       return categoryVal;
-  }
+    }
+    const checkStatus =(statusVal, varName='Status')=>{
+      statusVal = checkString(statusVal,"Status");
+      //statusVal=statusVal.toLowerCase();
+      const statusOption=["Fresh","Good","Near Expiry","Expired","Spoiled","Frozen","Canned","Dried","Partially Used","Reserved","Donation Ready","Needs Review"]
+      if(!(statusOption.includes(statusVal))){
+        throw `Provide only valid Status values from the option`
+
+      }
+      return statusVal;
+    }
 
     const checkDate =(dateVal, varName='Date')=>{
         if(!dateVal) throw`Error: You must provide an ${varName}`;
@@ -134,8 +174,20 @@ $(document).ready(function(){
             throw "Invalid input, day should be between 1-30 ";
           }
         }
+        function checkLeapYear(year) {
+          year = parseInt(year)
+    
+          //three conditions to find out the leap year
+          if ((0 == year % 4) && (0 != year % 100) || (0 == year % 400)) {
+              return true
+          } else {
+              return false
+          }
+        }
+    
+        const tocheckLeap = checkLeapYear(year);
         if(mon == '02'){
-          if(isLeapYear(year)){
+          if(tocheckLeap){
             if(!(date>=1 && date<=29)){
               throw "Leap year feb should have date in between 1-29";
             }
@@ -213,7 +265,7 @@ $(document).ready(function(){
             errorList.push(e)
         }
         try{
-            const stat=checkString(status, "Status");
+            const stat=checkStatus(status, "Status");
         }catch(e){
             errorList.push(e)
         }

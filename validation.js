@@ -74,6 +74,16 @@ const exportedMethods = {
   
       return categoryVal;
   },
+  checkStatus(statusVal, varName='Status'){
+    statusVal = this.checkString(statusVal,"Status");
+    //statusVal=statusVal.toLowerCase();
+    const statusOption=["Fresh","Good","Near Expiry","Expired","Spoiled","Frozen","Canned","Dried","Partially Used","Reserved","Donation Ready","Needs Review"]
+    if(!(statusOption.includes(statusVal))){
+      throw `Provide only valid Status values from the option`
+
+    }
+    return statusVal;
+  },
   
 
     checkState(stateVal, varName='State'){
