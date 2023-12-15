@@ -114,17 +114,139 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="category">Category:
-                                        <input type="text" name="category" id="category" placeholder="Eg:Dairy" value="{{food.category}}" >
+                                        {{!-- <input type="text" name="category" id="category" placeholder="Eg:Dairy" value="{{food.category}}" > --}}
+                                        <select name="category" id="category" value="{{food.category}}">
+                                            <option value="">Select...</option>
+                                            <!-- Dairy & Eggs -->
+                                            <optgroup label="Dairy & Eggs">
+                                            <option value="Milk & Cream">Milk & Cream</option>
+                                            <option value="Cheese">Cheese</option>
+                                            <option value="Yogurt">Yogurt</option>
+                                            <option value="Eggs">Eggs</option>
+                                            <option value="Butter & Margarine">Butter & Margarine</option>
+                                            </optgroup>
+                                            <!-- Meat & Poultry -->
+                                            <optgroup label="Meat & Poultry">
+                                            <option value="Beef">Beef</option>
+                                            <option value="Pork">Pork</option>
+                                            <option value="Chicken">Chicken</option>
+                                            <option value="Turkey">Turkey</option>
+                                            <option value="Lamb">Lamb</option>
+                                            </optgroup>
+                                            <!-- Seafood -->
+                                            <optgroup label="Seafood">
+                                            <option value="Fish">Fish</option>
+                                            <option value="Shellfish">Shellfish</option>
+                                            <option value="Canned Seafood">Canned Seafood</option>
+                                            </optgroup>
+                                            <!-- Fruits -->
+                                            <optgroup label="Fruits">
+                                            <option value="Citrus Fruits">Citrus Fruits</option>
+                                            <option value="Berries">Berries</option>
+                                            <option value="Tropical Fruits">Tropical Fruits</option>
+                                            <option value="Apples & Pears">Apples & Pears</option>
+                                            <option value="Stone Fruits">Stone Fruits</option>
+                                            </optgroup>
+                                            <!-- Vegetables -->
+                                            <optgroup label="Vegetables">
+                                            <option value="Leafy Greens">Leafy Greens</option>
+                                            <option value="Root Vegetables">Root Vegetables</option>
+                                            <option value="Squashes">Squashes</option>
+                                            <option value="Cruciferous Vegetables">Cruciferous Vegetables</option>
+                                            <option value="Nightshade Vegetables">Nightshade Vegetables</option>
+                                            </optgroup>
+                                            <!-- Grains & Cereals -->
+                                            <optgroup label="Grains & Cereals">
+                                            <option value="Rice">Rice</option>
+                                            <option value="Pasta">Pasta</option>
+                                            <option value="Bread">Bread</option>
+                                            <option value="Cereal">Cereal</option>
+                                            <option value="Oats">Oats</option>
+                                            </optgroup>
+                                            <!-- Legumes & Beans -->
+                                            <optgroup label="Legumes & Beans">
+                                            <option value="Beans">Beans</option>
+                                            <option value="Lentils">Lentils</option>
+                                            <option value="Peas">Peas</option>
+                                            <option value="Chickpeas">Chickpeas</option>
+                                            </optgroup>
+                                            <!-- Nuts & Seeds -->
+                                            <optgroup label="Nuts & Seeds">
+                                            <option value="Almonds">Almonds</option>
+                                            <option value="Peanuts">Peanuts</option>
+                                            <option value="Sunflower Seeds">Sunflower Seeds</option>
+                                            <option value="Chia Seeds">Chia Seeds</option>
+                                            <option value="Flax Seeds">Flax Seeds</option>
+                                            </optgroup>
+                                            <!-- Beverages -->
+                                            <optgroup label="Beverages">
+                                            <option value="Juices">Juices</option>
+                                            <option value="Sodas">Sodas</option>
+                                            <option value="Tea & Coffee">Tea & Coffee</option>
+                                            <option value="Alcoholic Beverages">Alcoholic Beverages</option>
+                                            <option value="Water">Water</option>
+                                            </optgroup>
+                                            <!-- Snacks & Sweets -->
+                                            <optgroup label="Snacks & Sweets">
+                                            <option value="Chips & Crackers">Chips & Crackers</option>
+                                            <option value="Candy & Chocolate">Candy & Chocolate</option>
+                                            <option value="Baked Goods">Baked Goods</option>
+                                            <option value="Ice Cream & Desserts">Ice Cream & Desserts</option>
+                                            </optgroup>
+                                            <!-- Condiments & Spices -->
+                                            <optgroup label="Condiments & Spices">
+                                            <option value="Herbs & Spices">Herbs & Spices</option>
+                                            <option value="Sauces & Dressings">Sauces & Dressings</option>
+                                            <option value="Oils & Vinegars">Oils & Vinegars</option>
+                                            <option value="Condiments">Condiments</option>
+                                            </optgroup>
+                                            <!-- Frozen Foods -->
+                                            <optgroup label="Frozen Foods">
+                                            <option value="Frozen Vegetables">Frozen Vegetables</option>
+                                            <option value="Frozen Fruits">Frozen Fruits</option>
+                                            <option value="Frozen Meals">Frozen Meals</option>
+                                            <option value="Ice Cream">Ice Cream</option>
+                                            </optgroup>
+                                            <!-- Canned & Jarred Goods -->
+                                            <optgroup label="Canned & Jarred Goods">
+                                            <option value="Canned Vegetables">Canned Vegetables</option>
+                                            <option value="Canned Fruits">Canned Fruits</option>
+                                            <option value="Preserves & Spreads">Preserves & Spreads</option>
+                                            <option value="Pickles">Pickles</option>
+                                            </optgroup>
+                                            <!-- Special Diets -->
+                                            <optgroup label="Special Diets">
+                                            <option value="Gluten-Free">Gluten-Free</option>
+                                            <option value="Vegan">Vegan</option>
+                                            <option value="Organic">Organic</option>
+                                            <option value="Non-Dairy Alternatives">Non-Dairy Alternatives</option>
+                                            </optgroup>
+                                            <!-- Others -->
+                                            <optgroup label="Others">
+                                            <option value="Miscellaneous">Miscellaneous</option>
+                                            <option value="Non-Food Items">Non-Food Items</option>
+                                            </optgroup>
+                                        </select>
                                     </label><br>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="status">Status:
-                                        <select name="status" id="status">
+                                        <select name="status" id="status" value="{{food.status}}">
                                             <option value="">Select...</option>
                                             <option value="Fresh">Fresh</option>
-                                            <option value="Early Decline">Early Decline</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Near Expiry">Near Expiry</option>
+                                            <option value="Expired">Expired</option>
+                                            <option value="Spoiled">Spoiled</option>
+                                            <option value="Frozen">Frozen</option>
+                                            <option value="Canned">Canned</option>
+                                            <option value="Dried">Dried</option>
+                                            <option value="Partially Used">Partially Used</option>
+                                            <option value="Reserved">Reserved</option>
+                                            <option value="Donation Ready">Donation Ready</option>
+                                            <option value="Needs Review">Needs Review</option>
                                         </select>
                                     </label><br>
                                 </div>

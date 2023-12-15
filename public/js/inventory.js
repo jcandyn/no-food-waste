@@ -103,7 +103,7 @@ $("#quantity, #costPerItem").on("input", function () {
     }
     const dateStr = dateVal.split("-");
 
-    const year = dateStr[0];
+    let year = dateStr[0];
     const date = dateStr[2];
     const mon = dateStr[1];
 
@@ -125,8 +125,21 @@ $("#quantity, #costPerItem").on("input", function () {
         throw "Invalid input, day should be between 1-30 ";
       }
     }
+    // program to check leap year
+    function checkLeapYear(year) {
+      year = parseInt(year)
+
+      //three conditions to find out the leap year
+      if ((0 == year % 4) && (0 != year % 100) || (0 == year % 400)) {
+          return true
+      } else {
+          return false
+      }
+    }
+
+    const tocheckLeap = checkLeapYear(year);
     if (mon == "02") {
-      if (isLeapYear(year)) {
+      if (tocheckLeap) {
         if (!(date >= 1 && date <= 29)) {
           throw "Leap year feb should have date in between 1-29";
         }

@@ -37,9 +37,11 @@ $(document).ready(function(){
     })
     const unitVal = obj['Unit']
     const statusVal = obj['Status']
+    const categoryVal =obj['Category']
     
     $('#status').val(statusVal)
     $('#unit').val(unitVal)
+    $('#category').val(categoryVal)
 
     const checkString = (strVal, varName='input') =>{
         if (!strVal) throw `Error: You must supply a ${varName}!`;
