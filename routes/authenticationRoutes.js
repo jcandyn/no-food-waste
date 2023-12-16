@@ -44,7 +44,7 @@ router
 
 
       // Try to input the user
-      response = await registerUser(
+      let response = await registerUser(
         emailVal,
         passwordVal, 
         firstNameVal,
@@ -60,7 +60,7 @@ router
         password: req.body.password,
         name: req.body.firstName,
       };
-
+      
       return res.status(200).send("User logged in successfully");
     } catch (error) {
       console.log("Routes error: ", error);
@@ -94,7 +94,7 @@ router
         password: user.password,
         name: user.name,
       };
-
+      
       return res.status(200).send("User registered successfully");
     } catch (error) {
       console.log("Routes error: ", error);
