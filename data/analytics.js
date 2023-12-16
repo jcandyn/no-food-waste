@@ -78,33 +78,31 @@ const getMonthName = (month) => {
 
 export const getWeeklyExpirations = async (userId) => {
   try {
-    // Validate user ID
+    // validations
     if (!ObjectId.isValid(userId)) throw "Invalid User ID";
     userId = help.checkId(userId, "User Id");
 
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-    // Format the date as "MM/DD/YYYY"
-    const formattedThreshold = `${(oneMonthAgo.getMonth() + 1)
+    // format the date as "YYYY-MM-DD"
+    const formattedThreshold = `${oneMonthAgo.getFullYear()}-${(
+      oneMonthAgo.getMonth() + 1
+    )
       .toString()
-      .padStart(2, "0")}/${oneMonthAgo
-      .getDate()
-      .toString()
-      .padStart(2, "0")}/${oneMonthAgo.getFullYear()}`;
+      .padStart(2, "0")}-${oneMonthAgo.getDate().toString().padStart(2, "0")}`;
 
     console.log("formatted threshold :", formattedThreshold);
 
-    const formattedCurrentDate = `${(new Date().getMonth() + 1)
+    const formattedCurrentDate = `${new Date().getFullYear()}-${(
+      new Date().getMonth() + 1
+    )
       .toString()
-      .padStart(2, "0")}/${new Date()
-      .getDate()
-      .toString()
-      .padStart(2, "0")}/${new Date().getFullYear()}`;
+      .padStart(2, "0")}-${new Date().getDate().toString().padStart(2, "0")}`;
 
     console.log("formatted current :", formattedCurrentDate);
 
-    // Find documents with expiryDate within the last month
+    // query with expiryDate within the last month
     const query = {
       expiryDate: {
         $gte: formattedThreshold,
@@ -115,7 +113,7 @@ export const getWeeklyExpirations = async (userId) => {
 
     const expiringItems = await foodCollection.find(query).toArray();
 
-    // Aggregate query to get weekly expirations
+    // aggregation
     const weeklyExpirations = expiringItems
       .reduce((result, item) => {
         const expirationDate = new Date(item.expiryDate);
