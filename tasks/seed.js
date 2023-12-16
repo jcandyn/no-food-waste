@@ -421,6 +421,46 @@ async function seedGiveaway() {
       site: "fulfillnj.org/",
       email: "main@fulfillnj.org",
     },
+    {
+      state: "new_york",
+      name: "City Harvest",
+      address: "150 52nd Street Brooklyn, NY 11232",
+      number: "646.412.0758",
+      site: "www.cityharvest.org/",
+      email: "fooddonations@cityharvest.org",
+    },
+    {
+      state: "new_york",
+      name: "FeedMore Western New York, Inc.",
+      address: "91 Holt Street Buffalo, NY 14206",
+      number: "716.852.1305",
+      site: "www.feedmorewny.org/",
+      email: "hello@feedmorewny.org",
+    },
+    {
+      state: "north_carolina",
+      name: "Second Harvest Food Bank of Metrolina",
+      address: "500 B Spratt St.Charlotte, NC 28206",
+      number: "704.376.1785",
+      site: "www.secondharvestmetrolina.org/",
+      email: "info@SecondHarvest.org ",
+    },
+    {
+      state: "ohio",
+      name: "Freestore Foodbank",
+      address: "3401 Rosenthal Way Cincinnati, OH 45204",
+      number: "513.482.4500",
+      site: "freestorefoodbank.org/",
+      email: "info@freestore.org ",
+    },
+    {
+      state: "washington",
+      name: "Food Lifeline",
+      address: "815 South 96th Street Seattle, WA 98108",
+      number: "206.545.6600",
+      site: "foodlifeline.org/",
+      email: "info@foodlifeline.org",
+    }
   ];
 
   try {
