@@ -34,9 +34,9 @@ async function findExpirations(user) {
     const cursor = foodCollection.find(query);
 
     for await (const doc of cursor) {
-      console.log(
-        `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
-      );
+      // console.log(
+      //   `Document with _id ${doc._id}, ${doc.itemName} will expire on ${doc.expiryDate}`
+      // );
 
       expirations.push(
         "Alert: Expiration approaching for " +

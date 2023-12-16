@@ -169,7 +169,7 @@ const exportedMethods = {
 
   async updateFoodSnoozeStatus(foodId, snoozed) {
     foodId = help.checkId(foodId, "Food Id");
-    console.log("food id passed to update function: ", foodId);
+    //console.log("food id passed to update function: ", foodId);
     console.log("snoozed : ", snoozed);
 
     let updateInfo;
@@ -183,7 +183,7 @@ const exportedMethods = {
       console.log(e);
     }
 
-    console.log(updateInfo);
+    //console.log(updateInfo);
 
     if (!updateInfo)
       throw `Error: Update failed! Could not update snooze status for food with id ${foodId}`;
