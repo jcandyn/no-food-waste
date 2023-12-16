@@ -38,7 +38,6 @@
     <br />
     <br />
     <br />
-    ·
     <a href="https://github.com/jcandyn/no-food-waste/issues">Report Bug</a>
     ·
     <a href="https://github.com/jcandyn/no-food-waste/issues">Request Feature</a>
