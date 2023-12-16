@@ -33,7 +33,7 @@ const exportedMethods = {
       });
     }
 
-    console.log("POST result in data functions: ", result);
+    //console.log("POST result in data functions: ", result);
     return result;
   },
   async addItemToShoppingListByUserId(userId, newItem) {
