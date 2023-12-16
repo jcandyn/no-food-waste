@@ -154,12 +154,12 @@ export const loginUser = async (email, password) => {
   } catch (error) {
     throw error;
   }
-  if (!user) throw "no user found associated with this email";
+  if (!user) throw "Email and/or password is incorrect";
 
   if (!bcrypt.compareSync(password, user.password)) {
     // Passwords do not match
     user = null;
-    throw "password is incorrect";
+    throw "Email and/or password is incorrect";
   }
   return user;
 };
