@@ -5,7 +5,6 @@ import {
   getWeeklyExpirations,
 } from "../data/analytics.js";
 
-// Example analytics route
 router.get("/", async (req, res) => {
   if (!req.session.user) {
     return res.redirect("/");
@@ -16,8 +15,6 @@ router.get("/", async (req, res) => {
     const itemNameStatistics = await getItemNameStatistics(userId);
 
     const weeklyExpirations = await getWeeklyExpirations(userId);
-
-    console.log("weekly expirations: ", weeklyExpirations);
 
     // Pass data to Handlebars
     res.render("analytics", {
