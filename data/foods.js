@@ -40,6 +40,7 @@ const exportedMethods = {
       category: category,
       status: status,
       imageUrl: imageUrl,
+      snoozed: false
     };
 
     const insertInfo = await foodCollection.insertOne(newFoodItem);
